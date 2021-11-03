@@ -2,7 +2,7 @@
 
 Lista zespołu:
 
-Marcin Jan Grabysz
-Patryk Jan Będkowski
-Szymon Mikołaj Skarzyński
-Łukasz Szarejko
+- Marcin Jan Grabysz
+- Patryk Jan Będkowski
+- Szymon Mikołaj Skarzyński
+- Łukasz Szarejko
