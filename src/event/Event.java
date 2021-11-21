@@ -8,21 +8,28 @@ public class Event {
     Class that represents an event.
     */
 
+    public String id;
     public String organizer;
     public String location;
     public LocalDateTime dateTime;
     public HashMap<String, Integer> tickets = new HashMap<String, Integer>();
 
     public Event(
+        String id,
         String organizer,
         String location,
         LocalDateTime dateTime,
         HashMap<String, Integer> tickets
     ) {
+        this.id = id;
         this.organizer = organizer;
         this.location = location;
         this.dateTime = dateTime;
         this.tickets = tickets;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getOrganizer() {
