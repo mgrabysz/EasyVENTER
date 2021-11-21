@@ -53,7 +53,8 @@ public class Event {
     }
 
     public String toString() {
-        String eventInfo = "Organizer: " + organizer;
+        String eventInfo = "ID: " + id;
+        eventInfo += "\nOrganizer: " + organizer;
         eventInfo += "\nLocation: " + location;
         eventInfo += "\nDate and time: " + dateTime;
 
