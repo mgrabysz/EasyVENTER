@@ -1,7 +1,5 @@
 package ticket;
 
-import javax.lang.model.type.NullType;
-
 public class Ticket {
     /*
     Class that represents a ticket.
