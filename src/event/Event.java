@@ -8,11 +8,11 @@ public class Event {
     Class that represents an event.
     */
 
-    public String id;
-    public String organizer;
-    public String location;
-    public LocalDateTime dateTime;
-    public HashMap<String, Integer> tickets = new HashMap<String, Integer>();
+    private String id;
+    private String organizer;
+    private String location;
+    private LocalDateTime dateTime;
+    private HashMap<String, Integer> tickets = new HashMap<String, Integer>();
 
     public Event(
         String id,

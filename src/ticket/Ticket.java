@@ -5,12 +5,12 @@ public class Ticket {
     Class that represents a ticket.
     */
 
-    public String id;
-    public int price;
-    public String sector;
-    public int seat;
-    public Boolean isBought;
-    public String owner;
+    private String id;
+    private int price;
+    private String sector;
+    private int seat;
+    private Boolean isBought;
+    private String owner;
 
     public Ticket(
         String id,
