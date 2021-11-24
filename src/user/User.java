@@ -3,9 +3,9 @@ package user;
 
 
 public class User {
-    public int user_id;
-    public String name;
-    public String surname;
+    private int user_id;
+    private String name;
+    private String surname;
     private String login;
     private String password;
     public User(
@@ -26,5 +26,17 @@ public class User {
     public String getPassword()
     {
         return this.password;
+    }
+    public int getID()
+    {
+        return this.user_id;
+    }
+    public String getName()
+    {
+        return this.name;
+    }
+    public String getSurname()
+    {
+        return this.surname;
     }
 }
