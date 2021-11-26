@@ -1,9 +1,15 @@
 package database;
 
+import userInterface.*;
+
 public class EasyVENT {
     Database_credentials database;
+    public MainMenuFrame menuframe;
+    public String user_type;
 
     public EasyVENT(){ // Constructor
+        user_type = "client";
+        menuframe = new MainMenuFrame(user_type);
         database = new Database_credentials(); // create database
     }
 
