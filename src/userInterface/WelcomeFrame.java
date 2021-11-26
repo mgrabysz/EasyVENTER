@@ -27,7 +27,6 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     WelcomeFrame() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500, 500);
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(300, 450));
