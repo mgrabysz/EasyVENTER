@@ -15,11 +15,18 @@ będą mieć możliwość przeglądania listy nadchodzących wydarzeń, zakupu b
 ## Architektura rozwiązania
 
 ### Program
-Aplikacja desktopowa napisana w Javie przy pomocy Swinga
-- Moduł logowania/rejestracji przy uruchomieniu aplikacji
-- Przeglądarka wydarzeń z możliwością kupienia biletu
-- Moduł do zarządzania biletami
-- Moduł do tworzenia wydarzeń
+Aplikacja desktopowa napisana w Javie przy pomocy Swinga 
+(Osobą odpowiedzialną w głównej mierze za frontend będzie Marcin Grabysz, z pomocą Szymona Skarzyńskiego)
+- Moduł logowania/rejestracji przy uruchomieniu aplikacji (Patryk Będkowski)
+- Przeglądarka wydarzeń z możliwością kupienia biletu (Szymon Skarzyński)
+- Moduł do zarządzania biletami (Łukasz Szarejko)
+- Moduł do tworzenia wydarzeń (Łukasz Szarejko)
+Aplikacja będzie korzystała z bazy danych Oracle SQL. (Główny odpowiedzialny za łączenie z bazą danych - Patryk Będkowski)
+
+### Testy
+Wszystkie klasy odpowiadające za backend aplikacji zostaną przetestowane za pomocą testów jednostkowych.
+Natomiast okienka (frontend) zostaną przetestowany poprzez korzystanie z programu przez kilku uczestników, aby wykryć potencjalne bugi.
+Testy jednostkowe każdy członek napisze indywidualnie do swoich klas.
 
 ### Wstępne plany bazy danych
 1. Wydarzenia: ID, miejsce, data, godzina, nazwa, id organizatora, bilety
