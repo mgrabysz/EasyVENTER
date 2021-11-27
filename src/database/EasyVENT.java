@@ -3,7 +3,7 @@ package database;
 import userInterface.*;
 
 public class EasyVENT {
-    Database_credentials database;
+    public static Database_credentials database;
     public WelcomeFrame menuframe;
     public RegisterFrame registerframe;
     public LoginFrame loginframe;
@@ -21,11 +21,10 @@ public class EasyVENT {
         boolean run_loop = true;
         StringConstant.FRAME_TYPE = "welcome";
         String last_frame = "";
+        String he = "he";
 
-        while(run_loop){
-            System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
-            System.out.println(last_frame);
-
+        do{
+            //System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
             if(last_frame != StringConstant.FRAME_TYPE){
 
                 switch (StringConstant.FRAME_TYPE) {
@@ -45,31 +44,6 @@ public class EasyVENT {
                         break;
                 }
             }
-        }
-    }
-
-    public boolean log_in(NewUserData data){
-        NewUserData response = database.logIntoDatabase(data.login, data.password);
-        if(response != null){
-            System.out.println("User was logged in successfully");
-            return true;
-        }
-        else{
-            System.out.println("User was logged in unsuccessfully");
-            return false;
-        }
-    }
-
-    public boolean create_new_user(NewUserData data){
-        boolean response = database.register_new_user(data);
-
-        if(response){
-            System.out.println("User was registered successfully");
-            return true;
-        }
-        else{
-            System.out.println("User was not registered!");
-            return false;
-        }
+        }while(run_loop);
     }
 }
