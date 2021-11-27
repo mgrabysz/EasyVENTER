@@ -27,6 +27,7 @@ package userInterface;
 import database.EasyVENT;
 import database.StringConstant;
 import user.Client;
+import user.EventOrganizer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -56,6 +57,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
     String userLogin, userPassword, userName, userSurname;
     int accountType;    // 0 if client, 1 if organiser
+    int user_id;
 
     public RegisterFrame() {
 
@@ -63,6 +65,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(600, 450));
+        user_id = 0;
 
         // title label "EasyVENTER"
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
@@ -175,20 +178,20 @@ public class RegisterFrame extends JFrame implements ActionListener {
             if (is_correct) {
 
                 //create user object
-                Client new_user = new Client(10, userName, userSurname, userLogin, userPassword);
-
-                boolean register_successful = EasyVENT.database.register_new_user(new_user);
+                if (accountType == 0){
+                    Client new_user = new Client(user_id, userName, userSurname, userLogin, userPassword);
+                    EasyVENT.database.register_new_user(new_user);
+                } else {
+                    EventOrganizer new_user = new EventOrganizer(user_id, userName, userSurname, userLogin, userPassword);
+                    EasyVENT.database.register_new_user(new_user);
+                }
+                //increment next user's id;
+                user_id++;
 
                 System.out.println("name: " + userName);
                 System.out.println("surname: " + userSurname);
                 System.out.println("login: " + userLogin);
                 System.out.println("password: " + userPassword);
-
-                if (accountType == 0){
-                    System.out.println("Client account");
-                } else {
-                    System.out.println("Organiser account");
-                }
 
                 StringConstant.FRAME_TYPE = "login";  // set global variable to open login frame
 
