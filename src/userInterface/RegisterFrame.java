@@ -24,6 +24,10 @@ package userInterface;
 // pozdrawiam cieplutko
 // =============================================================================
 
+import database.EasyVENT;
+import database.StringConstant;
+import user.Client;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -136,7 +140,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.add(organiserButton);
         this.add(confirmButton);
         this.setVisible(true);
-
     }
 
     @Override
@@ -171,7 +174,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
             boolean is_correct = true;
             if (is_correct) {
 
-                // jakiś kod że jest super
+                //create user object
+                Client new_user = new Client(10, userName, userSurname, userLogin, userPassword);
+
+                boolean register_successful = EasyVENT.database.register_new_user(new_user);
 
                 System.out.println("name: " + userName);
                 System.out.println("surname: " + userSurname);
@@ -183,6 +189,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 } else {
                     System.out.println("Organiser account");
                 }
+
+                StringConstant.FRAME_TYPE = "login";  // set global variable to open login frame
 
                 this.dispose(); // zamyka okno
 

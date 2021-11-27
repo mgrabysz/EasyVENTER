@@ -66,11 +66,9 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource()==registerButton){
-            System.out.println("User wants to register");
             StringConstant.FRAME_TYPE= "register";
 
         } else if (e.getSource()==logButton){
-            System.out.println("User wants to log in");
             StringConstant.FRAME_TYPE = "login";
         }
 
