@@ -1,5 +1,5 @@
 package database;
 
 public class StringConstant {
-    public static String FRAME_TYPE;
+    public static volatile String FRAME_TYPE;
 }
