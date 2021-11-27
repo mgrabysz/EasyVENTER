@@ -5,6 +5,8 @@ package userInterface;
 // new WelcomeFrame()
 // Na razie funkcja nic nie zwraca, bo jeszcze nie wiem jak
 
+import database.StringConstant;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -24,8 +26,7 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     JLabel titleLabel;
     Border border;
 
-    WelcomeFrame() {
-
+    public WelcomeFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -59,8 +60,6 @@ public class WelcomeFrame extends JFrame implements ActionListener {
         this.add(logButton);
         this.add(registerButton);
         this.setVisible(true);
-
-
     }
 
     @Override
@@ -68,8 +67,11 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 
         if (e.getSource()==registerButton){
             System.out.println("User wants to register");
+            StringConstant.FRAME_TYPE= "register";
+
         } else if (e.getSource()==logButton){
             System.out.println("User wants to log in");
+            StringConstant.FRAME_TYPE = "login";
         }
 
     }

@@ -21,6 +21,8 @@ package userInterface;
 // pozdrawiam cieplutko
 // =============================================================================
 
+import database.NewUserData;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -42,10 +44,11 @@ public class LoginFrame extends JFrame implements ActionListener {
     JLabel titleLabel, loginLabel, passwordLabel;
     JTextField loginTextField, passwordTextField;
     Border border;
+    NewUserData user_data;
 
     String userLogin, userPassword;
 
-    LoginFrame() {
+    public LoginFrame() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -93,6 +96,10 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     }
 
+    public database.NewUserData returnUserData(database.NewUserData userdata){
+        return userdata;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==logButton){
@@ -104,32 +111,34 @@ public class LoginFrame extends JFrame implements ActionListener {
             loginTextField.setText(null);
             passwordTextField.setText(null);
 
-// ==========================================================================
-//  Tę metodę sobie zmodyfikuj!!!
-
-            // poniższy kod to tylko sugestia i wskazówka, gdzie co umieścić,
-            // sprawdzanie danych logowania oczywiście powinno być lepiej
-            // zaimplementowane
-
-            if (userLogin.equals("expectedLogin") && userPassword.equals("expectedPassword")){
-
-                // jakiś kod że jest super
-                this.dispose(); // zamyka okno
-
-            } else {
-
-                // hasło nieprawidłowe
-                // wyświetla się komunikat, że dane są nieprawidłowe
-                // i użytkownik może wpisać dane ponownie
-
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Login or password incorrect",
-                    "Invalid user input",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
-
-            }
+            user_data = new NewUserData(userLogin, userPassword, 'o');
+            this.returnUserData(user_data);
+//// ==========================================================================
+////  Tę metodę sobie zmodyfikuj!!!
+//
+//            // poniższy kod to tylko sugestia i wskazówka, gdzie co umieścić,
+//            // sprawdzanie danych logowania oczywiście powinno być lepiej
+//            // zaimplementowane
+//
+//            if (userLogin.equals("expectedLogin") && userPassword.equals("expectedPassword")){
+//
+//                // jakiś kod że jest super
+//                this.dispose(); // zamyka okno
+//
+//            } else {
+//
+//                // hasło nieprawidłowe
+//                // wyświetla się komunikat, że dane są nieprawidłowe
+//                // i użytkownik może wpisać dane ponownie
+//
+//                JOptionPane.showMessageDialog(
+//                    null,
+//                    "Login or password incorrect",
+//                    "Invalid user input",
+//                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+//                    );
+//
+//            }
         }
 
     }

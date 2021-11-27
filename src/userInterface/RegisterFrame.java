@@ -53,7 +53,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
     String userLogin, userPassword, userName, userSurname;
     int accountType;    // 0 if client, 1 if organiser
 
-    RegisterFrame() {
+    public RegisterFrame() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
