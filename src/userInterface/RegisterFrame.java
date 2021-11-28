@@ -34,6 +34,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 import javax.swing.JRadioButton;
@@ -51,7 +52,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
     JButton confirmButton;
     JRadioButton clientButton, organiserButton;
     JLabel titleLabel, loginLabel, passwordLabel, nameLabel, surnameLabel, accountLabel;
-    JTextField loginTextField, passwordTextField, nameTextField, surnameTextField;
+    JTextField loginTextField, nameTextField, surnameTextField;
+    JPasswordField passwordTextField;
     Border border;
     ButtonGroup group;
 
@@ -107,7 +109,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         loginTextField = new JTextField();
         loginTextField.setBounds(350, 150, 200, 30);
 
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
         passwordTextField.setBounds(350, 230, 200, 30);
 
         organiserButton = new JRadioButton("Event organiser");
@@ -150,7 +152,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         if (e.getSource()==confirmButton){
 
             userLogin = loginTextField.getText();
-            userPassword = passwordTextField.getText();
+            userPassword = new String(passwordTextField.getPassword());
             userName = nameTextField.getText();
             userSurname = surnameTextField.getText();
 

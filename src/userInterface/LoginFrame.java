@@ -30,6 +30,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JOptionPane;
+import javax.swing.JPasswordField;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
@@ -44,7 +45,8 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     JButton logButton;
     JLabel titleLabel, loginLabel, passwordLabel;
-    JTextField loginTextField, passwordTextField;
+    JTextField loginTextField;
+    JPasswordField passwordTextField;
     Border border;
     NewUserData user_data;
 
@@ -79,7 +81,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         loginTextField = new JTextField();
         loginTextField.setBounds(50, 150, 200, 30);
 
-        passwordTextField = new JTextField();
+        passwordTextField = new JPasswordField();
         passwordTextField.setBounds(50, 230, 200, 30);
 
         logButton = new JButton();
@@ -103,7 +105,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         if (e.getSource()==logButton){
 
             userLogin = loginTextField.getText();
-            userPassword = passwordTextField.getText();
+            userPassword = new String(passwordTextField.getPassword());
 
             // mało elegancki sposób na wyczyszczenie textfielda
             loginTextField.setText(null);
