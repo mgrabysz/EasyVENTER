@@ -39,3 +39,7 @@ Testy jednostkowe każdy członek napisze indywidualnie do swoich klas.
 ### Diagram funkcjonalności aplikacji
 
 ![EasyVENT_diagram_flow.png](./diagrams/EasyVENT_diagram_flow.png)
+
+### Diagram klas
+
+![ClassDiagram.png](./diagrams/ClassDiagram.png)
