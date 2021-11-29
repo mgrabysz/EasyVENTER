@@ -24,6 +24,7 @@ package userInterface;
 import database.Database_credentials;
 import database.EasyVENT;
 import database.NewUserData;
+import database.StringConstant;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -116,6 +117,9 @@ public class LoginFrame extends JFrame implements ActionListener {
             if (login_successfully){
 
                 System.out.println("Log in was successful");
+
+                StringConstant.FRAME_TYPE = "after login";
+                
                 this.dispose(); // zamyka okno
 
             } else {
@@ -129,7 +133,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                     "Login or password incorrect",
                     "Invalid user input",
                     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
+                );
 
             }
         }

@@ -4,14 +4,17 @@ import userInterface.*;
 
 public class EasyVENT {
     public static Database_credentials database;
-    public WelcomeFrame menuframe;
-    public RegisterFrame registerframe;
-    public LoginFrame loginframe;
+    public WelcomeFrame menuFrame;
+    public RegisterFrame registerFrame;
+    public LoginFrame loginFrame;
+    public CreateEventFrame createEventFrame;
+    public ViewEventsFrame viewEventsFrame;
+
 
     public String user_type;
 
     public EasyVENT(){ // Constructor
-        user_type = "organizer";
+        // user_type = "organizer";
         database = new Database_credentials(); // create database
 
         main_loop();
@@ -20,27 +23,40 @@ public class EasyVENT {
     public void main_loop(){
         boolean run_loop = true;
         StringConstant.FRAME_TYPE = "welcome";
-        String last_frame = "";
-        String he = "he";
+        StringConstant.USER_TYPE = "a";
+        String lastFrame = "";
+        String he = "he"; //legacy code
 
         do{
             //System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
-            if(last_frame != StringConstant.FRAME_TYPE){
+            if(lastFrame != StringConstant.FRAME_TYPE){
 
                 switch (StringConstant.FRAME_TYPE) {
                     case "welcome":
-                        menuframe = new WelcomeFrame();
-                        last_frame = "welcome";  // prevents from creating another window
+                        menuFrame = new WelcomeFrame();
+                        lastFrame = "welcome";  // prevents from creating another window
                         break;
                     case "register":
-                        menuframe.dispose();  // manually destroy menuframe window
-                        registerframe = new RegisterFrame();
-                        last_frame = "register";
+                        menuFrame.dispose();  // manually destroy menuFrame window
+                        registerFrame = new RegisterFrame();
+                        lastFrame = "register";
                         break;
                     case "login":
-                        menuframe.dispose();  // manually destroy menuframe window
-                        loginframe = new LoginFrame();
-                        last_frame = "login";
+                        menuFrame.dispose();  // manually destroy menuFrame window
+                        loginFrame = new LoginFrame();
+                        lastFrame = "login";
+                        break;
+                    case "after login":
+                        menuFrame.dispose();  // manually destroy loginFrame window
+                        if (StringConstant.USER_TYPE == "client") {
+                            viewEventsFrame = new ViewEventsFrame();
+                            StringConstant.FRAME_TYPE = "view events";
+                            lastFrame = StringConstant.FRAME_TYPE;
+                        } else if (StringConstant.USER_TYPE == "organizer") {
+                            createEventFrame = new CreateEventFrame();
+                            StringConstant.FRAME_TYPE = "create event";
+                            lastFrame = StringConstant.FRAME_TYPE;
+                        }
                         break;
                 }
             }

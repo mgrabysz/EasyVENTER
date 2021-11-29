@@ -183,9 +183,11 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 if (accountType == 0){
                     Client new_user = new Client(user_id, userName, userSurname, userLogin, userPassword);
                     EasyVENT.database.register_new_user(new_user);
+                    StringConstant.USER_TYPE = "client";
                 } else {
                     EventOrganizer new_user = new EventOrganizer(user_id, userName, userSurname, userLogin, userPassword);
                     EasyVENT.database.register_new_user(new_user);
+                    StringConstant.USER_TYPE = "organizer";
                 }
                 //increment next user's id;
                 user_id++;
