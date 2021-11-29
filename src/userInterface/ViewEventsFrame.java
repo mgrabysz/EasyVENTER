@@ -27,7 +27,7 @@ import javax.swing.JButton;
 public class ViewEventsFrame extends JFrame implements ActionListener {
 
     Border border;
-    JButton detailsButton, cancelButton;
+    JButton buyButton, cancelButton;
     ButtonGroup group;
     
     public ViewEventsFrame() {
@@ -53,12 +53,12 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         this.add(sp);
 
 
-        detailsButton = new JButton();
-        detailsButton.setText("Details");
-        detailsButton.setFocusable(false);
-        detailsButton.setBounds(850, 200, 120, 50);
-        detailsButton.addActionListener(this);
-        this.add(detailsButton);
+        buyButton = new JButton();
+        buyButton.setText("Buy");
+        buyButton.setFocusable(false);
+        buyButton.setBounds(850, 200, 120, 50);
+        buyButton.addActionListener(this);
+        this.add(buyButton);
 
         cancelButton = new JButton();
         cancelButton.setText("Cancel");
@@ -68,7 +68,7 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         this.add(cancelButton);
 
         group = new ButtonGroup();
-        group.add(detailsButton);
+        group.add(buyButton);
         group.add(cancelButton);
         
         this.setVisible(true);
@@ -77,8 +77,8 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==detailsButton){
-            StringConstant.FRAME_TYPE = "create";
+        if (e.getSource()==buyButton){
+            StringConstant.FRAME_TYPE = "buy";
         } else if (e.getSource()==cancelButton) {
             StringConstant.FRAME_TYPE = "cancel";
         }
