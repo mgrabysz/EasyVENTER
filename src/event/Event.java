@@ -9,6 +9,7 @@ public class Event {
     */
 
     private String id;
+    private String name;
     private String organizer;
     private String location;
     private LocalDateTime dateTime;
@@ -16,12 +17,14 @@ public class Event {
 
     public Event(
         String id,
+        String name,
         String organizer,
         String location,
         LocalDateTime dateTime,
         HashMap<String, Integer> tickets
     ) {
         this.id = id;
+        this.name = name;
         this.organizer = organizer;
         this.location = location;
         this.dateTime = dateTime;
@@ -30,6 +33,10 @@ public class Event {
 
     public String getId() {
         return id;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getOrganizer() {
@@ -54,6 +61,7 @@ public class Event {
 
     public String toString() {
         String eventInfo = "ID: " + id;
+        eventInfo += "\nName: " + name;
         eventInfo += "\nOrganizer: " + organizer;
         eventInfo += "\nLocation: " + location;
         eventInfo += "\nDate and time: " + dateTime;
