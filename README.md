@@ -20,8 +20,8 @@ Aplikacja desktopowa napisana w Javie przy pomocy Swinga
 - Moduł logowania/rejestracji przy uruchomieniu aplikacji (Patryk Będkowski)
 - Przeglądarka wydarzeń z możliwością kupienia biletu (Szymon Skarzyński)
 - Moduł do zarządzania biletami (Łukasz Szarejko)
-- Moduł do tworzenia wydarzeń (Łukasz Szarejko)<br />
-Aplikacja będzie korzystała z bazy danych Oracle SQL. (Główny odpowiedzialny za łączenie z bazą danych - Patryk Będkowski)
+- Moduł do tworzenia wydarzeń (Łukasz Szarejko)
+<p>Aplikacja będzie korzystała z bazy danych Oracle SQL. (Główny odpowiedzialny za łączenie z bazą danych - Patryk Będkowski)</p>
 
 ### Testy
 Wszystkie klasy odpowiadające za backend aplikacji zostaną przetestowane za pomocą testów jednostkowych.
