@@ -16,12 +16,12 @@ będą mieć możliwość przeglądania listy nadchodzących wydarzeń, zakupu b
 
 ### Program
 Aplikacja desktopowa napisana w Javie przy pomocy Swinga 
-(Osobą odpowiedzialną w głównej mierze za frontend będzie Marcin Grabysz, z pomocą Szymona Skarzyńskiego)
+- Frontend, okna logowania, rejestracji, przeglądania wydarzeń etc. (Marcin Grabysz, Szymon Skarzyński)
 - Moduł logowania/rejestracji przy uruchomieniu aplikacji (Patryk Będkowski)
 - Przeglądarka wydarzeń z możliwością kupienia biletu (Szymon Skarzyński)
 - Moduł do zarządzania biletami (Łukasz Szarejko)
 - Moduł do tworzenia wydarzeń (Łukasz Szarejko)
-Aplikacja będzie korzystała z bazy danych Oracle SQL. (Główny odpowiedzialny za łączenie z bazą danych - Patryk Będkowski)
+<p>Aplikacja będzie korzystała z bazy danych Oracle SQL. (Główny odpowiedzialny za łączenie z bazą danych - Patryk Będkowski)</p>
 
 ### Testy
 Wszystkie klasy odpowiadające za backend aplikacji zostaną przetestowane za pomocą testów jednostkowych.
