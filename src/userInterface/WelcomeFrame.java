@@ -1,10 +1,5 @@
 package userInterface;
 
-// ============================================================
-// Aby wywołać okienko, należy utworzyć obiekt klasy WelcomeFrame, na przykład:
-// new WelcomeFrame()
-// Na razie funkcja nic nie zwraca, bo jeszcze nie wiem jak
-
 import database.StringConstant;
 
 import javax.swing.JButton;
