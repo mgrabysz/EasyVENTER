@@ -1,5 +1,6 @@
 import database.EasyVENT;
 import database.NewUserData;
+import userInterface.CreateEventFrame;
 import userInterface.MainMenuFrame;
 import userInterface.WelcomeFrame;
 
@@ -7,29 +8,6 @@ public class Main {
     public static void main(String[] args) {
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
-        // boolean choosen = false;
-        //to co tu zrobiłem w debugu działa, a podczas runu się zawiesza idk why??
-//        while (!choosen)
-//        {
-//            if (easyVENT.menuframe.decision == 2)
-//            {
-//                System.out.println("Wylogowywanie");
-//                choosen = true;
-//            }
-//            else if (easyVENT.menuframe.decision == 1)
-//            {
-//                if (easyVENT.user_type == "client")
-//                {
-//                    System.out.println("Client wants to explore events");
-//                }
-//                else
-//                {
-//                    System.out.println("Organizer wants to add new events");
-//                }
-//                choosen = true;
-//            }
-//        }
-
 //        // Create user who is an organiser
 //        NewUserData user1 = new NewUserData("seanMurphy", "murphylaw123", 'O');
 //

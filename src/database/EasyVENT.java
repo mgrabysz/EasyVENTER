@@ -14,7 +14,6 @@ public class EasyVENT {
     public String user_type;
 
     public EasyVENT(){ // Constructor
-        // user_type = "organizer";
         database = new Database_credentials(); // create database
 
         main_loop();
