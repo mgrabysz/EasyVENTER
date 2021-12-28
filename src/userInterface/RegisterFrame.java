@@ -158,11 +158,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 //increment next user's id;
                 user_id++;
 
-                System.out.println("name: " + userName);
-                System.out.println("surname: " + userSurname);
-                System.out.println("login: " + userLogin);
-                System.out.println("password: " + userPassword);
-
                 StringConstant.FRAME_TYPE = "login";  // set global variable to open login frame
 
                 this.dispose(); // closes window

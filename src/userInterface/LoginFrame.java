@@ -93,8 +93,6 @@ public class LoginFrame extends JFrame implements ActionListener {
 
             if (login_successfully){
 
-                System.out.println("Log in was successful");
-
                 StringConstant.FRAME_TYPE = "after login";
 
                 this.dispose(); // closes window
