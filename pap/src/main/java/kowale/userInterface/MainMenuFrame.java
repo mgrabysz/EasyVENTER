@@ -10,7 +10,7 @@ import javax.swing.JButton;
 
 public class MainMenuFrame extends JFrame implements ActionListener{
 
-    JButton seeEvents, makeEvent, logout;
+    JButton seeEvents, makeEvent, logout, manageEvent, manageTicket;
     private String user_type;
     public int decision = 0;
 
@@ -23,15 +23,21 @@ public class MainMenuFrame extends JFrame implements ActionListener{
 
         seeEvents = new JButton("Explore Events");
         makeEvent = new JButton("Make Event");
+        manageEvent = new JButton("Manage Events");
+        manageTicket = new JButton("Manage Tickets");
         logout = new JButton("Logout");
 
         if (this.user_type == "client"){
             seeEvents.addActionListener(this);
             panel.add(seeEvents);
+            manageTicket.addActionListener(this);
+            panel.add(manageTicket);
         }
         else if (this.user_type == "organizer"){
             makeEvent.addActionListener(this);
             panel.add(makeEvent);
+            manageEvent.addActionListener(this);
+            panel.add(manageEvent);
         }
 
         logout.addActionListener(this);
@@ -44,15 +50,23 @@ public class MainMenuFrame extends JFrame implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e){
         if (e.getSource()==logout){
-            this.decision = 2;
+
             this.dispose();
         }
         else if (e.getSource()==seeEvents){
-            this.decision = 1;
+
             this.dispose();
         }
-        if (e.getSource()==makeEvent){
-            this.decision = 1;
+        else if (e.getSource()==makeEvent){
+
+            this.dispose();
+        }
+        else if (e.getSource()==manageEvent){
+
+            this.dispose();
+        }
+        else if (e.getSource()==manageTicket){
+
             this.dispose();
         }
     }

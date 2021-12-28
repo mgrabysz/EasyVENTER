@@ -24,7 +24,6 @@ public class EasyVENT {
         StringConstant.FRAME_TYPE = "welcome";
         StringConstant.USER_TYPE = "a";
         String lastFrame = "";
-        String he = "he"; //legacy code
 
         do{
             //System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
