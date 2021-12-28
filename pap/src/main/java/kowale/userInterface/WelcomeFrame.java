@@ -26,6 +26,7 @@ public class WelcomeFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(300, 450));
+        this.setLocationRelativeTo(null);
 
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
 

@@ -35,6 +35,7 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(1000, 600));
+        this.setLocationRelativeTo(null);
 
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
 

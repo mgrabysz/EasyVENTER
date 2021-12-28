@@ -42,6 +42,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(600, 450));
+        this.setLocationRelativeTo(null);
         user_id = 0;
 
         // title label "EasyVENTER"
