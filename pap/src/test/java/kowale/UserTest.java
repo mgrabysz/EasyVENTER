@@ -1,20 +1,16 @@
 package kowale;
 
-import static org.junit.Assert.assertTrue;
+import kowale.user.User;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class UserTest
 {
-    /**
-     * Rigorous Test :-)
-     */
     @Test
-    public void shouldAnswerWithTrue()
+    public void getIDTest()
     {
-        assertTrue( true );
+        User user = new User(1, "John", "Rambo", "johnny", "1234");
+        assertEquals(1, user.getID());
     }
 }
