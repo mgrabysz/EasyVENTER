@@ -14,8 +14,7 @@ public class MainMenuFrame extends JFrame implements ActionListener{
     private String user_type;
     public int decision = 0;
 
-    public MainMenuFrame(String type)
-    {
+    public MainMenuFrame(String type){
         this.user_type = type;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 200);
@@ -26,13 +25,11 @@ public class MainMenuFrame extends JFrame implements ActionListener{
         makeEvent = new JButton("Make Event");
         logout = new JButton("Logout");
 
-        if (this.user_type == "client")
-        {
+        if (this.user_type == "client"){
             seeEvents.addActionListener(this);
             panel.add(seeEvents);
         }
-        else if (this.user_type == "organizer")
-        {
+        else if (this.user_type == "organizer"){
             makeEvent.addActionListener(this);
             panel.add(makeEvent);
         }
@@ -45,20 +42,16 @@ public class MainMenuFrame extends JFrame implements ActionListener{
     }
 
     @Override
-    public void actionPerformed(ActionEvent e)
-    {
-        if (e.getSource()==logout)
-        {
+    public void actionPerformed(ActionEvent e){
+        if (e.getSource()==logout){
             this.decision = 2;
             this.dispose();
         }
-        else if (e.getSource()==seeEvents)
-        {
+        else if (e.getSource()==seeEvents){
             this.decision = 1;
             this.dispose();
         }
-        if (e.getSource()==makeEvent)
-        {
+        if (e.getSource()==makeEvent){
             this.decision = 1;
             this.dispose();
         }

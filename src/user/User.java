@@ -11,32 +11,26 @@ public class User {
     public User(
         int id, String name, String surname,
         String login, String pass
-    )
-    {
+    ){
         this.user_id = id;
         this.name = name;
         this.surname = surname;
         this.login = login;
         this.password = pass;
     }
-    public String getLogin()
-    {
+    public String getLogin(){
         return this.login;
     }
-    public String getPassword()
-    {
+    public String getPassword(){
         return this.password;
     }
-    public int getID()
-    {
+    public int getID(){
         return this.user_id;
     }
-    public String getName()
-    {
+    public String getName(){
         return this.name;
     }
-    public String getSurname()
-    {
+    public String getSurname(){
         return this.surname;
     }
 }

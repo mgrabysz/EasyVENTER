@@ -10,28 +10,23 @@ public class EventOrganizer extends User {
     public EventOrganizer(
         int id, String name, String surname,
         String login, String pass
-    )
-    {
+    ){
         super(id, name, surname, login, pass);
     }
 
-    public void addEvent(Event event)
-    {
+    public void addEvent(Event event){
         events.add(event);
     }
 
-    public void cancelEvent(Event event)
-    {
+    public void cancelEvent(Event event){
         events.remove(event);
     }
 
-    public void changeEvent()
-    {
+    public void changeEvent(){
 
     }
 
-    public LinkedList<Event> getEventsList()
-    {
+    public LinkedList<Event> getEventsList(){
         return events;
     }
 }
