@@ -1,34 +1,26 @@
 package kowale.userInterface;
 
 import kowale.database.StringConstant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Vector;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.BorderFactory;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
-import javax.swing.ButtonGroup;
+import javax.swing.BorderFactory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
-import java.awt.Color;
 import java.awt.Dimension;
-
-// import java.awt.*;
-// import javax.swing.*;
-
-import javax.swing.JTable;
-import javax.swing.JScrollPane;
-import javax.swing.JButton;
+import java.awt.Color;
 
 public class ViewEventsFrame extends JFrame implements ActionListener {
 
     Border border;
     JButton buyButton, cancelButton;
-    ButtonGroup group;
+    JTable table;
+    JScrollPane sp;
 
     public ViewEventsFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -45,11 +37,20 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         };
         String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
 
-        JTable table = new JTable(data, columnNames);
-        // table.setBounds(30, 30, 500, 300);
-        // this.add(table);
+        table = new JTable(data, columnNames){
+            @Override
+            public boolean isCellEditable(int row, int column){
+                // prevents from editing cells
+                return false;
+            }
+        };
 
-        JScrollPane sp = new JScrollPane(table);
+        // prevents from selecting multiple rows
+        table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // prevents from column dragging
+        table.getTableHeader().setReorderingAllowed(false);
+
+        sp = new JScrollPane(table);
         sp.setBounds(30, 30, 800, 500);
         this.add(sp);
 
@@ -61,28 +62,28 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         buyButton.addActionListener(this);
         this.add(buyButton);
 
-        cancelButton = new JButton();
-        cancelButton.setText("Cancel");
+        cancelButton = new JButton("Cancel");
         cancelButton.setFocusable(false);
         cancelButton.setBounds(850, 300, 120, 50);
         cancelButton.addActionListener(this);
         this.add(cancelButton);
 
-        group = new ButtonGroup();
-        group.add(buyButton);
-        group.add(cancelButton);
-
         this.setVisible(true);
     }
 
-
     @Override
-    public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==buyButton){
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource()==buyButton){
             StringConstant.FRAME_TYPE = "buy";
-        } else if (e.getSource()==cancelButton) {
+            int index = table.getSelectedRow(); // returns index of selected row
+
+            // ============ for testing ==================
+            System.out.println("Buy button clicked. Index of selected row:");
+            System.out.println(index);
+            // ===========================================
+
+        } else if (event.getSource()==cancelButton) {
             StringConstant.FRAME_TYPE = "cancel";
         }
-
     }
 }
