@@ -8,6 +8,20 @@ public class User {
     private String surname;
     private String login;
     private String password;
+
+    private static int unusedID = 0;
+
+    public User(
+        String name, String surname,
+        String login, String pass
+    ){
+        this.user_id = unusedID;
+        ++unusedID;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = pass;
+    }
     public User(
         int id, String name, String surname,
         String login, String pass
@@ -32,5 +46,8 @@ public class User {
     }
     public String getSurname(){
         return this.surname;
+    }
+    public static int getUnusedID(){
+        return unusedID;
     }
 }

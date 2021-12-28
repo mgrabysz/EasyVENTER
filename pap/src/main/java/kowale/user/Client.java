@@ -8,6 +8,13 @@ public class Client extends User {
     private LinkedList<Ticket> tickets;
 
     public Client(
+        String name, String surname,
+        String login, String pass
+    ){
+        super(name, surname, login, pass);
+        tickets = new LinkedList<Ticket>();
+    }
+    public Client(
         int id, String name, String surname,
         String login, String pass
     ){

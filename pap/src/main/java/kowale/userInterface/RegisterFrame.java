@@ -148,18 +148,24 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
                 //create user object
                 if (accountType == 0){
-                    Client new_user = new Client(user_id, userName, userSurname, userLogin, userPassword);
+                    Client new_user = new Client(userName, userSurname, userLogin, userPassword);
+
+                    // ========== for testing ==============
+                    int new_id = new_user.getID();
+                    System.out.println(new_id);
+                    // =====================================
+
                     EasyVENT.database.register_new_user(new_user);
                     StringConstant.USER_TYPE = "client";
                 } else {
-                    EventOrganizer new_user = new EventOrganizer(user_id, userName, userSurname, userLogin, userPassword);
+                    EventOrganizer new_user = new EventOrganizer(userName, userSurname, userLogin, userPassword);
                     EasyVENT.database.register_new_user(new_user);
                     StringConstant.USER_TYPE = "organizer";
                 }
                 //increment next user's id;
                 user_id++;
 
-                StringConstant.FRAME_TYPE = "login";  // set global variable to open login frame
+                StringConstant.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
 
                 this.dispose(); // closes window
 
