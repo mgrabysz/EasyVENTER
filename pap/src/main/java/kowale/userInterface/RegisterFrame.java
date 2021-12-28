@@ -34,7 +34,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
     String userLogin, userPassword, userName, userSurname;
     int accountType;    // 0 if client, 1 if organiser
-    int user_id;
 
     public RegisterFrame() {
 
@@ -43,7 +42,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.setResizable(false);
         this.setSize(new Dimension(600, 450));
         this.setLocationRelativeTo(null);
-        user_id = 0;
 
         // title label "EasyVENTER"
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
@@ -162,8 +160,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     EasyVENT.database.register_new_user(new_user);
                     StringConstant.USER_TYPE = "organizer";
                 }
-                //increment next user's id;
-                user_id++;
 
                 StringConstant.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
 
