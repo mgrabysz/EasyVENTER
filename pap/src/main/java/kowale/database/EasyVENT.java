@@ -47,7 +47,16 @@ public class EasyVENT {
                     case "after login":
                         menuFrame.dispose();  // manually destroy loginFrame window
                         if (StringConstant.USER_TYPE == "client") {
-                            viewEventsFrame = new ViewEventsFrame();
+
+                            // example data to display in table
+                            String[][] data = {
+                                { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
+                                { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
+                            };
+                            String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
+
+                            viewEventsFrame = new ViewEventsFrame(data, columnNames);
+
                             StringConstant.FRAME_TYPE = "view events";
                             lastFrame = StringConstant.FRAME_TYPE;
                         } else if (StringConstant.USER_TYPE == "organizer") {
