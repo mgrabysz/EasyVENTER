@@ -12,6 +12,7 @@ public class EventOrganizer extends User {
         String login, String pass
     ){
         super(id, name, surname, login, pass);
+        events = new LinkedList<Event>();
     }
 
     public void addEvent(Event event){

@@ -12,6 +12,7 @@ public class Client extends User {
         String login, String pass
     ){
         super(id, name, surname, login, pass);
+        tickets = new LinkedList<Ticket>();
     }
 
     public void buyTicket(Ticket ticket){
