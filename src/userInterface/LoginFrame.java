@@ -1,27 +1,5 @@
 package userInterface;
 
-// =================================================================
-// INSTRUKCJA OBSŁUGI KLASY LoginFrame()
-// autor: Marcin
-//
-// LoginFrame() to ekran logowania
-// Zawiera dwa pola do pisania: login i hasło
-// oraz przycisk zatwierdzający dane
-//
-// Aby uruchomić okno, należy utworzyć obiekt klasy LoginFrame(), na przykład:
-// LoginFrame window = new LoginFrame();
-// albo prościej:
-// new LoginFrame();
-//
-// Zmodyfikujcie sobie metodę actionPerformed(), która wykonuje się
-// w momencie kliknięcia przycisku
-//
-// input użytkownika jest zapisany w zmiennych lokalnych userLogin oraz userPassword
-//
-// pozdrawiam cieplutko
-// =============================================================================
-
-import database.Database_credentials;
 import database.EasyVENT;
 import database.NewUserData;
 import database.StringConstant;
@@ -42,7 +20,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 public class LoginFrame extends JFrame implements ActionListener {
-
 
     JButton logButton;
     JLabel titleLabel, loginLabel, passwordLabel;
@@ -119,14 +96,10 @@ public class LoginFrame extends JFrame implements ActionListener {
                 System.out.println("Log in was successful");
 
                 StringConstant.FRAME_TYPE = "after login";
-                
-                this.dispose(); // zamyka okno
+
+                this.dispose(); // closes window
 
             } else {
-
-                // hasło nieprawidłowe
-                // wyświetla się komunikat, że dane są nieprawidłowe
-                // i użytkownik może wpisać dane ponownie
 
                 JOptionPane.showMessageDialog(
                     null,
@@ -134,10 +107,7 @@ public class LoginFrame extends JFrame implements ActionListener {
                     "Invalid user input",
                     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
                 );
-
             }
         }
-
     }
-
 }

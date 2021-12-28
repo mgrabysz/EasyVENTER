@@ -1,29 +1,5 @@
 package userInterface;
 
-// =================================================================
-// INSTRUKCJA OBSŁUGI KLASY RegisterFrame()
-// autor: Marcin
-//
-// RegisterFrame() to ekran jestracji
-// Użytkownik wpisuje następujące dane:
-// Imię, nazwisko, nazwa użytkownika, hasło
-// zaznacza typ konta organizator/klient
-//
-// Aby uruchomić okno, należy utworzyć obiekt klasy RegisterFrame(), na przykład:
-// RegisterFrame window = new RegisterFrame();
-// albo prościej:
-// new RegisterFrame();
-//
-// Zmodyfikujcie sobie metodę actionPerformed(), która wykonuje się
-// w momencie kliknięcia przycisku
-//
-// input użytkownika jest zapisany w atrybutach klasy:
-// String userLogin, userPassword, userName, userSurname;
-// int accountType;    // 0 if client, 1 if organiser
-//
-// pozdrawiam cieplutko
-// =============================================================================
-
 import database.EasyVENT;
 import database.StringConstant;
 import user.Client;
@@ -47,7 +23,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 public class RegisterFrame extends JFrame implements ActionListener {
-
 
     JButton confirmButton;
     JRadioButton clientButton, organiserButton;
@@ -162,19 +137,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 accountType = 0;    // 0 for client account
             }
 
-            // mało elegancki sposób na wyczyszczenie textfielda
             loginTextField.setText(null);
             passwordTextField.setText(null);
             nameTextField.setText(null);
             surnameTextField.setText(null);
-
-// ==========================================================================
-//  Tę metodę sobie zmodyfikuj!!!
-
-            // poniższy kod to tylko sugestia i wskazówka, gdzie co umieścić,
-            // myślę, że w instrukcji if() można sprawdzić poprawność danych, np.
-            // czy nie są pustym stringiem
-            // ale to zostawiłem na razie, żeby to robiła jakaś inna funkcja na przykład
 
             boolean is_correct = true;
             if (is_correct) {
@@ -199,13 +165,9 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
                 StringConstant.FRAME_TYPE = "login";  // set global variable to open login frame
 
-                this.dispose(); // zamyka okno
+                this.dispose(); // closes window
 
             } else {
-
-                // dane nieprawidłowe
-                // wyświetla się komunikat, że dane są nieprawidłowe
-                // i użytkownik może wpisać dane ponownie
 
                 JOptionPane.showMessageDialog(
                     null,
@@ -216,7 +178,5 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
             }
         }
-
     }
-
 }

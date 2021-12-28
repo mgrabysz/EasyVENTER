@@ -9,19 +9,15 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import javax.swing.JOptionPane;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;
-import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Font;
 import java.awt.Color;
 import java.awt.Dimension;
 
-import java.awt.*;
 import javax.swing.*;
 
 public class CreateEventFrame extends JFrame implements ActionListener {
@@ -37,14 +33,14 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(320, 650));
-    
+
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
 
         JLabel nameLabel = new JLabel("Name:");
         nameLabel.setBounds(50, 50, 220, 30);
         nameLabel.setHorizontalAlignment(JLabel.LEFT);
         this.add(nameLabel);
-        
+
         JTextField nameTextField = new JTextField();
         nameTextField.setBounds(50, 80, 220, 30);
         this.add(nameTextField);
@@ -71,7 +67,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         dayCombo.setBounds(50, 240, 50, 30);
         // daysCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(dayCombo);
-        
+
         String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         monthCombo = new JComboBox<String>(months);
         monthCombo.setBounds(100, 240, 110, 30);
@@ -148,7 +144,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             if (day.length() == 1) {
                 day = "0" + day;
             }
-            String dateTimeString = day; 
+            String dateTimeString = day;
             dateTimeString += ".";
             String month = Integer.toString(monthCombo.getSelectedIndex() + 1);
             if (month.length() == 1) {
@@ -168,12 +164,11 @@ public class CreateEventFrame extends JFrame implements ActionListener {
                 "dd.MM.yyyy HH:mm"
             );
             LocalDateTime dateTime = LocalDateTime.parse(dateTimeString, formatter);
-        
+
             StringConstant.FRAME_TYPE = "create";
         } else if (e.getSource()==cancelButton) {
             StringConstant.FRAME_TYPE = "cancel";
         }
-
     }
 }
 
