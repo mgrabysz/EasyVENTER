@@ -1,4 +1,4 @@
-package userInterface;
+package kowale.userInterface;
 
 import java.awt.event.ActionListener;
 import javax.swing.JFrame;

@@ -1,4 +1,4 @@
-package event;
+package kowale.event;
 
 import java.util.HashMap;
 import java.time.LocalDateTime;

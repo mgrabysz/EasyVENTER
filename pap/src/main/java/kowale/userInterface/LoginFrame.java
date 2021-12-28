@@ -1,8 +1,8 @@
-package userInterface;
+package kowale.userInterface;
 
-import database.EasyVENT;
-import database.NewUserData;
-import database.StringConstant;
+import kowale.database.EasyVENT;
+import kowale.database.NewUserData;
+import kowale.database.StringConstant;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

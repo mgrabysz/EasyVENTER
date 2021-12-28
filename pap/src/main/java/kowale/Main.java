@@ -1,8 +1,6 @@
-import database.EasyVENT;
-import database.NewUserData;
-import userInterface.CreateEventFrame;
-import userInterface.MainMenuFrame;
-import userInterface.WelcomeFrame;
+package kowale;
+import kowale.database.EasyVENT;
+
 
 public class Main {
     public static void main(String[] args) {

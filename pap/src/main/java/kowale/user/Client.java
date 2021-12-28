@@ -1,8 +1,8 @@
-package user;
+package kowale.user;
 
 import java.util.LinkedList;
 
-import ticket.Ticket;
+import kowale.ticket.Ticket;
 
 public class Client extends User {
     private LinkedList<Ticket> tickets;

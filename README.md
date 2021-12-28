@@ -15,7 +15,7 @@ będą mieć możliwość przeglądania listy nadchodzących wydarzeń, zakupu b
 ## Architektura rozwiązania
 
 ### Program
-Aplikacja desktopowa napisana w Javie przy pomocy Swinga 
+Aplikacja desktopowa napisana w Javie przy pomocy Swinga
 - Frontend, okna logowania, rejestracji, przeglądania wydarzeń etc. (Marcin Grabysz, Szymon Skarzyński)
 - Moduł logowania/rejestracji przy uruchomieniu aplikacji (Patryk Będkowski)
 - Przeglądarka wydarzeń z możliwością kupienia biletu (Szymon Skarzyński)

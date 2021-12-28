@@ -1,8 +1,8 @@
-package user;
+package kowale.user;
 
 import java.util.LinkedList;
 
-import event.Event;
+import kowale.event.Event;
 
 public class EventOrganizer extends User {
     private LinkedList<Event> events;

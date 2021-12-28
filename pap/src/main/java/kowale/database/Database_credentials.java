@@ -1,5 +1,5 @@
-package database;
-import user.User;
+package kowale.database;
+import kowale.user.User;
 
 import java.util.ArrayList;
 import java.util.HashMap;

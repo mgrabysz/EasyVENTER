@@ -1,4 +1,4 @@
-package database;
+package kowale.database;
 
 public class NewUserData {
     /*

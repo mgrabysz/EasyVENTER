@@ -1,6 +1,6 @@
-package database;
+package kowale.database;
 
-import userInterface.*;
+import kowale.userInterface.*;
 
 public class EasyVENT {
     public static Database_credentials database;

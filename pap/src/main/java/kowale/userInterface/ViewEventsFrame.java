@@ -1,6 +1,6 @@
-package userInterface;
+package kowale.userInterface;
 
-import database.StringConstant;
+import kowale.database.StringConstant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
@@ -29,7 +29,7 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
     Border border;
     JButton buyButton, cancelButton;
     ButtonGroup group;
-    
+
     public ViewEventsFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -37,13 +37,13 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         this.setSize(new Dimension(1000, 600));
 
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
-    
+
         String[][] data = {
             { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
             { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
         };
         String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
- 
+
         JTable table = new JTable(data, columnNames);
         // table.setBounds(30, 30, 500, 300);
         // this.add(table);
@@ -70,7 +70,7 @@ public class ViewEventsFrame extends JFrame implements ActionListener {
         group = new ButtonGroup();
         group.add(buyButton);
         group.add(cancelButton);
-        
+
         this.setVisible(true);
     }
 

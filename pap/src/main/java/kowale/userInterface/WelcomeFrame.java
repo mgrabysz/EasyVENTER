@@ -1,6 +1,6 @@
-package userInterface;
+package kowale.userInterface;
 
-import database.StringConstant;
+import kowale.database.StringConstant;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;

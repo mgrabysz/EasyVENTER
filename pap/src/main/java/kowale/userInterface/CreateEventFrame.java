@@ -1,6 +1,6 @@
-package userInterface;
+package kowale.userInterface;
 
-import database.StringConstant;
+import kowale.database.StringConstant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Vector;
