@@ -1,10 +1,7 @@
 package kowale.userInterface;
 
-import kowale.database.StringConstant;
-
 import java.awt.event.ActionEvent;
 
-import javax.print.attribute.standard.JobHoldUntil;
 import javax.swing.JButton;
 
 public class BrowseEventsOrganizerFrame extends BasicTableFrame {
