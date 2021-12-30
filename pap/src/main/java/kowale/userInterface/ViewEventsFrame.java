@@ -14,17 +14,16 @@ public class ViewEventsFrame extends BasicTableFrame {
         names of the columns of the table (probably: "Name", "Organizer", "Location", "Date and time")
     */
     public ViewEventsFrame(String[][] data, String[] columnNames) {
-        super(data, columnNames, "Buy");
+        super(data, columnNames, "Details");
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
-            StringConstant.FRAME_TYPE = "buy";
             int index = table.getSelectedRow(); // returns index of selected row
 
             // ============ for testing ==================
-            System.out.println("Buy button clicked. Index of selected row:");
+            System.out.println("Details button clicked. Index of selected row:");
             System.out.println(index);
             // ===========================================
 

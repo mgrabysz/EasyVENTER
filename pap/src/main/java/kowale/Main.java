@@ -1,5 +1,6 @@
 package kowale;
 import kowale.database.EasyVENT;
+import kowale.event.Event;
 import kowale.userInterface.*;
 
 
@@ -11,6 +12,7 @@ public class Main {
         //     { "Ludzie biegający w kółko", "Warszafka", "48.17.2023 29:81", "200" }
         // };
         // String[] columnNames = {"Name", "Location", "Date and time", "Tickets sold"};
+
 
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
