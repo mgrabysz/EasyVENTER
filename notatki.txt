@@ -1,0 +1,17 @@
+Moje notatki i wnioski
+
+1. Trzeba zastosować te rzeczy co K. Radler chce
+2. Imo za duża odpowiedzialność interfejsów (np. tworzenie użytkowników)
+3. Program strasznie ciężki, ciągle wykonująca się pętla while. Może da się zrobić tak, żeby czekał do momentu naciśnięcia przycisków?
+4. Błędy z userem:
+    - każdy dostawał id równe 0 (odpowiedzialność interfejsu once more)
+    - otwierało się okno clienta/organizera w zależności od tego, kto się ostatni rejestrował, a nie, kto jest zalogowany
+    (odpowiedzialność interfejsu once more)
+5. W ogóle to uważam, że powinniśmy globalnie przechowywać usera, który jest zalogowany (bo musimy jego dane modyfikować np. podczas kupowania biletu)
+6. Może User mógłby być abstrakcyjną klasą?
+7. Nie wszyscy się trzymają wielbłądzejWalizki
+8. O chuj chodzi z tym? (EasyVENT.java)
+
+    StringConstant.USER_TYPE = "a";
+    String lastFrame = "";
+9. W register frame jest nieużywana zmienna is_correct. Zostawiamy czy wywalamy?

@@ -2,8 +2,6 @@ package kowale.userInterface;
 
 import kowale.database.StringConstant;
 
-import javax.swing.JButton;
-
 import java.awt.event.ActionEvent;
 
 public class ViewEventsFrame extends BasicTableFrame {
