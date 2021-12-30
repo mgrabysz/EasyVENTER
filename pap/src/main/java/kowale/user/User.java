@@ -8,6 +8,7 @@ public class User {
     private String surname;
     private String login;
     private String password;
+    protected String type;
 
     private static int unusedID = 0;
 
@@ -49,5 +50,8 @@ public class User {
     }
     public static int getUnusedID(){
         return unusedID;
+    }
+    public String getType(){
+        return type;
     }
 }

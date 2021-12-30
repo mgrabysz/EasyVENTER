@@ -8,15 +8,13 @@ import java.awt.event.ActionEvent;
 
 public class ViewEventsFrame extends BasicTableFrame {
 
-    JButton buyButton, cancelButton;
-
     public ViewEventsFrame(String[][] data, String[] columnNames) {
         super(data, columnNames, "Buy");
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource()==buyButton){
+        if (event.getSource()==actionButton){
             StringConstant.FRAME_TYPE = "buy";
             int index = table.getSelectedRow(); // returns index of selected row
 

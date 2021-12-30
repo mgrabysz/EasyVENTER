@@ -1,6 +1,7 @@
 package kowale.database;
 
 import kowale.userInterface.*;
+import kowale.user.*;
 
 public class EasyVENT {
     public static Database_credentials database;
@@ -15,6 +16,14 @@ public class EasyVENT {
 
     public EasyVENT(){ // Constructor
         database = new Database_credentials(); // create database
+
+        // create an example client
+        Client newClient = new Client("Stachu", "Jones", "sjones", "sjones");
+        EasyVENT.database.register_new_user(newClient);
+
+        // create an example organizer
+        EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", "pzpn");
+        EasyVENT.database.register_new_user(newOrganizer);
 
         main_loop();
     }

@@ -13,6 +13,7 @@ public class Client extends User {
     ){
         super(name, surname, login, pass);
         tickets = new LinkedList<Ticket>();
+        type = "client";
     }
     public Client(
         int id, String name, String surname,
@@ -20,6 +21,7 @@ public class Client extends User {
     ){
         super(id, name, surname, login, pass);
         tickets = new LinkedList<Ticket>();
+        type = "client";
     }
 
     public void buyTicket(Ticket ticket){

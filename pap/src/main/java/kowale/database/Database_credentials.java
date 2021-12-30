@@ -23,6 +23,7 @@ public class Database_credentials {
         {
             if(users.get(i).getLogin().equals(_login)){
                 if(users.get(i).getPassword().equals(_password)){
+                    StringConstant.USER_TYPE = users.get(i).getType();
                     return true;
                 }
             }

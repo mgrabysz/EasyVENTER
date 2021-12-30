@@ -13,6 +13,7 @@ public class EventOrganizer extends User {
     ){
         super(name, surname, login, pass);
         events = new LinkedList<Event>();
+        type = "organizer";
     }
     public EventOrganizer(
         int id, String name, String surname,
@@ -20,6 +21,7 @@ public class EventOrganizer extends User {
     ){
         super(id, name, surname, login, pass);
         events = new LinkedList<Event>();
+        type = "organizer";
     }
 
     public void addEvent(Event event){
