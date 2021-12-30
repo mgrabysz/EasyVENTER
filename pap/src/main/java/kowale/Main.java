@@ -1,9 +1,17 @@
 package kowale;
 import kowale.database.EasyVENT;
+import kowale.userInterface.*;
 
 
 public class Main {
     public static void main(String[] args) {
+
+        // String[][] data = {
+        //     { "Meczyk jakiś", "Bydgoszcz", "35.19.2022 25:72", "120" },
+        //     { "Ludzie biegający w kółko", "Warszafka", "48.17.2023 29:81", "200" }
+        // };
+        // String[] columnNames = {"Name", "Location", "Date and time", "Tickets sold"};
+
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
 //        // Create user who is an organiser

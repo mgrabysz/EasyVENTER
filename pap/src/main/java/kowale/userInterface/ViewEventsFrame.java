@@ -5,7 +5,14 @@ import kowale.database.StringConstant;
 import java.awt.event.ActionEvent;
 
 public class ViewEventsFrame extends BasicTableFrame {
-
+    /*
+    Frame to browse available events from client's perspective.
+    Constructor takes two parameters:
+    :data: String[][]
+        table of data about events
+    :columnNames: String[]
+        names of the columns of the table (probably: "Name", "Organizer", "Location", "Date and time")
+    */
     public ViewEventsFrame(String[][] data, String[] columnNames) {
         super(data, columnNames, "Buy");
     }
