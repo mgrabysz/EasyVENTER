@@ -1,6 +1,8 @@
 package kowale.userInterface;
 
-import java.util.Vector;
+import java.awt.event.ActionEvent;
+
+import javax.swing.table.TableModel;
 
 // Przykładowe parametry dla konstruktora:
 // int number = 10;   // dowolna liczba sektorów
@@ -23,9 +25,35 @@ public class InputSectorDataFrame extends BasicTableFrame {
         table of data about sectors
     */
 
+    private int numOfSectors;
+    private String[][] tableData;
+
 
     public InputSectorDataFrame(String[][] data) {
         super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", true);
+        numOfSectors = table.getRowCount();
     }
+
+    @Override
+    public void actionPerformed(ActionEvent event) {
+        if (event.getSource()==actionButton){
+            String[][] tableData = getTableData();
+            // something to do with tableData
+            System.out.println(tableData[0][1]);
+        } else if (event.getSource()==cancelButton) {
+            // something to do whel cancelled
+        }
+    }
+
+    public String[][] getTableData () {
+        TableModel dtm = table.getModel();
+        int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
+        tableData = new String[nRow][nCol];
+        for (int i = 0 ; i < nRow ; i++)
+            for (int j = 0 ; j < nCol ; j++)
+                tableData[i][j] = (String)dtm.getValueAt(i,j);
+        return tableData;
+    }
+
 
 }

@@ -16,3 +16,4 @@ Moje notatki i wnioski
     String lastFrame = "";
 9. W register frame jest nieużywana zmienna is_correct. Zostawiamy czy wywalamy?
 10. Do wyświetlenia u organizatora - może expected income? (czyli ilość sprzedanych biletów w każdym sektorze razy cena)
+11. Pytanie - czy InputSectorDataFrame ma nadpisywać tabelę czy tworzyć nową?
