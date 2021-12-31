@@ -13,7 +13,7 @@ public class Main {
         // };
         // String[] columnNames = {"Name", "Location", "Date and time", "Tickets sold"};
 
-
+        // new CreateEventFrame();
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
 //        // Create user who is an organiser
