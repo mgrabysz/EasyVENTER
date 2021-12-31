@@ -19,13 +19,16 @@ public class BasicTableFrame extends JFrame implements ActionListener {
     JButton actionButton, cancelButton;
     JTable table;
     JScrollPane sp;
+    boolean isEditable;
 
-    public BasicTableFrame(String[][] data, String[] columnNames, String actionButtonText) {
+    public BasicTableFrame(String[][] data, String[] columnNames, String actionButtonText, boolean isTableEditable) {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
         this.setSize(new Dimension(1000, 600));
         this.setLocationRelativeTo(null);
+
+        isEditable = isTableEditable;
 
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
 
@@ -46,7 +49,7 @@ public class BasicTableFrame extends JFrame implements ActionListener {
             @Override
             public boolean isCellEditable(int row, int column){
                 // provides from editing cells
-                return false;
+                return isEditable;
             }
         };
 

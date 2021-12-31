@@ -19,7 +19,7 @@ public class BrowseEventsOrganizerFrame extends BasicTableFrame {
     JButton removeButton;
 
     public BrowseEventsOrganizerFrame(String[][] data, String[] columnNames) {
-        super(data, columnNames, "Modify");
+        super(data, columnNames, "Modify", false);
 
         removeButton = new JButton("Remove");
         removeButton.setFocusable(false);

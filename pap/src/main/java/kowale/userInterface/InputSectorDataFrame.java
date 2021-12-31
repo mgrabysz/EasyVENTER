@@ -25,7 +25,7 @@ public class InputSectorDataFrame extends BasicTableFrame {
 
 
     public InputSectorDataFrame(String[][] data) {
-        super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm");
+        super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", true);
     }
 
 }

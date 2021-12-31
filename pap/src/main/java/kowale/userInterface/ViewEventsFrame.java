@@ -14,7 +14,7 @@ public class ViewEventsFrame extends BasicTableFrame {
         names of the columns of the table (probably: "Name", "Organizer", "Location", "Date and time")
     */
     public ViewEventsFrame(String[][] data, String[] columnNames) {
-        super(data, columnNames, "Details");
+        super(data, columnNames, "Details", false);
     }
 
     @Override
