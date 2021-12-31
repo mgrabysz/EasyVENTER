@@ -30,7 +30,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
 
     String name, location;
     int numOfSectors;
-    float[] prices;
     LocalDateTime dateTime;
 
     public CreateEventFrame() {
