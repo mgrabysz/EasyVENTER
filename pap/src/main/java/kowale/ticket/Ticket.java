@@ -5,15 +5,14 @@ public class Ticket {
     Class that represents a ticket.
     */
 
-    private String id;
+    private int id;
     private int price;
     private String sector;
     private int seat;
-    private Boolean isBought;
     private String owner;
 
     public Ticket(
-        String id,
+        int id,
         int price,
         String sector,
         int seat
@@ -22,11 +21,10 @@ public class Ticket {
         this.price = price;
         this.sector = sector;
         this.seat = seat;
-        this.isBought = false;
         this.owner = null;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
@@ -46,10 +44,6 @@ public class Ticket {
         return seat;
     }
 
-    public Boolean isBought() {
-        return isBought;
-    }
-
     public String getOwner() {
         return owner;
     }
@@ -67,7 +61,6 @@ public class Ticket {
         ticketInfo += "\nPrice: " + String.format("%.2f", this.getPriceInPLN()) + " PLN";
         ticketInfo += "\nSector " + sector;
         ticketInfo += "\nSeat: " + seat;
-        ticketInfo += "\nIs bouth: " + isBought;
         ticketInfo += "\nOwner: " + owner;
 
         return ticketInfo;

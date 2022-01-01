@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class ClientTest {
     Client cl = new Client(1, "John", "Rambo", "johnny", "1234");
-    Ticket ticket = new Ticket("1", 100, "A", 25);
+    Ticket ticket = new Ticket(1, 100, "A", 25);
     @Test
     public void getTicketsTest(){
         LinkedList<Ticket> exp = new LinkedList<Ticket>();
