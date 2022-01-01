@@ -1,6 +1,6 @@
 package kowale.userInterface;
 
-import kowale.database.StringConstant;
+import kowale.database.GlobalVariables;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -62,10 +62,10 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
 
         if (e.getSource()==registerButton){
-            StringConstant.FRAME_TYPE= "RegisterFrame";
+            GlobalVariables.FRAME_TYPE= "RegisterFrame";
             this.dispose(); // closes window
         } else if (e.getSource()==logButton){
-            StringConstant.FRAME_TYPE = "LoginFrame";
+            GlobalVariables.FRAME_TYPE = "LoginFrame";
             this.dispose(); // closes window
         }
     }

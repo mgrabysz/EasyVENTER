@@ -1,6 +1,6 @@
 package kowale.userInterface;
 
-import kowale.database.StringConstant;
+import kowale.database.GlobalVariables;
 
 import java.awt.event.ActionEvent;
 
@@ -26,7 +26,7 @@ public class ViewEventsFrame extends BasicTableFrame {
             // ===========================================
 
         } else if (event.getSource()==cancelButton) {
-            StringConstant.FRAME_TYPE = "cancel";
+            GlobalVariables.FRAME_TYPE = "cancel";
         }
     }
 }

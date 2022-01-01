@@ -1,7 +1,7 @@
 package kowale.userInterface;
 
 import kowale.database.EasyVENT;
-import kowale.database.StringConstant;
+import kowale.database.GlobalVariables;
 import kowale.user.Client;
 import kowale.user.EventOrganizer;
 
@@ -153,7 +153,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     EasyVENT.database.register_new_user(new_user);
                 }
 
-                StringConstant.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
+                GlobalVariables.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
 
                 this.dispose(); // closes window
 

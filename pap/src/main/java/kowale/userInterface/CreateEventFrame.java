@@ -1,6 +1,6 @@
 package kowale.userInterface;
 
-import kowale.database.StringConstant;
+import kowale.database.GlobalVariables;
 import kowale.event.Event;
 import kowale.database.EasyVENT;
 
@@ -231,10 +231,10 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             System.out.println(dateTimeString);
             System.out.println(numOfSectors);
 
-            StringConstant.SECTORS_NUMBER = numOfSectors;
+            GlobalVariables.SECTORS_NUMBER = numOfSectors;
             EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
-            StringConstant.FRAME_TYPE= "InputSectorDataFrame";
+            GlobalVariables.FRAME_TYPE= "InputSectorDataFrame";
             this.dispose(); // closes window
 
         } else if (e.getSource()==cancelButton) {
