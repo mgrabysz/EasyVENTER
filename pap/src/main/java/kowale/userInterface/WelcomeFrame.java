@@ -63,9 +63,10 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 
         if (e.getSource()==registerButton){
             StringConstant.FRAME_TYPE= "register";
-
+            this.dispose(); // closes window
         } else if (e.getSource()==logButton){
             StringConstant.FRAME_TYPE = "login";
+            this.dispose(); // closes window
         }
     }
 }

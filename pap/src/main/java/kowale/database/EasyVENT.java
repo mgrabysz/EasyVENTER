@@ -2,6 +2,7 @@ package kowale.database;
 
 import kowale.userInterface.*;
 import kowale.user.*;
+import javax.swing.JFrame;
 
 public class EasyVENT {
     public static Database_credentials database;
@@ -10,6 +11,8 @@ public class EasyVENT {
     public LoginFrame loginFrame;
     public CreateEventFrame createEventFrame;
     public ViewEventsFrame viewEventsFrame;
+
+    public JFrame activeFrame;
 
 
     public String user_type;
@@ -28,33 +31,29 @@ public class EasyVENT {
         main_loop();
     }
 
-    public void main_loop(){
+    public void main_loop() {
         boolean run_loop = true;
         StringConstant.FRAME_TYPE = "welcome";
-        StringConstant.USER_TYPE = "a";
-        String lastFrame = "";
+        StringConstant.USER_TYPE = null;
+        String lastFrameType = "";
 
-        do{
+        do {
             //System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
-            if(lastFrame != StringConstant.FRAME_TYPE){
-
+            if(lastFrameType != StringConstant.FRAME_TYPE){
                 switch (StringConstant.FRAME_TYPE) {
                     case "welcome":
-                        menuFrame = new WelcomeFrame();
-                        lastFrame = "welcome";  // prevents from creating another window
+                        activeFrame = new WelcomeFrame();
+                        lastFrameType = StringConstant.FRAME_TYPE;  // prevents from creating another window
                         break;
                     case "register":
-                        menuFrame.dispose();  // manually destroy menuFrame window
-                        registerFrame = new RegisterFrame();
-                        lastFrame = "register";
+                        activeFrame = new RegisterFrame();
+                        lastFrameType = StringConstant.FRAME_TYPE;
                         break;
                     case "login":
-                        menuFrame.dispose();  // manually destroy menuFrame window
-                        loginFrame = new LoginFrame();
-                        lastFrame = "login";
+                        activeFrame = new LoginFrame();
+                        lastFrameType = StringConstant.FRAME_TYPE;
                         break;
                     case "after login":
-                        menuFrame.dispose();  // manually destroy loginFrame window
                         if (StringConstant.USER_TYPE == "client") {
 
                             // example data to display in table
@@ -67,15 +66,15 @@ public class EasyVENT {
                             viewEventsFrame = new ViewEventsFrame(data);
 
                             StringConstant.FRAME_TYPE = "view events";
-                            lastFrame = StringConstant.FRAME_TYPE;
+                            lastFrameType = StringConstant.FRAME_TYPE;
                         } else if (StringConstant.USER_TYPE == "organizer") {
                             createEventFrame = new CreateEventFrame();
                             StringConstant.FRAME_TYPE = "create event";
-                            lastFrame = StringConstant.FRAME_TYPE;
+                            lastFrameType = StringConstant.FRAME_TYPE;
                         }
                         break;
                 }
             }
-        }while(run_loop);
+        } while(run_loop);
     }
 }
