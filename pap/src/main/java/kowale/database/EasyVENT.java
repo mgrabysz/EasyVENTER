@@ -63,6 +63,8 @@ public class EasyVENT {
                             };
                             String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
 
+                            //tutaj powinno byc uzyte database.getEvents()
+
                             viewEventsFrame = new ViewEventsFrame(data);
                             GlobalVariables.FRAME_TYPE = "ViewEventsFrame";
                             lastFrameType = GlobalVariables.FRAME_TYPE;

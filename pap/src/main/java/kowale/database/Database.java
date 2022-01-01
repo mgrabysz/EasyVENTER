@@ -58,4 +58,8 @@ public class Database {
 
         return true;
     }
+
+    public ArrayList<Event> getEvents() {
+        return events;
+    }
 }
