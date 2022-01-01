@@ -15,14 +15,6 @@ public class EventOrganizer extends User {
         events = new LinkedList<Event>();
         type = "organizer";
     }
-    public EventOrganizer(
-        int id, String name, String surname,
-        String login, String pass
-    ){
-        super(id, name, surname, login, pass);
-        events = new LinkedList<Event>();
-        type = "organizer";
-    }
 
     public void addEvent(Event event){
         events.add(event);
@@ -30,10 +22,6 @@ public class EventOrganizer extends User {
 
     public void cancelEvent(Event event){
         events.remove(event);
-    }
-
-    public void changeEvent(){
-
     }
 
     public LinkedList<Event> getEventsList(){

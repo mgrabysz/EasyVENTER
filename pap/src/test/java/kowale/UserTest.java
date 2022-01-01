@@ -6,12 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class UserTest{
-    User user = new User(1, "John", "Rambo", "johnny", "1234");
-
-    @Test
-    public void getIDTest(){
-        assertEquals(1, user.getID());
-    }
+    User user = new User("John", "Rambo", "johnny", "1234");
 
     @Test
     public void getLoginTest(){

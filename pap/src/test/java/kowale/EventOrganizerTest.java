@@ -9,7 +9,7 @@ import java.util.LinkedList;
 import org.junit.Test;
 
 public class EventOrganizerTest {
-    EventOrganizer eo = new EventOrganizer(1, "John", "Rambo", "johnny", "1234");
+    EventOrganizer eo = new EventOrganizer("John", "Rambo", "johnny", "1234");
     LocalDateTime dt;
     int numOfSectors;
     // HashMap<String, Integer> tickets;
