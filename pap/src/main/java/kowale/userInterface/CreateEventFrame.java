@@ -2,7 +2,7 @@ package kowale.userInterface;
 
 import kowale.database.GlobalVariables;
 import kowale.event.Event;
-import kowale.database.EasyVENT;
+// import kowale.database.EasyVENT;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -226,13 +226,15 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             );
             dateTime = LocalDateTime.parse(dateTimeString, formatter);
 
-            System.out.println(name);
-            System.out.println(location);
-            System.out.println(dateTimeString);
-            System.out.println(numOfSectors);
+            // System.out.println(name);
+            // System.out.println(location);
+            // System.out.println(dateTimeString);
+            // System.out.println(numOfSectors);
+
+            GlobalVariables.EVENT = new Event(-1, name, null, location, dateTime);
 
             GlobalVariables.SECTORS_NUMBER = numOfSectors;
-            EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
+            // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
             GlobalVariables.FRAME_TYPE= "InputSectorDataFrame";
             this.dispose(); // closes window

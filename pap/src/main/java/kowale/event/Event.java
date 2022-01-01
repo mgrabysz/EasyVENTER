@@ -13,33 +13,32 @@ public class Event {
     private String organizer;
     private String location;
     private LocalDateTime dateTime;
-    private int numOfSectors;
-    // private HashMap<String, Integer> tickets = new HashMap<String, Integer>();
+    // private int numOfSectors;
+    private HashMap<String, HashMap<String, Integer>> tickets =
+        new HashMap<String, HashMap<String, Integer>>();
 
     public Event(
         int id,
         String name,
         String organizer,
         String location,
-        LocalDateTime dateTime,
-        int numOfSectors
-        // HashMap<String, Integer> tickets
+        LocalDateTime dateTime
     ) {
         this.id = id;
         this.name = name;
         this.organizer = organizer;
         this.location = location;
         this.dateTime = dateTime;
-        this.numOfSectors = numOfSectors;
+        // this.numOfSectors = numOfSectors;
     }
 
     public int getId() {
         return id;
     }
 
-    // public void setId(int id) {
-    //     this.id = id;
-    // }
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -71,6 +70,14 @@ public class Event {
 
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
+    }
+
+    public HashMap<String, HashMap<String, Integer>> getTickets() {
+        return this.tickets;
+    }
+
+    public void setTickets(HashMap<String, HashMap<String, Integer>> tickets) {
+        this.tickets = tickets;
     }
 
     // public HashMap<String, Integer> getTickets() {

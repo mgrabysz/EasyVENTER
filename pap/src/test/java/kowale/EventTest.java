@@ -10,7 +10,7 @@ import org.junit.Test;
 public class EventTest{
 
     LocalDateTime dateTime = LocalDateTime.now();
-    Event event = new Event(0, "Mecz", "PZPN", "PGE Narodowy", dateTime, 3);
+    Event event = new Event(0, "Mecz", "PZPN", "PGE Narodowy", dateTime);
 
     @Test
     public void getIdTest(){

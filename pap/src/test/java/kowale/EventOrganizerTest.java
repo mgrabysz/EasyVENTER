@@ -2,7 +2,7 @@ package kowale;
 import kowale.event.Event;
 import kowale.user.EventOrganizer;
 import static org.junit.Assert.assertEquals;
-import java.util.HashMap;
+// import java.util.HashMap;
 import java.time.LocalDateTime;
 import java.util.LinkedList;
 
@@ -13,7 +13,7 @@ public class EventOrganizerTest {
     LocalDateTime dt;
     int numOfSectors;
     // HashMap<String, Integer> tickets;
-    Event ev = new Event(1, "Kezak", "firma", "Warsaw0", dt, numOfSectors);
+    Event ev = new Event(1, "Kezak", "firma", "Warsaw0", dt);
 
     @Test
     public void getEventsListTest(){

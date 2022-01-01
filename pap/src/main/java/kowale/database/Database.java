@@ -2,7 +2,7 @@ package kowale.database;
 import kowale.user.User;
 import kowale.event.Event;
 
-import java.time.LocalDateTime;
+// import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,12 +44,7 @@ public class Database {
         return true;
     }
 
-    public boolean createEvent(
-        String name,
-        String location,
-        LocalDateTime dateTime,
-        int numOfSectors
-    ) {
+    public boolean createEvent() {
         /*
         Adds new event to the database. Returns boolean true
         if user has been added successfully.
@@ -57,8 +52,11 @@ public class Database {
         int id = 0;
         String organizer = "PZPN";
 
-        Event event = new Event(id, name, organizer, location, dateTime, numOfSectors);
+        Event event = GlobalVariables.EVENT;
+        event.setId(id);
+        event.setOrganizer(organizer);
         events.add(event);
+        GlobalVariables.EVENT = null;
         return true;
     }
 }
