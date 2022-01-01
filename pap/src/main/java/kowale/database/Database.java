@@ -1,19 +1,23 @@
 package kowale.database;
 import kowale.user.User;
+import kowale.event.Event;
+
+import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Database_credentials {
+public class Database {
     /*
-    Representation of database that holds user login data
-    and the rest of information regarding their account.
-     */
+    Representation of database.
+    */
 
     public HashMap<String, NewUserData> usersData = new HashMap<String, NewUserData>();
     public ArrayList<User> users = new ArrayList<>();
 
-    public Database_credentials(){ // Constructor
+    public ArrayList<Event> events = new ArrayList<>();
+
+    public Database(){ // Constructor
     }
 
     public boolean logIntoDatabase(String _login, String _password){
@@ -37,6 +41,24 @@ public class Database_credentials {
         if user has been added successfully.
          */
         users.add(new_user);
+        return true;
+    }
+
+    public boolean createEvent(
+        String name,
+        String location,
+        LocalDateTime dateTime,
+        int numOfSectors
+    ) {
+        /*
+        Adds new event to the database. Returns boolean true
+        if user has been added successfully.
+        */
+        int id = 0;
+        String organizer = "PZPN";
+
+        Event event = new Event(id, name, organizer, location, dateTime, numOfSectors);
+        events.add(event);
         return true;
     }
 }

@@ -5,12 +5,13 @@ import kowale.user.*;
 import javax.swing.JFrame;
 
 public class EasyVENT {
-    public static Database_credentials database;
+    public static Database database;
     public WelcomeFrame menuFrame;
     public RegisterFrame registerFrame;
     public LoginFrame loginFrame;
     public CreateEventFrame createEventFrame;
     public ViewEventsFrame viewEventsFrame;
+    public InputSectorDataFrame inputSectorDataFrame;
 
     public JFrame activeFrame;
 
@@ -18,7 +19,7 @@ public class EasyVENT {
     public String user_type;
 
     public EasyVENT(){ // Constructor
-        database = new Database_credentials(); // create database
+        database = new Database(); // create database
 
         // create an example client
         Client newClient = new Client("Stachu", "Jones", "sjones", "sjones");
@@ -33,7 +34,7 @@ public class EasyVENT {
 
     public void main_loop() {
         boolean run_loop = true;
-        StringConstant.FRAME_TYPE = "welcome";
+        StringConstant.FRAME_TYPE = "WelcomeFrame";
         StringConstant.USER_TYPE = null;
         String lastFrameType = "";
 
@@ -71,6 +72,17 @@ public class EasyVENT {
                             lastFrameType = StringConstant.FRAME_TYPE;
                         }
                         break;
+                    case "InputSectorDataFrame":
+                        int number = StringConstant.SECTORS_NUMBER;
+                        String[][] sectors = new String[number][3];
+                        for (int i=0; i<number; ++i) {
+                            String iStr = String.valueOf(i+1);
+                            String[] sector = {iStr, "0", "0", "0"};
+                            sectors[i] = sector;
+                        }
+                        inputSectorDataFrame = new InputSectorDataFrame(sectors);
+                        lastFrameType = StringConstant.FRAME_TYPE;
+
                 }
             }
         } while(run_loop);
