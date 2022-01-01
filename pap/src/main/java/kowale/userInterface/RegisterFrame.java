@@ -34,8 +34,11 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
     String userLogin, userPassword, userName, userSurname;
     int accountType;    // 0 if client, 1 if organiser
+    boolean isReady;
 
     public RegisterFrame() {
+
+        isReady = false;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -141,8 +144,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
             nameTextField.setText(null);
             surnameTextField.setText(null);
 
-            boolean is_correct = true;
-            if (is_correct) {
+            boolean isCorrect = true;
+            if (isCorrect) {
 
                 //create user object
                 if (accountType == 0){

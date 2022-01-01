@@ -7,4 +7,5 @@ public class GlobalVariables {
 
     public static volatile Event EVENT;
     public static volatile int SECTORS_NUMBER;
+    public static volatile int USER_ID;
 }

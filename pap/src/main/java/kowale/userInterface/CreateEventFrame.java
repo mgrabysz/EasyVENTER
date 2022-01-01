@@ -170,6 +170,11 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             // pricesStrings[1] = secTwoField.getText();
             // pricesStrings[2] = secThreeField.getText();
 
+// SPRAWDZANIE CZY ZMIENNA JEST POPRAWNA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
             // // check if prices are numbers
             // boolean pricesCorrect = true;
             // for (String i : pricesStrings) {    // for each loop

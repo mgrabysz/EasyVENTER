@@ -2,6 +2,9 @@ package kowale.database;
 
 import kowale.userInterface.*;
 import kowale.user.*;
+
+import java.awt.Frame;
+
 import javax.swing.JFrame;
 
 public class EasyVENT {
@@ -29,11 +32,11 @@ public class EasyVENT {
         EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", "pzpn");
         EasyVENT.database.register_new_user(newOrganizer);
 
-        main_loop();
+        mainLoop();
     }
 
-    public void main_loop() {
-        boolean run_loop = true;
+    public void mainLoop() {
+        boolean runLoop = true;
         GlobalVariables.FRAME_TYPE = "WelcomeFrame";
         GlobalVariables.USER_TYPE = null;
         String lastFrameType = "";
@@ -87,6 +90,9 @@ public class EasyVENT {
 
                 }
             }
-        } while(run_loop);
+        } while(runLoop);
     }
 }
+
+
+

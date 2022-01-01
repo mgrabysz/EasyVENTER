@@ -25,7 +25,6 @@ public class Main {
 
 
 
-
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
         //        // Create user who is an organiser
