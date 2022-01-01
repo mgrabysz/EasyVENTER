@@ -11,8 +11,9 @@ import org.junit.Test;
 public class EventOrganizerTest {
     EventOrganizer eo = new EventOrganizer(1, "John", "Rambo", "johnny", "1234");
     LocalDateTime dt;
-    HashMap<String, Integer> tickets;
-    Event ev = new Event("1", "Kezak", "firma", "Warsaw0", dt, tickets);
+    int numOfSectors;
+    // HashMap<String, Integer> tickets;
+    Event ev = new Event(1, "Kezak", "firma", "Warsaw0", dt, numOfSectors);
 
     @Test
     public void getEventsListTest(){
