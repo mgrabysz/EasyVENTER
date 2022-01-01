@@ -41,21 +41,20 @@ public class EasyVENT {
             //System.out.println("GLOBAL " + StringConstant.FRAME_TYPE);
             if(lastFrameType != StringConstant.FRAME_TYPE){
                 switch (StringConstant.FRAME_TYPE) {
-                    case "welcome":
+                    case "WelcomeFrame":
                         activeFrame = new WelcomeFrame();
                         lastFrameType = StringConstant.FRAME_TYPE;  // prevents from creating another window
                         break;
-                    case "register":
+                    case "RegisterFrame":
                         activeFrame = new RegisterFrame();
                         lastFrameType = StringConstant.FRAME_TYPE;
                         break;
-                    case "login":
+                    case "LoginFrame":
                         activeFrame = new LoginFrame();
                         lastFrameType = StringConstant.FRAME_TYPE;
                         break;
                     case "after login":
                         if (StringConstant.USER_TYPE == "client") {
-
                             // example data to display in table
                             String[][] data = {
                                 { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
@@ -64,12 +63,11 @@ public class EasyVENT {
                             String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
 
                             viewEventsFrame = new ViewEventsFrame(data);
-
-                            StringConstant.FRAME_TYPE = "view events";
+                            StringConstant.FRAME_TYPE = "ViewEventsFrame";
                             lastFrameType = StringConstant.FRAME_TYPE;
                         } else if (StringConstant.USER_TYPE == "organizer") {
                             createEventFrame = new CreateEventFrame();
-                            StringConstant.FRAME_TYPE = "create event";
+                            StringConstant.FRAME_TYPE = "CreateEventFrame";
                             lastFrameType = StringConstant.FRAME_TYPE;
                         }
                         break;
