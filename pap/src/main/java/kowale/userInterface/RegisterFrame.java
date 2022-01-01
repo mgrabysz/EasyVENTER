@@ -32,9 +32,9 @@ public class RegisterFrame extends JFrame implements ActionListener {
     Border border;
     ButtonGroup group;
 
-    String userLogin, userPassword, userName, userSurname;
-    int accountType;    // 0 if client, 1 if organiser
-    boolean isReady;
+    private String userLogin, userPassword, userName, userSurname;
+    private int accountType;    // 0 if client, 1 if organiser
+    private boolean isReady;
 
     public RegisterFrame() {
 
@@ -158,6 +158,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
                 GlobalVariables.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
 
+                isReady = true;
+
                 this.dispose(); // closes window
 
             } else {
@@ -169,7 +171,35 @@ public class RegisterFrame extends JFrame implements ActionListener {
                     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
                     );
 
+                }
             }
         }
+
+        public boolean getIsReady() {
+            return isReady;
+        }
+
+        public void setIsReady(boolean b) {
+            isReady = b;
+        }
+
+        public String getUserLogin() {
+            return userLogin;
+        }
+
+        public String getUserPassword() {
+            return userPassword;
+        }
+
+        public String getUserName() {
+            return userName;
+        }
+
+        public String getUserSurname() {
+            return userSurname;
+        }
+
+        public int getAccountType() {
+            return accountType;
+        }
     }
-}

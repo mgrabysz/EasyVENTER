@@ -21,7 +21,12 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     JLabel titleLabel;
     Border border;
 
+    boolean isReady;
+
     public WelcomeFrame() {
+
+        isReady = false;
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -63,11 +68,23 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 
         if (e.getSource()==registerButton){
             GlobalVariables.FRAME_TYPE= "RegisterFrame";
+
+            isReady = true;
+
             this.dispose(); // closes window
         } else if (e.getSource()==logButton){
             GlobalVariables.FRAME_TYPE = "LoginFrame";
             this.dispose(); // closes window
         }
     }
+
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+
 }
 

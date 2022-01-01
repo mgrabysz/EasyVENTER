@@ -28,9 +28,12 @@ public class LoginFrame extends JFrame implements ActionListener {
     Border border;
     NewUserData user_data;
 
-    String userLogin, userPassword;
+    private String userLogin, userPassword;
+    private boolean isReady;
 
     public LoginFrame() {
+
+        isReady = false;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -98,6 +101,8 @@ public class LoginFrame extends JFrame implements ActionListener {
 
                 GlobalVariables.FRAME_TYPE = "after login";
 
+                isReady = true;
+
                 this.dispose(); // closes window
 
             } else {
@@ -110,5 +115,21 @@ public class LoginFrame extends JFrame implements ActionListener {
                 );
             }
         }
+    }
+
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
     }
 }

@@ -31,11 +31,16 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     JLabel locationLabel, nameLabel, dateLabel, timeLabel, sectorsLabel;
     Border border;
 
-    String name, location;
-    int numOfSectors;
-    LocalDateTime dateTime;
+    private String name, location;
+    private int numOfSectors;
+    private LocalDateTime dateTime;
+
+    private boolean isReady, isCancelled;
 
     public CreateEventFrame() {
+
+        isReady = isCancelled = false;
+
         this.setTitle("Create a new event");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -242,11 +247,14 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
             GlobalVariables.FRAME_TYPE= "InputSectorDataFrame";
+
+            isReady = true;
             this.dispose(); // closes window
 
         } else if (e.getSource()==cancelButton) {
             // something to do
             System.out.println("calcelled");
+            isCancelled = true;
         }
     }
 
@@ -275,5 +283,21 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
     //     );
     // }
+
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public boolean getIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+
+    public void setIsCancelled(boolean b) {
+        isCancelled = b;
+    }
 }
 

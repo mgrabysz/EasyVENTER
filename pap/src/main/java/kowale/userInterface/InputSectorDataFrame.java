@@ -32,18 +32,21 @@ public class InputSectorDataFrame extends BasicTableFrame {
 
     // private int numOfSectors;
     private String[][] tableData;
+
+    private boolean isReady, isCancelled;
     // private HashMap<String, HashMap<String, Integer>> tickets;
 
 
     public InputSectorDataFrame(String[][] data) {
         super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", true);
+        isReady = isCancelled = false;
         // numOfSectors = table.getRowCount();
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
-            String[][] tableData = getTableData();
+            String[][] tableData = readTableData();
             // something to do with tableData
             // System.out.println(tableData[0][1]);
 
@@ -72,13 +75,17 @@ public class InputSectorDataFrame extends BasicTableFrame {
             GlobalVariables.EVENT = null;
 
             GlobalVariables.FRAME_TYPE= "WelcomeFrame";
+
+            isReady = true;
+
             this.dispose(); // closes window
         } else if (event.getSource()==cancelButton) {
             // something to do when cancelled
+            isCancelled = true;
         }
     }
 
-    public String[][] getTableData () {
+    public String[][] readTableData () {
         TableModel dtm = table.getModel();
         int nRow = dtm.getRowCount(), nCol = dtm.getColumnCount();
         tableData = new String[nRow][nCol];
@@ -87,6 +94,27 @@ public class InputSectorDataFrame extends BasicTableFrame {
                 tableData[i][j] = (String)dtm.getValueAt(i,j);
         return tableData;
     }
+
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public boolean getIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+
+    public void setIsCancelled(boolean b) {
+        isCancelled = b;
+    }
+
+    public String[][] getTableData() {
+        return tableData;
+    }
+
 
 
 }

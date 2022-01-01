@@ -25,8 +25,11 @@ public class ViewEventsFrame extends BasicTableFrame {
             System.out.println(index);
             // ===========================================
 
+            isReady = true;
+
         } else if (event.getSource()==cancelButton) {
             GlobalVariables.FRAME_TYPE = "cancel";
+            isCancelled = true;
         }
     }
 }
