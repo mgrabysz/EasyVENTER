@@ -68,7 +68,11 @@ public class InputSectorDataFrame extends BasicTableFrame {
 
             System.out.println(tickets);
             GlobalVariables.EVENT.setTickets(tickets);
-            EasyVENT.database.createEvent();
+            EasyVENT.database.createEvent(GlobalVariables.EVENT);
+            GlobalVariables.EVENT = null;
+
+            GlobalVariables.FRAME_TYPE= "WelcomeFrame";
+            this.dispose(); // closes window
         } else if (event.getSource()==cancelButton) {
             // something to do when cancelled
         }

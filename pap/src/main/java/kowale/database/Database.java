@@ -44,7 +44,7 @@ public class Database {
         return true;
     }
 
-    public boolean createEvent() {
+    public boolean createEvent(Event event) {
         /*
         Adds new event to the database. Returns boolean true
         if user has been added successfully.
@@ -52,11 +52,10 @@ public class Database {
         int id = 0;
         String organizer = "PZPN";
 
-        Event event = GlobalVariables.EVENT;
         event.setId(id);
         event.setOrganizer(organizer);
         events.add(event);
-        GlobalVariables.EVENT = null;
+
         return true;
     }
 }
