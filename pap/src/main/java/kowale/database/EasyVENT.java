@@ -64,7 +64,7 @@ public class EasyVENT {
                             };
                             String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
 
-                            viewEventsFrame = new ViewEventsFrame(data, columnNames);
+                            viewEventsFrame = new ViewEventsFrame(data);
 
                             StringConstant.FRAME_TYPE = "view events";
                             lastFrame = StringConstant.FRAME_TYPE;
