@@ -13,20 +13,20 @@ public class Main {
         //     { "Ludzie biegający w kółko", "Warszafka", "48.17.2023 29:81", "200" }
         // };
         // String[] columnNames = {"Name", "Location", "Date and time", "Tickets sold"};
-        // int number = 10;   // dowolna liczba sektorów
-        // String[][] sectors = new String[number][3];
-        // for (int i=0; i<number; ++i) {
-        //     String iStr = String.valueOf(i+1);
-        //     String[] sector = {iStr, "0", "0", "0"};
-        //     sectors[i] = sector;
-        // }
+        int number = 10;   // dowolna liczba sektorów
+        String[][] sectors = new String[number][3];
+        for (int i=0; i<number; ++i) {
+            String iStr = String.valueOf(i+1);
+            String[] sector = {iStr, "0", "0", "0"};
+            sectors[i] = sector;
+        }
 
         // new InputSectorDataFrame(sectors);
-
+        new EventDetailsFrame(sectors);
 
 
         // Create EasyVENT object
-        EasyVENT easyVENT = new EasyVENT();
+        //EasyVENT easyVENT = new EasyVENT();
         //        // Create user who is an organiser
         //        NewUserData user1 = new NewUserData("seanMurphy", "murphylaw123", 'O');
         //

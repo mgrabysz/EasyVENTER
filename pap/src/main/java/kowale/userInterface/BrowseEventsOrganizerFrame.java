@@ -8,18 +8,15 @@ public class BrowseEventsOrganizerFrame extends BasicTableFrame {
     /*
     Frame to browse events from organizer perspective.
     Organizer has option to modify or remove his events.
-    Constructor takes two parameters:
+    Constructor takes parameter:
     :data: String[][]
         table of data about events
-    :columnNames: String[]
-        names of the columns of the table (probably: "Name", "Location", "Date and time")
-        organizer is kinda obvious
     */
 
     JButton removeButton;
 
-    public BrowseEventsOrganizerFrame(String[][] data, String[] columnNames) {
-        super(data, columnNames, "Modify", false);
+    public BrowseEventsOrganizerFrame(String[][] data) {
+        super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Modify", false);
 
         removeButton = new JButton("Remove");
         removeButton.setFocusable(false);

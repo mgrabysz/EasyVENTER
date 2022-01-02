@@ -1,6 +1,7 @@
 package kowale.userInterface;
 
 import kowale.event.Event;
+import kowale.userInterface.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -18,72 +19,103 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 
-public class EventDetailsFrame extends JFrame implements ActionListener {
+public class EventDetailsFrame extends BasicTableFrame {
 
     JButton buyButton, cancelButton;
-    JRadioButton secOnebutton, secTwoButton, secThreeButton;
-    JLabel locationLabel, nameLabel, dateLabel, timeLabel, secOneLabel, secTwoLabel, secThreeLabel;
-    JLabel locationInfoLabel, nameInfoLabel, dateInfoLabel, secOnePriceLabel, secTwoPriceLabel, secThreePriceLabel;
+    JLabel nameLabel, dateTimeTitleLabel, locationTitleLabel, organizerTitleLabel;
+    JLabel dateLabel, countryLabel, cityLabel, addressLabel, organizerLabel;
     JLabel totalPriceLabel, numberOfTicketsLabel;
     Border border;
 
-    public EventDetailsFrame(Event event) {
+    private String name, country, city, address;
+    private LocalDateTime dateTime;
 
-        String name = event.getName();
-        String organizer = event.getOrganizer();
-        String location = event.getLocation();
+    public EventDetailsFrame(String[][] data) {
+        super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", false);
+
+        // String name = event.getName();
+        // String organizer = event.getOrganizer();
+        // String location = event.getLocation();
+
+        // =============== uwaga hardkodowanie ===================
+        name = "Otwarcie parasola";
+        country = "Wielka Bolzga";
+        city = "Warszawa";
+        address = "Nowowiejska 15/19";
+        dateTime = LocalDateTime.now();
 
         // Custom format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
 
         // Format LocalDateTime
-        String formattedDateTime = event.getDateTime().format(formatter);
+        String formattedDateTime = dateTime.format(formatter);
 
         this.setTitle(name);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLayout(null);
-        this.setResizable(false);
-        this.setSize(new Dimension(600, 550));
-        this.setLocationRelativeTo(null);
 
-        border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
+        sp.setBounds(30, 280, 800, 100);
 
-        nameLabel = new JLabel("Name:");
-        nameLabel.setBounds(40, 50, 200, 30);
-        nameLabel.setHorizontalAlignment(JLabel.LEFT);
+        nameLabel = new JLabel(name);
+        nameLabel.setBounds(30, 50, 800, 70);
+        nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 50));
+        nameLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(nameLabel);
 
-        nameInfoLabel = new JLabel(name);
-        nameInfoLabel.setBounds(40, 80, 220, 30);
-        this.add(nameInfoLabel);
+        dateTimeTitleLabel = new JLabel("Date:");
+        dateTimeTitleLabel.setBounds(40, 150, 200, 30);
+        this.add(dateTimeTitleLabel);
 
-        locationLabel = new JLabel("Location:");
-        locationLabel.setBounds(40, 130, 200, 30);
-        locationLabel.setHorizontalAlignment(JLabel.LEFT);
-        this.add(locationLabel);
-
-        locationInfoLabel = new JLabel(location);
-        locationInfoLabel.setBounds(40, 160, 220, 30);
-        this.add(locationInfoLabel);
-
-        dateLabel = new JLabel("Date:");
-        dateLabel.setBounds(40, 210, 200, 30);
-        dateLabel.setHorizontalAlignment(JLabel.LEFT);
+        dateLabel = new JLabel(formattedDateTime);
+        dateLabel.setBounds(40, 180, 200, 30);
         this.add(dateLabel);
 
-        dateInfoLabel = new JLabel(formattedDateTime);
-        dateInfoLabel.setBounds(40, 160, 220, 30);
-        this.add(dateInfoLabel);
+        locationTitleLabel = new JLabel("Location:");
+        locationTitleLabel.setBounds(300, 150, 200, 30);
+        this.add(locationTitleLabel);
 
-        buyButton = new JButton();
-        buyButton.setText("Create");
-        buyButton.setFocusable(false);
-        buyButton.setBounds(40, 400, 220, 50);
-        buyButton.addActionListener(this);
-        this.add(buyButton);
-    }
+        addressLabel = new JLabel(address);
+        addressLabel.setBounds(300, 180, 200, 30);
+        this.add(addressLabel);
+
+        cityLabel = new JLabel(city);
+        cityLabel.setBounds(300, 210, 200, 30);
+        this.add(cityLabel);
+
+        countryLabel = new JLabel(country);
+        countryLabel.setBounds(300, 240, 200, 30);
+        this.add(countryLabel);
+
+
+
+
+
+    //     locationLabel = new JLabel("Location:");
+    //     locationLabel.setBounds(40, 130, 200, 30);
+    //     locationLabel.setHorizontalAlignment(JLabel.LEFT);
+    //     this.add(locationLabel);
+
+    //     locationInfoLabel = new JLabel(location);
+    //     locationInfoLabel.setBounds(40, 160, 220, 30);
+    //     this.add(locationInfoLabel);
+
+    //     dateLabel = new JLabel("Date:");
+    //     dateLabel.setBounds(40, 210, 200, 30);
+    //     dateLabel.setHorizontalAlignment(JLabel.LEFT);
+    //     this.add(dateLabel);
+
+    //     dateInfoLabel = new JLabel(formattedDateTime);
+    //     dateInfoLabel.setBounds(40, 160, 220, 30);
+    //     this.add(dateInfoLabel);
+
+    //     buyButton = new JButton();
+    //     buyButton.setText("Create");
+    //     buyButton.setFocusable(false);
+    //     buyButton.setBounds(40, 400, 220, 50);
+    //     buyButton.addActionListener(this);
+    //     this.add(buyButton);
+    // }
 
         // right column
 
@@ -122,7 +154,7 @@ public class EventDetailsFrame extends JFrame implements ActionListener {
     //     this.add(cancelButton);
 
     //     this.setVisible(true);
-    // }
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -138,11 +170,12 @@ public class EventDetailsFrame extends JFrame implements ActionListener {
     //     secThreeField.setText(null);
 
     //     JOptionPane.showMessageDialog(
-    //         null,
-    //         "This data is not correct",
-    //         "Invalid user input",
-    //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-    //     );
-    }
-}
+        //         null,
+        //         "This data is not correct",
+        //         "Invalid user input",
+        //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+        //     );
+        // }
 
+
+}}
