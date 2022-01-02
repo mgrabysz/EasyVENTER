@@ -17,7 +17,7 @@ public class Main {
         String[][] sectors = new String[number][3];
         for (int i=0; i<number; ++i) {
             String iStr = String.valueOf(i+1);
-            String[] sector = {iStr, "0", "0", "0"};
+            String[] sector = {iStr, "0", "1", "0"};
             sectors[i] = sector;
         }
 
