@@ -33,13 +33,13 @@ public class InputSectorDataFrame extends BasicTableFrame {
     // private int numOfSectors;
     private String[][] tableData;
 
-    private boolean isReady, isCancelled;
-    // private HashMap<String, HashMap<String, Integer>> tickets;
+    // private boolean isReady, isCancelled;
+    private HashMap<String, HashMap<String, Integer>> tickets;
 
 
     public InputSectorDataFrame(String[][] data) {
         super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", true);
-        isReady = isCancelled = false;
+        // isReady = isCancelled = false;
         // numOfSectors = table.getRowCount();
     }
 
@@ -54,7 +54,8 @@ public class InputSectorDataFrame extends BasicTableFrame {
             System.out.println(tableData[0][1]);
             System.out.println(tableData[0][2]);
 
-            HashMap<String, HashMap<String, Integer>> tickets = new HashMap<String, HashMap<String, Integer>>();
+            // HashMap<String, HashMap<String, Integer>> tickets = new HashMap<String, HashMap<String, Integer>>();
+            tickets = new HashMap<String, HashMap<String, Integer>>();
 
             TableModel dtm = table.getModel();
             int nRow = dtm.getRowCount();
@@ -70,18 +71,11 @@ public class InputSectorDataFrame extends BasicTableFrame {
             }
 
             System.out.println(tickets);
-            GlobalVariables.EVENT.setTickets(tickets);
-            EasyVENT.database.createEvent(GlobalVariables.EVENT);
-            GlobalVariables.EVENT = null;
 
-            GlobalVariables.FRAME_TYPE= "WelcomeFrame";
-
-            isReady = true;
-
-            this.dispose(); // closes window
+            option = "confirm";
         } else if (event.getSource()==cancelButton) {
             // something to do when cancelled
-            isCancelled = true;
+            option = "cancel";
         }
     }
 
@@ -95,26 +89,27 @@ public class InputSectorDataFrame extends BasicTableFrame {
         return tableData;
     }
 
-    public boolean getIsReady() {
-        return isReady;
-    }
+    // public boolean getIsReady() {
+    //     return isReady;
+    // }
 
-    public boolean getIsCancelled() {
-        return isCancelled;
-    }
+    // public boolean getIsCancelled() {
+    //     return isCancelled;
+    // }
 
-    public void setIsReady(boolean b) {
-        isReady = b;
-    }
+    // public void setIsReady(boolean b) {
+    //     isReady = b;
+    // }
 
-    public void setIsCancelled(boolean b) {
-        isCancelled = b;
+    // public void setIsCancelled(boolean b) {
+    //     isCancelled = b;
+    // }
+    public HashMap<String, HashMap<String, Integer>> getTickets()
+    {
+        return tickets;
     }
 
     public String[][] getTableData() {
         return tableData;
     }
-
-
-
 }

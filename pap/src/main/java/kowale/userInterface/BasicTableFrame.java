@@ -19,11 +19,13 @@ public class BasicTableFrame extends JFrame implements ActionListener {
     JButton actionButton, cancelButton;
     JTable table;
     JScrollPane sp;
-    boolean isEditable, isReady, isCancelled;
+    boolean isEditable;
+    String option = "";
+    int selectedIndex = -1;
 
     public BasicTableFrame(String[][] data, String[] columnNames, String actionButtonText, boolean isTableEditable) {
 
-        isReady = isCancelled = false;
+        // isReady = isCancelled = false;
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -69,30 +71,33 @@ public class BasicTableFrame extends JFrame implements ActionListener {
 
     }
 
-
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource()==actionButton){
-            table.getSelectedRow();
-        } else if (event.getSource()==cancelButton) {
-
-        }
     }
 
-    public boolean getIsReady() {
-        return isReady;
+
+    public String getOption() {
+        return option;
     }
 
-    public boolean getIsCancelled() {
-        return isCancelled;
+    public int getSelectedIndex() {
+        return selectedIndex;
     }
 
-    public void setIsReady(boolean b) {
-        isReady = b;
-    }
+    // public boolean getIsReady() {
+    //     return isReady;
+    // }
 
-    public void setIsCancelled(boolean b) {
-        isCancelled = b;
-    }
+    // public boolean getIsCancelled() {
+    //     return isCancelled;
+    // }
+
+    // public void setIsReady(boolean b) {
+    //     isReady = b;
+    // }
+
+    // public void setIsCancelled(boolean b) {
+    //     isCancelled = b;
+    // }
 }
 

@@ -1,7 +1,5 @@
 package kowale.userInterface;
 
-import kowale.database.GlobalVariables;
-import kowale.event.Event;
 // import kowale.database.EasyVENT;
 
 import java.time.LocalDateTime;
@@ -17,6 +15,7 @@ import javax.swing.border.Border;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.StackWalker.Option;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -31,16 +30,13 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     JLabel locationLabel, nameLabel, dateLabel, timeLabel, sectorsLabel;
     Border border;
 
-    private String name, location;
+    private String name;
+    private String location;
     private int numOfSectors;
     private LocalDateTime dateTime;
-
-    private boolean isReady, isCancelled;
+    private String option = "";
 
     public CreateEventFrame() {
-
-        isReady = isCancelled = false;
-
         this.setTitle("Create a new event");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
@@ -163,7 +159,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==createButton){
 
-            name  = nameTextField.getText();
+            name = nameTextField.getText();
             location = locationTextField.getText();
             numOfSectors = (Integer) sectorCombo.getSelectedItem();
 
@@ -241,20 +237,15 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             // System.out.println(dateTimeString);
             // System.out.println(numOfSectors);
 
-            GlobalVariables.EVENT = new Event(name, null, location, dateTime);
-
-            GlobalVariables.SECTORS_NUMBER = numOfSectors;
+            
             // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
-            GlobalVariables.FRAME_TYPE= "InputSectorDataFrame";
-
-            isReady = true;
-            this.dispose(); // closes window
+            option = "create";
 
         } else if (e.getSource()==cancelButton) {
             // something to do
-            System.out.println("calcelled");
-            isCancelled = true;
+            System.out.println("cancelled");
+            option = "cancel";
         }
     }
 
@@ -270,6 +261,28 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         return true;
     }
 
+    public String getOption() {
+        return option;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    // getLocation gives error
+    // probably due to collison with Event.getLocation()
+    // it's strange
+    public String getLocatione() {
+        return location;
+    }
+
+    public LocalDateTime getDateTime() {
+        return dateTime;
+    }
+
+    public int getNumOfSectors() {
+        return numOfSectors;
+    }
     // public void displayMessageDialog() {
 
     //     secOneField.setText(null);
@@ -284,20 +297,20 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     //     );
     // }
 
-    public boolean getIsReady() {
-        return isReady;
-    }
+    // public boolean getIsReady() {
+    //     return isReady;
+    // }
 
-    public boolean getIsCancelled() {
-        return isCancelled;
-    }
+    // public boolean getIsCancelled() {
+    //     return isCancelled;
+    // }
 
-    public void setIsReady(boolean b) {
-        isReady = b;
-    }
+    // public void setIsReady(boolean b) {
+    //     isReady = b;
+    // }
 
-    public void setIsCancelled(boolean b) {
-        isCancelled = b;
-    }
+    // public void setIsCancelled(boolean b) {
+    //     isCancelled = b;
+    // }
 }
 

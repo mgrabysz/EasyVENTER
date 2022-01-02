@@ -1,6 +1,6 @@
 package kowale.userInterface;
 
-import kowale.database.GlobalVariables;
+// import kowale.database.GlobalVariables;
 
 import java.awt.event.ActionEvent;
 
@@ -11,6 +11,7 @@ public class ViewEventsFrame extends BasicTableFrame {
     :data: String[][]
         table of data about events
     */
+
     public ViewEventsFrame(String[][] data) {
         super(data, new String[]{"Name", "Organizer", "Location", "Date and time"}, "Details", false);
     }
@@ -25,11 +26,13 @@ public class ViewEventsFrame extends BasicTableFrame {
             System.out.println(index);
             // ===========================================
 
-            isReady = true;
+            // isReady = true;
+            option = "details";
 
         } else if (event.getSource()==cancelButton) {
-            GlobalVariables.FRAME_TYPE = "cancel";
-            isCancelled = true;
+            option = "cancel";
         }
     }
+
+    
 }

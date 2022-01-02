@@ -16,7 +16,8 @@ public class Event {
     private HashMap<String, HashMap<String, Integer>> tickets =
         new HashMap<String, HashMap<String, Integer>>();
 
-    public Event(String name,
+    public Event(
+        String name,
         String organizer,
         String location,
         LocalDateTime dateTime

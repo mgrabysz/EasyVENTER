@@ -181,19 +181,19 @@ public class EventDetailsFrame extends BasicTableFrame {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==actionButton){
-
             numberChildren = (Integer)childCombo.getSelectedItem();
             numberAdults = (Integer)adultCombo.getSelectedItem();
             numberVips = (Integer)vipCombo.getSelectedItem();
             sector = table.getSelectedRow() + 1;   //  +1 because table is indexed from 0
-            isReady = true;
-
+            option = "confirm";
         } else if (e.getSource()==calculateButton){
             String to_print = formatDouble(calculateTotalPrice());
             System.out.println(to_print);
             totalPriceLabel.setText(to_print + " PLN");
+            option = "calculate";
         } else if (e.getSource()==cancelButton){
             isCancelled = true;
+            option = "cancel";
         }
     }
 
@@ -217,12 +217,13 @@ public class EventDetailsFrame extends BasicTableFrame {
         return df.format(d);
     }
 
-    public void setIsCancelled(boolean b) {
-        isCancelled = b;
-    }
-    public void setIsReady(boolean b) {
-        isReady = b;
-    }
+    // public void setIsCancelled(boolean b) {
+    //     isCancelled = b;
+    // }
+    // public void setIsReady(boolean b) {
+    //     isReady = b;
+    // }
+
     public boolean getIsCancelled() {
         return isCancelled;
     }

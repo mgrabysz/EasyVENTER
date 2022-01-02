@@ -2,6 +2,7 @@ package kowale.database;
 
 import kowale.userInterface.*;
 import kowale.user.*;
+import kowale.event.Event;
 
 import java.lang.Thread;
 
@@ -19,6 +20,7 @@ public class EasyVENT {
     public ViewEventsOrganizerFrame viewEventsOrganizerFrame;
     public ViewEventsFrame viewEventsFrame;
     public InputSectorDataFrame inputSectorDataFrame;
+    public EventDetailsFrame eventDetailsFrame;
 
     public String user_type;
     // public JFrame activeFrame;
@@ -60,91 +62,82 @@ public class EasyVENT {
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
                         welcomeFrame = new WelcomeFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
-                    } else {
-                        if (welcomeFrame.getOption() != "") {
-                            switch (welcomeFrame.getOption()) {
-                                case "register":
-                                    GlobalVariables.FRAME_TYPE= "Register";
-                                    break;
-                                case "login":
-                                    GlobalVariables.FRAME_TYPE= "Login";
-                                    break;
-                            }
-                            welcomeFrame.dispose();
-                            welcomeFrame = null;
+                    } else if (welcomeFrame.getOption() != "") {
+                        switch (welcomeFrame.getOption()) {
+                            case "register":
+                                GlobalVariables.FRAME_TYPE= "Register";
+                                break;
+                            case "login":
+                                GlobalVariables.FRAME_TYPE= "Login";
+                                break;
                         }
-                        
-                    }
+                        welcomeFrame.dispose();
+                        welcomeFrame = null;
+                    }    
                     break;
                 case "Register":
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
                         registerFrame = new RegisterFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
-                    } else {
-                        if (registerFrame.getIsReady()) {
-                            if (registerFrame.getAccountType() == 0){
-                                Client new_user = new Client(
-                                    registerFrame.getUserName(),
-                                    registerFrame.getUserSurname(),
-                                    registerFrame.getUserLogin(),
-                                    registerFrame.getUserPassword()
-                                );
-                                EasyVENT.database.register_new_user(new_user);
-                            } else {
-                                EventOrganizer new_user = new EventOrganizer(
-                                    registerFrame.getUserName(),
-                                    registerFrame.getUserSurname(),
-                                    registerFrame.getUserLogin(),
-                                    registerFrame.getUserPassword()
-                                );
-                                EasyVENT.database.register_new_user(new_user);
-                            }
-
-                            GlobalVariables.FRAME_TYPE = "Welcome";
-                            registerFrame.dispose();
-                            registerFrame = null;
+                    } else if (registerFrame.getIsReady()) {
+                        if (registerFrame.getAccountType() == 0){
+                            Client new_user = new Client(
+                                registerFrame.getUserName(),
+                                registerFrame.getUserSurname(),
+                                registerFrame.getUserLogin(),
+                                registerFrame.getUserPassword()
+                            );
+                            EasyVENT.database.register_new_user(new_user);
+                        } else {
+                            EventOrganizer new_user = new EventOrganizer(
+                                registerFrame.getUserName(),
+                                registerFrame.getUserSurname(),
+                                registerFrame.getUserLogin(),
+                                registerFrame.getUserPassword()
+                            );
+                            EasyVENT.database.register_new_user(new_user);
                         }
+
+                        GlobalVariables.FRAME_TYPE = "Welcome";
+                        registerFrame.dispose();
+                        registerFrame = null;
                     }
                     break;
                 case "Login":
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
                         loginFrame = new LoginFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
-                    } else {
-                        if (loginFrame.getIsReady()) {
-                            GlobalVariables.FRAME_TYPE = "MainMenu";
-                            loginFrame.dispose();
-                            loginFrame = null;
-                        }
+                    } else if (loginFrame.getIsReady()) {
+                        GlobalVariables.FRAME_TYPE = "MainMenu";
+                        loginFrame.dispose();
+                        loginFrame = null;
                     }
                     break;
                 case "MainMenu":
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
                         mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
                         activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
-                    } else {
-                        if (mainMenuFrame.getOption() != "") {
-                            switch (mainMenuFrame.getOption()) {
-                                case "logout":
-                                    GlobalVariables.USER_TYPE = null;
-                                    GlobalVariables.FRAME_TYPE = "Welcome";
-                                    break;
-                                case "manageEvents":
-                                    GlobalVariables.FRAME_TYPE = "ViewEventsOrganizer";
-                                    break;
-                                case "createEvent":
-                                    GlobalVariables.FRAME_TYPE = "CreateEvent";
-                                    break;
-                                case "viewEvents":
-                                    GlobalVariables.FRAME_TYPE = "viewEvents";
-                                    break;
-                                case "manageTickets":
-                                    // GlobalVariables.FRAME_TYPE = "ManageTickets";
-                                    break;
-                            }
-                            mainMenuFrame.dispose();
-                            mainMenuFrame = null;
+                    } else if (mainMenuFrame.getOption() != "") {
+                        switch (mainMenuFrame.getOption()) {
+                            case "logout":
+                                GlobalVariables.USER_TYPE = null;
+                                GlobalVariables.FRAME_TYPE = "Welcome";
+                                break;
+                            case "manageEvents":
+                                GlobalVariables.FRAME_TYPE = "ViewEventsOrganizer";
+                                break;
+                            case "createEvent":
+                                GlobalVariables.FRAME_TYPE = "CreateEvent";
+                                break;
+                            case "viewEvents":
+                                GlobalVariables.FRAME_TYPE = "ViewEvents";
+                                break;
+                            case "manageTickets":
+                                // GlobalVariables.FRAME_TYPE = "ManageTickets";
+                                break;
                         }
+                        mainMenuFrame.dispose();
+                        mainMenuFrame = null;
                     }
                     break;
                 case "ViewEventsOrganizer":
@@ -155,55 +148,124 @@ public class EasyVENT {
                         };
                         viewEventsOrganizerFrame = new ViewEventsOrganizerFrame(data);
                         activeFrameType = GlobalVariables.FRAME_TYPE;
-                    } else {
-                        if (viewEventsOrganizerFrame.getOption() != "") {
-                            switch (viewEventsOrganizerFrame.getOption()) {
-                                case "cancel":
-                                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                                    break;
-                                case "remove":
-                                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                                    break;
-                                case "modify":
-                                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                                    break;
-                            }
-                            viewEventsOrganizerFrame.dispose();
-                            viewEventsOrganizerFrame = null;
+                    } else if (viewEventsOrganizerFrame.getOption() != "") {
+                        switch (viewEventsOrganizerFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "remove":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "modify":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
                         }
+                        viewEventsOrganizerFrame.dispose();
+                        viewEventsOrganizerFrame = null;
                     }
                     break;
-                // case "after login":
-                //     if (GlobalVariables.USER_TYPE == "client") {
-                //         // example data to display in table
-                //         String[][] data = {
-                //             { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
-                //             { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
-                //         };
-                //         String[] columnNames = {"Name", "Organizer", "Location", "Date and time"};
-
-                //         //tutaj powinno byc uzyte database.getEvents()
-
-                //         viewEventsFrame = new ViewEventsFrame(data);
-                //         GlobalVariables.FRAME_TYPE = "ViewEventsFrame";
-                //         activeFrameType = GlobalVariables.FRAME_TYPE;
-                //     } else if (GlobalVariables.USER_TYPE == "organizer") {
-                //         createEventFrame = new CreateEventFrame();
-                //         GlobalVariables.FRAME_TYPE = "CreateEventFrame";
-                //         activeFrameType = GlobalVariables.FRAME_TYPE;
-                //     }
-                //     break;
-                case "InputSectorDataFrame":
-                    int number = GlobalVariables.SECTORS_NUMBER;
-                    String[][] sectors = new String[number][3];
-                    for (int i=0; i<number; ++i) {
-                        String iStr = String.valueOf(i+1);
-                        String[] sector = {iStr, "0", "0", "0"};
-                        sectors[i] = sector;
+                case "CreateEvent":
+                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
+                        createEventFrame = new CreateEventFrame();
+                        activeFrameType = GlobalVariables.FRAME_TYPE;
+                    } else if (createEventFrame.getOption() != "") {
+                        switch (createEventFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "create":
+                                GlobalVariables.EVENT = new Event(
+                                    createEventFrame.getName(),
+                                    null,
+                                    createEventFrame.getLocatione(),
+                                    createEventFrame.getDateTime()
+                                );
+                                GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
+                                GlobalVariables.FRAME_TYPE = "InputSectorDataFrame";
+                                break;
+                        }
+                        createEventFrame.dispose();
+                        createEventFrame = null;
                     }
-                    inputSectorDataFrame = new InputSectorDataFrame(sectors);
-                    activeFrameType = GlobalVariables.FRAME_TYPE;
+                    break;
+                case "InputSectorDataFrame":
+                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
+                        int number = GlobalVariables.SECTORS_NUMBER;
+                        String[][] sectors = new String[number][3];
+                        for (int i=0; i<number; ++i) {
+                            String iStr = String.valueOf(i+1);
+                            String[] sector = {iStr, "0", "0", "0"};
+                            sectors[i] = sector;
+                        }
+                        inputSectorDataFrame = new InputSectorDataFrame(sectors);
+                        activeFrameType = GlobalVariables.FRAME_TYPE;
+                    } else if (inputSectorDataFrame.getOption() != "") {
+                        switch (inputSectorDataFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.EVENT = null;
+                                GlobalVariables.SECTORS_NUMBER = -1;
 
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "confirm":
+                                GlobalVariables.EVENT.setTickets(
+                                    inputSectorDataFrame.getTickets()
+                                );
+                                EasyVENT.database.createEvent(GlobalVariables.EVENT);
+                                GlobalVariables.EVENT = null;
+
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                        }
+                        inputSectorDataFrame.dispose();
+                        inputSectorDataFrame = null;
+                    }
+                    break;
+                case "ViewEvents":
+                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
+                        String[][] data = {
+                            { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
+                            { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
+                        };
+                        viewEventsFrame = new ViewEventsFrame(data);
+                        activeFrameType = GlobalVariables.FRAME_TYPE;
+                    } else if (viewEventsFrame.getOption() != "") {
+                        switch (viewEventsFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "details":
+                                GlobalVariables.FRAME_TYPE = "EventDetails";
+                                break;
+                        }
+                        viewEventsFrame.dispose();
+                        viewEventsFrame = null;
+                    }
+                    break;
+                case "EventDetails":
+                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
+                        String[][] data = {
+                            { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
+                            { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
+                        };
+                        eventDetailsFrame = new EventDetailsFrame(data);
+                        activeFrameType = GlobalVariables.FRAME_TYPE;
+                    } else if (eventDetailsFrame.getOption() != "") {
+                        switch (eventDetailsFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "confirm":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "calculate":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                        }
+                        eventDetailsFrame.dispose();
+                        eventDetailsFrame = null;
+                    }
+                    break;
             }
         } while(runLoop);
     }

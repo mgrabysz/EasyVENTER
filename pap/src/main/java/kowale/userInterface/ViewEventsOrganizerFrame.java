@@ -14,8 +14,6 @@ public class ViewEventsOrganizerFrame extends BasicTableFrame {
     */
 
     JButton removeButton;
-    private String option = "";
-    private int index = -1;
 
     public ViewEventsOrganizerFrame(String[][] data) {
         super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Modify", false);
@@ -31,13 +29,12 @@ public class ViewEventsOrganizerFrame extends BasicTableFrame {
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
             int index = table.getSelectedRow(); // returns index of selected row
-
-            // ============ for testing ==================
-            System.out.println("Modify button clicked. Index of selected row:");
-            System.out.println(index);
-            // ===========================================
+            selectedIndex = index;
             option = "modify";
-            this.index = index;
+            // ============ for testing ==================
+            // System.out.println("Modify button clicked. Index of selected row:");
+            // System.out.println(index);
+            // ===========================================
         } else if (event.getSource()==cancelButton) {
             // some code if cancel
             System.out.println("Cancel button clicked");
@@ -45,18 +42,11 @@ public class ViewEventsOrganizerFrame extends BasicTableFrame {
         } else if (event.getSource()==removeButton) {
             // some code if remove
             int index = table.getSelectedRow(); // returns index of selected row
-            System.out.println("Remove button clicked");
-            System.out.println(index);
+            selectedIndex = index;
             option = "remove";
-            this.index = index;
+            // System.out.println("Remove button clicked");
+            // System.out.println(index);
         }
     }
 
-    public String getOption() {
-        return option;
-    }
-
-    public int getIndex() {
-        return index;
-    }
 }
