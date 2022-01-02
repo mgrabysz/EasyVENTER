@@ -1,7 +1,7 @@
 package kowale.userInterface;
-import kowale.database.GlobalVariables;
+// import kowale.database.GlobalVariables;
 // import kowale.ticket.Ticket;
-import kowale.database.EasyVENT;
+// import kowale.database.EasyVENT;
 
 import java.util.HashMap;
 

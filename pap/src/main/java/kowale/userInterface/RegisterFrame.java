@@ -1,9 +1,9 @@
 package kowale.userInterface;
 
-import kowale.database.EasyVENT;
-import kowale.database.GlobalVariables;
-import kowale.user.Client;
-import kowale.user.EventOrganizer;
+// import kowale.database.EasyVENT;
+// import kowale.database.GlobalVariables;
+// import kowale.user.Client;
+// import kowale.user.EventOrganizer;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
