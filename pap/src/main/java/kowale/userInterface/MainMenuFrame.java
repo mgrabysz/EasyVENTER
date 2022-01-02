@@ -23,6 +23,7 @@ public class MainMenuFrame extends JFrame implements ActionListener{
         this.userType = userType;
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(500, 200);
+        this.setLocationRelativeTo(null);
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(2, 1));
 

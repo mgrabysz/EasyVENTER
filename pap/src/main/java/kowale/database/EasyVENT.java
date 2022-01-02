@@ -156,12 +156,21 @@ public class EasyVENT {
                         viewEventsOrganizerFrame = new ViewEventsOrganizerFrame(data);
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else {
-                        // System.out.println("else");
-                        // if (loginFrame.getIsReady()) {
-                        //     GlobalVariables.FRAME_TYPE = "MainMenu";
-                        //     loginFrame.dispose();
-                        //     loginFrame = null;
-                        // }
+                        if (viewEventsOrganizerFrame.getOption() != "") {
+                            switch (viewEventsOrganizerFrame.getOption()) {
+                                case "cancel":
+                                    GlobalVariables.FRAME_TYPE = "MainMenu";
+                                    break;
+                                case "remove":
+                                    GlobalVariables.FRAME_TYPE = "MainMenu";
+                                    break;
+                                case "modify":
+                                    GlobalVariables.FRAME_TYPE = "MainMenu";
+                                    break;
+                            }
+                            viewEventsOrganizerFrame.dispose();
+                            viewEventsOrganizerFrame = null;
+                        }
                     }
                     break;
                 // case "after login":
