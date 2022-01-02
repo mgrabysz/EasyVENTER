@@ -8,7 +8,6 @@ public class Event {
     Class that represents an event.
     */
 
-    private int id;
     private String name;
     private String organizer;
     private String location;
@@ -17,27 +16,16 @@ public class Event {
     private HashMap<String, HashMap<String, Integer>> tickets =
         new HashMap<String, HashMap<String, Integer>>();
 
-    public Event(
-        int id,
-        String name,
+    public Event(String name,
         String organizer,
         String location,
         LocalDateTime dateTime
     ) {
-        this.id = id;
         this.name = name;
         this.organizer = organizer;
         this.location = location;
         this.dateTime = dateTime;
         // this.numOfSectors = numOfSectors;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -85,8 +73,7 @@ public class Event {
     // }
 
     public String toString() {
-        String eventInfo = "ID: " + id;
-        eventInfo += "\nName: " + name;
+        String eventInfo = "\nName: " + name;
         eventInfo += "\nOrganizer: " + organizer;
         eventInfo += "\nLocation: " + location;
         eventInfo += "\nDate and time: " + dateTime;

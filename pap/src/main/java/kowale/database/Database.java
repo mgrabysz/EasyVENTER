@@ -49,10 +49,8 @@ public class Database {
         Adds new event to the database. Returns boolean true
         if user has been added successfully.
         */
-        int id = 0;
         String organizer = "PZPN";
 
-        event.setId(id);
         event.setOrganizer(organizer);
         events.add(event);
 

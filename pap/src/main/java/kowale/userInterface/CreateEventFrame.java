@@ -241,7 +241,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             // System.out.println(dateTimeString);
             // System.out.println(numOfSectors);
 
-            GlobalVariables.EVENT = new Event(-1, name, null, location, dateTime);
+            GlobalVariables.EVENT = new Event(name, null, location, dateTime);
 
             GlobalVariables.SECTORS_NUMBER = numOfSectors;
             // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
