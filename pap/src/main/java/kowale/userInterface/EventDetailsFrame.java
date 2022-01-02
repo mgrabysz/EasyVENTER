@@ -10,6 +10,7 @@ import java.util.Vector;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.BorderFactory;
@@ -28,9 +29,10 @@ public class EventDetailsFrame extends BasicTableFrame {
     JLabel nameLabel, dateTimeTitleLabel, locationTitleLabel, organizerTitleLabel;
     JLabel dateLabel, countryLabel, cityLabel, addressLabel, organizerLabel;
     JLabel totalPriceLabel, numberOfTicketsLabel;
+    JPanel dateTimePanel, locationPanel, organizerPanel;
     Border border;
 
-    private String name, country, city, address;
+    private String name, country, city, address, organizer;
     private LocalDateTime dateTime;
 
     public EventDetailsFrame(String[][] data) {
@@ -46,6 +48,7 @@ public class EventDetailsFrame extends BasicTableFrame {
         city = "Warszawa";
         address = "Nowowiejska 15/19";
         dateTime = LocalDateTime.now();
+        organizer = "Polish Meme Association";
 
         // Custom format
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
@@ -58,102 +61,65 @@ public class EventDetailsFrame extends BasicTableFrame {
         sp.setBounds(30, 280, 800, 100);
 
         nameLabel = new JLabel(name);
-        nameLabel.setBounds(30, 50, 800, 70);
+        nameLabel.setBounds(45, 30, 800, 70);
         nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 50));
-        nameLabel.setHorizontalAlignment(JLabel.CENTER);
         this.add(nameLabel);
 
+        dateTimePanel = new JPanel();
+        this.add(dateTimePanel);
+        dateTimePanel.setBounds(30, 120, 260, 140);
+        dateTimePanel.setLayout(null);
+
+        locationPanel = new JPanel();
+        this.add(locationPanel);
+        locationPanel.setBounds(290, 120, 260, 140);
+        locationPanel.setLayout(null);
+
+        organizerPanel = new JPanel();
+        this.add(organizerPanel);
+        organizerPanel.setBounds(550, 120, 260, 140);
+        organizerPanel.setLayout(null);
+
         dateTimeTitleLabel = new JLabel("Date:");
-        dateTimeTitleLabel.setBounds(40, 150, 200, 30);
-        this.add(dateTimeTitleLabel);
+        dateTimePanel.add(dateTimeTitleLabel);
+        Dimension dateTimeTitleLabelSize = dateTimeTitleLabel.getPreferredSize();
+        dateTimeTitleLabel.setBounds(0, 0, dateTimeTitleLabelSize.width, dateTimeTitleLabelSize.height);
 
         dateLabel = new JLabel(formattedDateTime);
-        dateLabel.setBounds(40, 180, 200, 30);
-        this.add(dateLabel);
+        dateTimePanel.add(dateLabel);
+        Dimension dateLabelSize = dateLabel.getPreferredSize();
+        dateLabel.setBounds(0, 30, dateLabelSize.width, dateLabelSize.height);
 
         locationTitleLabel = new JLabel("Location:");
-        locationTitleLabel.setBounds(300, 150, 200, 30);
-        this.add(locationTitleLabel);
+        locationPanel.add(locationTitleLabel);
+        Dimension locationTitleLabelSize = locationTitleLabel.getPreferredSize();
+        locationTitleLabel.setBounds(0, 0, locationTitleLabelSize.width, locationTitleLabelSize.height);
 
         addressLabel = new JLabel(address);
-        addressLabel.setBounds(300, 180, 200, 30);
-        this.add(addressLabel);
+        locationPanel.add(addressLabel);
+        Dimension addressLabelSize = addressLabel.getPreferredSize();
+        addressLabel.setBounds(0, 30, addressLabelSize.width, addressLabelSize.height);
 
         cityLabel = new JLabel(city);
-        cityLabel.setBounds(300, 210, 200, 30);
-        this.add(cityLabel);
+        locationPanel.add(cityLabel);
+        Dimension cityLabelSize = cityLabel.getPreferredSize();
+        cityLabel.setBounds(0, 60, cityLabelSize.width, cityLabelSize.height);
 
         countryLabel = new JLabel(country);
-        countryLabel.setBounds(300, 240, 200, 30);
-        this.add(countryLabel);
+        locationPanel.add(countryLabel);
+        Dimension countryLabelSize = countryLabel.getPreferredSize();
+        countryLabel.setBounds(0, 90, countryLabelSize.width, countryLabelSize.height);
 
+        organizerTitleLabel = new JLabel("Organizer:");
+        organizerPanel.add(organizerTitleLabel);
+        Dimension organizerTitleLabelSize = organizerTitleLabel.getPreferredSize();
+        organizerTitleLabel.setBounds(0, 0, organizerTitleLabelSize.width, organizerTitleLabelSize.height);
 
+        organizerLabel = new JLabel(organizer);
+        organizerPanel.add(organizerLabel);
+        Dimension organizerLabelSize = organizerLabel.getPreferredSize();
+        organizerLabel.setBounds(0, 30, organizerLabelSize.width, organizerLabelSize.height);
 
-
-
-    //     locationLabel = new JLabel("Location:");
-    //     locationLabel.setBounds(40, 130, 200, 30);
-    //     locationLabel.setHorizontalAlignment(JLabel.LEFT);
-    //     this.add(locationLabel);
-
-    //     locationInfoLabel = new JLabel(location);
-    //     locationInfoLabel.setBounds(40, 160, 220, 30);
-    //     this.add(locationInfoLabel);
-
-    //     dateLabel = new JLabel("Date:");
-    //     dateLabel.setBounds(40, 210, 200, 30);
-    //     dateLabel.setHorizontalAlignment(JLabel.LEFT);
-    //     this.add(dateLabel);
-
-    //     dateInfoLabel = new JLabel(formattedDateTime);
-    //     dateInfoLabel.setBounds(40, 160, 220, 30);
-    //     this.add(dateInfoLabel);
-
-    //     buyButton = new JButton();
-    //     buyButton.setText("Create");
-    //     buyButton.setFocusable(false);
-    //     buyButton.setBounds(40, 400, 220, 50);
-    //     buyButton.addActionListener(this);
-    //     this.add(buyButton);
-    // }
-
-        // right column
-
-    //     secOneLabel = new JLabel("Price of ticket in sector 1: ");
-    //     secOneLabel.setBounds(340, 50, 200, 30);
-    //     secOneLabel.setHorizontalAlignment(JLabel.LEFT);
-    //     this.add(secOneLabel);
-
-    //     secOneField = new JTextField();
-    //     secOneField.setBounds(340, 80, 220, 30);
-    //     this.add(secOneField);
-
-    //     secTwoLabel = new JLabel("Price of ticket in sector 2: ");
-    //     secTwoLabel.setBounds(340, 130, 200, 30);
-    //     secTwoLabel.setHorizontalAlignment(JLabel.LEFT);
-    //     this.add(secTwoLabel);
-
-    //     secTwoField = new JTextField();
-    //     secTwoField.setBounds(340, 160, 220, 30);
-    //     this.add(secTwoField);
-
-    //     secThreeLabel = new JLabel("Price of ticket in sector 3: ");
-    //     secThreeLabel.setBounds(340, 210, 200, 30);
-    //     secThreeLabel.setHorizontalAlignment(JLabel.LEFT);
-    //     this.add(secThreeLabel);
-
-    //     secThreeField = new JTextField();
-    //     secThreeField.setBounds(340, 240, 220, 30);
-    //     this.add(secThreeField);
-
-    //     cancelButton = new JButton();
-    //     cancelButton.setText("Cancel");
-    //     cancelButton.setFocusable(false);
-    //     cancelButton.setBounds(340, 400, 220, 50);
-    //     cancelButton.addActionListener(this);
-    //     this.add(cancelButton);
-
-    //     this.setVisible(true);
     }
 
     @Override
@@ -161,8 +127,8 @@ public class EventDetailsFrame extends BasicTableFrame {
         if (e.getSource()==buyButton){
             System.out.println("Buy button clicked");
         }
-
-
+    }
+}
     // public void displayMessageDialog() {
 
     //     secOneField.setText(null);
@@ -178,4 +144,3 @@ public class EventDetailsFrame extends BasicTableFrame {
         // }
 
 
-}}
