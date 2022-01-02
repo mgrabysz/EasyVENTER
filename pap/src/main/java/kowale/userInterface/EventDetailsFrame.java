@@ -1,42 +1,43 @@
 package kowale.userInterface;
 
-import kowale.event.Event;
-import kowale.userInterface.*;
-
+import kowale.database.GlobalVariables;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
-import javax.swing.JTextField;
-import javax.swing.BorderFactory;
 import javax.swing.border.Border;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+
+import java.util.Vector;
+import java.text.DecimalFormat;
 
 
 public class EventDetailsFrame extends BasicTableFrame {
 
-    JButton buyButton, cancelButton;
     JLabel nameLabel, dateTimeTitleLabel, locationTitleLabel, organizerTitleLabel;
     JLabel dateLabel, countryLabel, cityLabel, addressLabel, organizerLabel;
-    JLabel totalPriceLabel, numberOfTicketsLabel;
+    JLabel chooseSectorLabel, chooseTicketsLabel, childrenLabel, adultLabel, vipLabel;
+    JLabel totalPriceTitleLabel, totalPriceLabel;
     JPanel dateTimePanel, locationPanel, organizerPanel;
     Border border;
+    JComboBox<Integer> childCombo, adultCombo, vipCombo;
+    JButton calculateButton;
 
     private String name, country, city, address, organizer;
     private LocalDateTime dateTime;
+    private boolean isReady, isCancelled;
+    private int numberAdults, numberChildren, numberVips, sector;
+
 
     public EventDetailsFrame(String[][] data) {
-        super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", false);
+        super(data, new String[]{"Number of sector", "Number of seats", "Adult ticket price"} , "Confirm", false);
+        isReady = isCancelled = false;
 
         // String name = event.getName();
         // String organizer = event.getOrganizer();
@@ -59,6 +60,8 @@ public class EventDetailsFrame extends BasicTableFrame {
         this.setTitle(name);
 
         sp.setBounds(30, 280, 800, 100);
+        table.changeSelection(0, 0, false, false);
+
 
         nameLabel = new JLabel(name);
         nameLabel.setBounds(45, 30, 800, 70);
@@ -120,27 +123,123 @@ public class EventDetailsFrame extends BasicTableFrame {
         Dimension organizerLabelSize = organizerLabel.getPreferredSize();
         organizerLabel.setBounds(0, 30, organizerLabelSize.width, organizerLabelSize.height);
 
+        chooseSectorLabel = new JLabel("Choose sector");
+        this.add(chooseSectorLabel);
+        chooseSectorLabel.setBounds(30, 250, 200, 30);
+
+        chooseTicketsLabel = new JLabel("Choose tickets");
+        this.add(chooseTicketsLabel);
+        chooseTicketsLabel.setBounds(30, 400, 200, 30);
+
+        childrenLabel = new JLabel("Child (30% discount)");
+        this.add(childrenLabel);
+        childrenLabel.setBounds(30, 430, 200, 30);
+
+        adultLabel = new JLabel("Adult");
+        this.add(adultLabel);
+        adultLabel.setBounds(290, 430, 200, 30);
+
+        vipLabel = new JLabel("VIP ticket (150% price)");
+        this.add(vipLabel);
+        vipLabel.setBounds(550, 430, 200, 30);
+
+        Vector<Integer> tickets = new Vector<Integer>();
+        for (int i = 0; i <= 10; i++) {
+            tickets.add(i);
+        }
+        childCombo = new JComboBox<Integer>(tickets);
+        this.add(childCombo);
+        childCombo.setBounds(30, 460, 220, 30);
+
+        adultCombo = new JComboBox<Integer>(tickets);
+        this.add(adultCombo);
+        adultCombo.setBounds(290, 460, 220, 30);
+
+        vipCombo = new JComboBox<Integer>(tickets);
+        this.add(vipCombo);
+        vipCombo.setBounds(550, 460, 220, 30);
+
+        calculateButton = new JButton("Calculate");
+        calculateButton.setFocusable(false);
+        calculateButton.setBounds(850, 100, 120, 50);
+        calculateButton.addActionListener(this);
+        this.add(calculateButton);
+
+        totalPriceTitleLabel = new JLabel("Total price: ");
+        this.add(totalPriceTitleLabel);
+        totalPriceTitleLabel.setBounds(30, 500, 200, 30);
+
+        totalPriceLabel = new JLabel("0" + " PLN");
+        this.add(totalPriceLabel);
+        totalPriceLabel.setBounds(115, 500, 200, 30);
+
+        this.revalidate();
+        this.repaint();
+
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==buyButton){
-            System.out.println("Buy button clicked");
+        if (e.getSource()==actionButton){
+
+            numberChildren = (Integer)childCombo.getSelectedItem();
+            numberAdults = (Integer)adultCombo.getSelectedItem();
+            numberVips = (Integer)vipCombo.getSelectedItem();
+            sector = table.getSelectedRow() + 1;   //  +1 because table is indexed from 0
+            isReady = true;
+
+        } else if (e.getSource()==calculateButton){
+            String to_print = formatDouble(calculateTotalPrice());
+            System.out.println(to_print);
+            totalPriceLabel.setText(to_print + " PLN");
+        } else if (e.getSource()==cancelButton){
+            isCancelled = true;
         }
     }
+
+    public double calculateTotalPrice() {
+
+        int children = (Integer)childCombo.getSelectedItem();
+        int adults = (Integer)adultCombo.getSelectedItem();
+        int vips = (Integer)vipCombo.getSelectedItem();
+        int row = table.getSelectedRow();
+        double price = Double.parseDouble( table.getValueAt(row, 2).toString() );
+        double childrenCoef = GlobalVariables.CHILDREN_COEF;
+        double vipCoef = GlobalVariables.VIP_COEF;
+
+        double total = children * childrenCoef + vips * vipCoef + adults;
+        total = total * price;
+        return total;
+    }
+
+    public String formatDouble(double d) {
+        DecimalFormat df = new DecimalFormat("###.##");
+        return df.format(d);
+    }
+
+    public void setIsCancelled(boolean b) {
+        isCancelled = b;
+    }
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+    public boolean getIsCancelled() {
+        return isCancelled;
+    }
+    public int getNumberChildren() {
+        return numberChildren;
+    }
+    public int getNumberAdults() {
+        return numberAdults;
+    }
+    public boolean getIsReady() {
+        return isReady;
+    }
+    public int getNumberVips() {
+        return numberVips;
+    }
+    public int getSector() {
+        return sector;
+    }
 }
-    // public void displayMessageDialog() {
-
-    //     secOneField.setText(null);
-    //     secTwoField.setText(null);
-    //     secThreeField.setText(null);
-
-    //     JOptionPane.showMessageDialog(
-        //         null,
-        //         "This data is not correct",
-        //         "Invalid user input",
-        //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-        //     );
-        // }
-
 
