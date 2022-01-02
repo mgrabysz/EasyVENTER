@@ -96,17 +96,9 @@ public class LoginFrame extends JFrame implements ActionListener {
             boolean login_successfully = EasyVENT.database.logIntoDatabase(userLogin, userPassword);
 
             if (login_successfully){
-
                 System.out.println("Log in was successful");
-
-                GlobalVariables.FRAME_TYPE = "after login";
-
                 isReady = true;
-
-                this.dispose(); // closes window
-
             } else {
-
                 JOptionPane.showMessageDialog(
                     null,
                     "Login or password incorrect",

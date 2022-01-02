@@ -25,7 +25,7 @@ import java.awt.Dimension;
 public class RegisterFrame extends JFrame implements ActionListener {
 
     JButton confirmButton;
-    JRadioButton clientButton, organiserButton;
+    JRadioButton clientButton, organizerButton;
     JLabel titleLabel, loginLabel, passwordLabel, nameLabel, surnameLabel, accountLabel;
     JTextField loginTextField, nameTextField, surnameTextField;
     JPasswordField passwordTextField;
@@ -33,7 +33,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
     ButtonGroup group;
 
     private String userLogin, userPassword, userName, userSurname;
-    private int accountType;    // 0 if client, 1 if organiser
+    private int accountType;    // 0 if client, 1 if organizer
     private boolean isReady;
 
     public RegisterFrame() {
@@ -89,15 +89,15 @@ public class RegisterFrame extends JFrame implements ActionListener {
         passwordTextField = new JPasswordField();
         passwordTextField.setBounds(350, 230, 200, 30);
 
-        organiserButton = new JRadioButton("Event organiser");
-        organiserButton.setBounds(345, 65, 250, 35);
-        organiserButton.setFocusable(false);
+        organizerButton = new JRadioButton("Event organizer");
+        organizerButton.setBounds(345, 65, 250, 35);
+        organizerButton.setFocusable(false);
         clientButton = new JRadioButton("Client", true); // Client is selected as default option
         clientButton.setBounds(345, 90, 250, 35);
         clientButton.setFocusable(false);
 
         group = new ButtonGroup();
-        group.add(organiserButton);
+        group.add(organizerButton);
         group.add(clientButton);
 
         confirmButton = new JButton();
@@ -119,22 +119,21 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.add(passwordTextField);
 
         this.add(clientButton);
-        this.add(organiserButton);
+        this.add(organizerButton);
         this.add(confirmButton);
         this.setVisible(true);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource()==confirmButton){
-
+        if (e.getSource()==confirmButton) {
             userLogin = loginTextField.getText();
             userPassword = new String(passwordTextField.getPassword());
             userName = nameTextField.getText();
             userSurname = surnameTextField.getText();
 
-            if (organiserButton.isSelected()) {
-                accountType = 1;    // 1 for organiser account
+            if (organizerButton.isSelected()) {
+                accountType = 1;    // 1 for organizer account
             } else {
                 accountType = 0;    // 0 for client account
             }
@@ -144,62 +143,47 @@ public class RegisterFrame extends JFrame implements ActionListener {
             nameTextField.setText(null);
             surnameTextField.setText(null);
 
+            // TODO: check if correct
             boolean isCorrect = true;
             if (isCorrect) {
-
                 //create user object
-                if (accountType == 0){
-                    Client new_user = new Client(userName, userSurname, userLogin, userPassword);
-                    EasyVENT.database.register_new_user(new_user);
-                } else {
-                    EventOrganizer new_user = new EventOrganizer(userName, userSurname, userLogin, userPassword);
-                    EasyVENT.database.register_new_user(new_user);
-                }
-
-                GlobalVariables.FRAME_TYPE = "welcome";  // set global variable to open welcome frame
-
                 isReady = true;
-
-                this.dispose(); // closes window
-
             } else {
-
                 JOptionPane.showMessageDialog(
                     null,
                     "This data is not correct",
                     "Invalid user input",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
-
-                }
+                    JOptionPane.ERROR_MESSAGE    // adds red "x" picture
+                );
             }
         }
-
-        public boolean getIsReady() {
-            return isReady;
-        }
-
-        public void setIsReady(boolean b) {
-            isReady = b;
-        }
-
-        public String getUserLogin() {
-            return userLogin;
-        }
-
-        public String getUserPassword() {
-            return userPassword;
-        }
-
-        public String getUserName() {
-            return userName;
-        }
-
-        public String getUserSurname() {
-            return userSurname;
-        }
-
-        public int getAccountType() {
-            return accountType;
-        }
     }
+
+    public boolean getIsReady() {
+        return isReady;
+    }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
+
+    public String getUserLogin() {
+        return userLogin;
+    }
+
+    public String getUserPassword() {
+        return userPassword;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getUserSurname() {
+        return userSurname;
+    }
+
+    public int getAccountType() {
+        return accountType;
+    }
+}

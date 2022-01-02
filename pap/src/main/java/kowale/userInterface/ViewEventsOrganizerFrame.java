@@ -4,7 +4,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JButton;
 
-public class BrowseEventsOrganizerFrame extends BasicTableFrame {
+public class ViewEventsOrganizerFrame extends BasicTableFrame {
     /*
     Frame to browse events from organizer perspective.
     Organizer has option to modify or remove his events.
@@ -15,7 +15,7 @@ public class BrowseEventsOrganizerFrame extends BasicTableFrame {
 
     JButton removeButton;
 
-    public BrowseEventsOrganizerFrame(String[][] data) {
+    public ViewEventsOrganizerFrame(String[][] data) {
         super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Modify", false);
 
         removeButton = new JButton("Remove");

@@ -1,6 +1,6 @@
 package kowale.userInterface;
 
-import kowale.database.GlobalVariables;
+// import kowale.database.GlobalVariables;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -16,17 +16,13 @@ import java.awt.Dimension;
 
 public class WelcomeFrame extends JFrame implements ActionListener {
 
-
     JButton logButton, registerButton;
     JLabel titleLabel;
     Border border;
 
-    boolean isReady;
+    private String option = "";
 
     public WelcomeFrame() {
-
-        isReady = false;
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -65,25 +61,15 @@ public class WelcomeFrame extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
         if (e.getSource()==registerButton){
-            GlobalVariables.FRAME_TYPE= "RegisterFrame";
-
-            isReady = true;
-
-            this.dispose(); // closes window
+            option = "register";
         } else if (e.getSource()==logButton){
-            GlobalVariables.FRAME_TYPE = "LoginFrame";
-            this.dispose(); // closes window
+            option = "login";
         }
     }
 
-    public boolean getIsReady() {
-        return isReady;
-    }
-
-    public void setIsReady(boolean b) {
-        isReady = b;
+    public String getOption() {
+        return option;
     }
 
 }
