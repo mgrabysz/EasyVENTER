@@ -1,5 +1,6 @@
 package kowale.user;
 
+import java.time.LocalDate;
 import java.util.LinkedList;
 
 import kowale.ticket.Ticket;
@@ -7,13 +8,20 @@ import kowale.ticket.Ticket;
 public class Client extends User {
     private LinkedList<Ticket> tickets;
 
+    String gender;
+    LocalDate birth;
+
     public Client(
         String name, String surname,
-        String login, String password
+        String login, String password,
+        String email, int phone, String gender,
+        LocalDate birthDate
     ){
-        super(name, surname, login, password);
+        super(name, surname, login, password, email, phone);
         tickets = new LinkedList<Ticket>();
         type = "client";
+        this.birth = birthDate;
+        this.gender = gender;
     }
 
     public Client(
@@ -36,5 +44,12 @@ public class Client extends User {
 
     public LinkedList<Ticket> getTicketsList(){
         return tickets;
+    }
+
+    public LocalDate getBirth(){
+        return this.birth;
+    }
+    public String getGender(){
+        return this.gender;
     }
 }
