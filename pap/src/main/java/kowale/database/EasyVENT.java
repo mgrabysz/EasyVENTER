@@ -37,11 +37,6 @@ public class EasyVENT {
         Client newClient = new Client("Stachu", "Jones", "sjones", hash("sjones"));
         EasyVENT.database.register_new_user(newClient);
         newClient = new Client("a", "a", "a", hash("a"));
-        System.out.println("a");
-        System.out.println(hash("a"));
-        System.out.println(hash("a"));
-        System.out.println(hash("a"));
-        System.out.println("---");
 
         EasyVENT.database.register_new_user(newClient);
 
@@ -71,7 +66,7 @@ public class EasyVENT {
 
         do {
             try {
-                Thread.sleep(50);
+                Thread.sleep(100);
             }
             catch (Exception e) {
                 System.out.println(e);
@@ -148,9 +143,6 @@ public class EasyVENT {
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (loginFrame.getIsReady()) {
                         // check if user input is correct
-                        System.out.println(loginFrame.getUserPassword());
-                        System.out.println(hash(loginFrame.getUserPassword()));
-
                         if (
                             EasyVENT.database.logIntoDatabase(
                                 loginFrame.getUserLogin(),
