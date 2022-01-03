@@ -3,6 +3,7 @@ import kowale.user.Client;
 import kowale.user.EventOrganizer;
 import kowale.user.User;
 import kowale.event.Event;
+import kowale.ticket.Ticket;
 
 import java.sql.Timestamp;
 import java.sql.CallableStatement;
@@ -204,5 +205,25 @@ public class Database {
         }
         return events;
     }
+//todo
+    public LinkedList<Ticket> getTicketsOfUser(User user){
+        LinkedList<Ticket> tickets = new LinkedList<Ticket>();
+        return tickets;
+    }
 
+    public boolean editEvent(Event event){
+        return false;
+    }
+
+    public boolean dropEvent(Event event){
+        return false;
+    }
+
+    public boolean buyTicket(User user, Event event){
+        return false;
+    }
+
+    public boolean cancelTicket(User user, Ticket ticket){
+        return false;
+    }
 }
