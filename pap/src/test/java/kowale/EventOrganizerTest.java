@@ -14,7 +14,14 @@ public class EventOrganizerTest {
     LocalDateTime dt;
     int numOfSectors;
     // HashMap<String, Integer> tickets;
-    Event ev = new Event("Kezak", "firma", "Warsaw0", dt);
+    Event ev = new Event(
+        "Mecz",
+        "PZPN",
+        "Polska",
+        "Warszafka",
+        "Ulica",
+        dt
+    );
 
     @Test
     public void getEventsListTest(){

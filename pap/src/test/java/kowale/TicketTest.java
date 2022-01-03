@@ -26,17 +26,17 @@ public class TicketTest{
 
     @Test
     public void getCategory(){
-        assertEquals(null, ticket.getCategory());
+        assertEquals("A", ticket.getCategory());
     }
 
     @Test
     public void getSector(){
-        assertEquals("A", ticket.getSector());
+        assertEquals("1", ticket.getSector());
     }
 
     @Test
     public void getSeat(){
-        assertEquals(10, ticket.getSeat());
+        assertEquals(2, ticket.getSeat());
     }
 
     // @Test

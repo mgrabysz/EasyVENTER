@@ -11,7 +11,9 @@ public class Event {
 
     private String name;
     private String organizer;
-    private String location;
+    private String country;
+    private String city;
+    private String street;
     private LocalDateTime dateTime;
     // private int numOfSectors;
     private HashMap<String, HashMap<String, Integer>> tickets;
@@ -19,12 +21,16 @@ public class Event {
     public Event(
         String name,
         String organizer,
-        String location,
+        String country,
+        String city,
+        String street,
         LocalDateTime dateTime
     ) {
         this.name = name;
         this.organizer = organizer;
-        this.location = location;
+        this.country = country;
+        this.city = city;
+        this.street = street;
         this.dateTime = dateTime;
     }
 
@@ -44,12 +50,28 @@ public class Event {
         this.organizer = organizer;
     }
 
-    public String getLocation() {
-        return location;
+    public String getCountry() {
+        return country;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 
     public LocalDateTime getDateTime() {
@@ -77,7 +99,7 @@ public class Event {
     public String[] getEventInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
-        String[] eventInfo = {name, organizer, location, dateTime.format(formatter)};
+        String[] eventInfo = {name, country, city, dateTime.format(formatter)};
         // String eventInfo = "\nName: " + name;
         // eventInfo += "\nOrganizer: " + organizer;
         // eventInfo += "\nLocation: " + location;
@@ -110,8 +132,8 @@ public class Event {
             }
         }
 
-        System.out.println("details:");
-        System.out.println(details);
+        // System.out.println("details:");
+        // System.out.println(details);
 
         return details;
     }

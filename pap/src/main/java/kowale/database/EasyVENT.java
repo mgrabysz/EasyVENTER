@@ -104,11 +104,25 @@ public class EasyVENT {
 
         
 
-        Event event = new Event("Ludzie biegający w kółko", "Google", "Warszafka", dateTime);
+        Event event = new Event(
+            "Ludzie biegający w kółko",
+            "Google",
+            "Polska",
+            "Warszafka",
+            "Ulica",
+            dateTime
+        );
         event.setTickets(tickets);
         EasyVENT.database.createEvent(event);
 
-        event = new Event("Meczyk jakiś", "Firma Krzak", "Bydgoszcz", dateTime);
+        event = new Event(
+            "Meczyk jakiś",
+            "Firma Krzak",
+            "Polska",
+            "Bydgoszcz",
+            "Ulica",
+            dateTime
+        );
         event.setTickets(tickets);
         EasyVENT.database.createEvent(event);
 
@@ -342,7 +356,9 @@ public class EasyVENT {
                     GlobalVariables.EVENT = new Event(
                         createEventFrame.getName(),
                         GlobalVariables.USER_NAME,
+                        "Kraj",
                         createEventFrame.getLocatione(),
+                        "Ulica",
                         createEventFrame.getDateTime()
                     );
                     GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
