@@ -138,24 +138,12 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 accountType = 0;    // 0 for client account
             }
 
-            loginTextField.setText(null);
-            passwordTextField.setText(null);
-            nameTextField.setText(null);
-            surnameTextField.setText(null);
+            // loginTextField.setText(null);
+            // passwordTextField.setText(null);
+            // nameTextField.setText(null);
+            // surnameTextField.setText(null);
 
-            // TODO: check if correct
-            boolean isCorrect = true;
-            if (isCorrect) {
-                //create user object
-                isReady = true;
-            } else {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "This data is not correct",
-                    "Invalid user input",
-                    JOptionPane.ERROR_MESSAGE    // adds red "x" picture
-                );
-            }
+            isReady = true;
         }
     }
 

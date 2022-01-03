@@ -75,24 +75,4 @@ public class MainMenuFrame extends JFrame implements ActionListener{
     public String getOption() {
         return option;
     }
-
-    // public boolean getCancel(){
-    //     return cancel;
-    // }
-
-    // public boolean getSee(){
-    //     return see;
-    // }
-
-    // public boolean getMake(){
-    //     return make;
-    // }
-
-    // public boolean getManageT(){
-    //     return manageT;
-    // }
-
-    // public boolean getManageE(){
-    //     return manageE;
-    // }
 }

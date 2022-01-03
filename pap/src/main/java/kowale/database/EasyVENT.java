@@ -6,6 +6,8 @@ import kowale.event.Event;
 
 import java.lang.Thread;
 
+import javax.swing.JOptionPane;
+
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -80,27 +82,48 @@ public class EasyVENT {
                         registerFrame = new RegisterFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (registerFrame.getIsReady()) {
-                        if (registerFrame.getAccountType() == 0){
-                            Client new_user = new Client(
-                                registerFrame.getUserName(),
-                                registerFrame.getUserSurname(),
-                                registerFrame.getUserLogin(),
-                                registerFrame.getUserPassword()
-                            );
-                            EasyVENT.database.register_new_user(new_user);
+                        // check if data is correct
+                        System.out.println("Ready");
+                        
+                        if (
+                            registerFrame.getUserName().trim().length() > 0 &&
+                            registerFrame.getUserSurname().trim().length() > 0 &&
+                            registerFrame.getUserLogin().trim().length() > 0 &&
+                            registerFrame.getUserPassword().trim().length() > 0
+                        ) {
+                            if (registerFrame.getAccountType() == 0){
+                                Client new_user = new Client(
+                                    registerFrame.getUserName(),
+                                    registerFrame.getUserSurname(),
+                                    registerFrame.getUserLogin(),
+                                    registerFrame.getUserPassword()
+                                );
+                                EasyVENT.database.register_new_user(new_user);
+                            } else {
+                                EventOrganizer new_user = new EventOrganizer(
+                                    registerFrame.getUserName(),
+                                    registerFrame.getUserSurname(),
+                                    registerFrame.getUserLogin(),
+                                    registerFrame.getUserPassword()
+                                );
+                                EasyVENT.database.register_new_user(new_user);
+                            }
+    
+                            GlobalVariables.FRAME_TYPE = "Welcome";
+                            registerFrame.dispose();
+                            registerFrame = null;
                         } else {
-                            EventOrganizer new_user = new EventOrganizer(
-                                registerFrame.getUserName(),
-                                registerFrame.getUserSurname(),
-                                registerFrame.getUserLogin(),
-                                registerFrame.getUserPassword()
-                            );
-                            EasyVENT.database.register_new_user(new_user);
-                        }
+                            registerFrame.setIsReady(false);
 
-                        GlobalVariables.FRAME_TYPE = "Welcome";
-                        registerFrame.dispose();
-                        registerFrame = null;
+                            System.out.println("Not correct");
+                            JOptionPane.showMessageDialog(
+                                null,
+                                "Invalid value in one or more fields.",
+                                "Invalid user input",
+                                JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                            );
+                        }
+                        
                     }
                     break;
                 case "Login":
@@ -123,17 +146,19 @@ public class EasyVENT {
                                 GlobalVariables.USER_TYPE = null;
                                 GlobalVariables.FRAME_TYPE = "Welcome";
                                 break;
+                            case "viewEvents":
+                                GlobalVariables.FRAME_TYPE = "ViewEvents";
+                                break;
                             case "manageEvents":
                                 GlobalVariables.FRAME_TYPE = "ViewEventsOrganizer";
                                 break;
                             case "createEvent":
                                 GlobalVariables.FRAME_TYPE = "CreateEvent";
                                 break;
-                            case "viewEvents":
-                                GlobalVariables.FRAME_TYPE = "ViewEvents";
-                                break;
                             case "manageTickets":
                                 // GlobalVariables.FRAME_TYPE = "ManageTickets";
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                activeFrameType = null;
                                 break;
                         }
                         mainMenuFrame.dispose();
