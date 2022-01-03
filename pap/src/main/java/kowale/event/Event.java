@@ -14,8 +14,7 @@ public class Event {
     private String location;
     private LocalDateTime dateTime;
     // private int numOfSectors;
-    private HashMap<String, HashMap<String, Integer>> tickets =
-        new HashMap<String, HashMap<String, Integer>>();
+    private HashMap<String, HashMap<String, Integer>> tickets;
 
     public Event(
         String name,
@@ -27,7 +26,6 @@ public class Event {
         this.organizer = organizer;
         this.location = location;
         this.dateTime = dateTime;
-        // this.numOfSectors = numOfSectors;
     }
 
     public String getName() {
@@ -68,6 +66,8 @@ public class Event {
 
     public void setTickets(HashMap<String, HashMap<String, Integer>> tickets) {
         this.tickets = tickets;
+        // System.out.println(tickets);
+        // System.out.println(tickets.size());
     }
 
     // public HashMap<String, Integer> getTickets() {
@@ -88,6 +88,32 @@ public class Event {
         // }
 
         return eventInfo;
+    }
+
+    public String[][] getDetails() {
+        // {"Number of sector", "Number of seats", "Adult ticket price"}
+
+        String[][] details = new String[tickets.size()][3];
+        
+        if (tickets.size() > 0) {
+            // details = new String[events.size()][4];
+            System.out.println(tickets);
+
+            for (int i = 0; i < tickets.size(); i++) {
+                System.out.println(String.valueOf(i));
+                HashMap<String, Integer> sector = tickets.get(String.valueOf(i+1));
+                System.out.println(sector);
+                details[i][0] = String.valueOf(i+1);
+                details[i][1] = String.valueOf(sector.get("Number"));
+                details[i][2] = String.valueOf(sector.get("Price"));
+                // details[i][0] = String.valueOf(i+1);
+            }
+        }
+
+        System.out.println("details:");
+        System.out.println(details);
+
+        return details;
     }
 
 }

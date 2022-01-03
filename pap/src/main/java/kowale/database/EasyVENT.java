@@ -13,9 +13,10 @@ import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+// import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -52,11 +53,25 @@ public class EasyVENT {
         newOrganizer = new EventOrganizer("s", "s", "s", hash("s"));
         EasyVENT.database.register_new_user(newOrganizer);
 
-        // create exampl events
+        // create example events
+        HashMap<String, HashMap<String, Integer>> tickets = new HashMap<String, HashMap<String, Integer>>();
+        HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
+        int number = 1;
+        int price = 1;
+        numberPrice.put("Number", number);
+        numberPrice.put("Price", price);
+
+        tickets.put("1", numberPrice);
+        tickets.put("2", numberPrice);
+
         LocalDateTime dateTime = LocalDateTime.now();
-        Event event = new Event("Mecz", null, "PGE Narodowy", dateTime);
+
+        Event event = new Event("Ludzie biegający w kółko", "Google", "Warszafka", dateTime);
+        event.setTickets(tickets);
         EasyVENT.database.createEvent(event);
-        event = new Event("Meczyk jakiś", null, "Bydgoszcz", dateTime);
+
+        event = new Event("Meczyk jakiś", "Firma Krzak", "Bydgoszcz", dateTime);
+        event.setTickets(tickets);
         EasyVENT.database.createEvent(event);
 
         mainLoop();
@@ -86,18 +101,16 @@ public class EasyVENT {
         
         if (events.size() > 0) {
             // data = new String[events.size()][4];
-
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
                 data[i] = event.getEventInfo();
             }
-    
         }
 
-        System.out.println("events:");
-        System.out.println(events);
-        System.out.println("data:");
-        System.out.println(data);
+        // System.out.println("events:");
+        // System.out.println(events);
+        // System.out.println("data:");
+        // System.out.println(data);
 
         return data;
     }
@@ -239,6 +252,7 @@ public class EasyVENT {
                     break;
                 case "details":
                     GlobalVariables.FRAME_TYPE = "EventDetails";
+                    GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
                     break;
             }
             viewEventsFrame.dispose();
@@ -331,10 +345,10 @@ public class EasyVENT {
 
     private void eventDetails() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            String[][] data = {
-                { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
-                { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
-            };
+            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+            // System.out.println(event);
+            String[][] data = event.getDetails();
+            // System.out.println(data);
             eventDetailsFrame = new EventDetailsFrame(data);
             activeFrameType = GlobalVariables.FRAME_TYPE;
         } else if (eventDetailsFrame.getOption() != "") {

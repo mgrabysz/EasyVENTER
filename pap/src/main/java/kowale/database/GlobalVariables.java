@@ -4,6 +4,8 @@ import kowale.event.Event;
 public class GlobalVariables {
     public static volatile String FRAME_TYPE;
 
+    public static volatile int SELECTED_INDEX;
+
     public static volatile String USER_NAME;
     public static volatile int USER_ID;
     public static volatile String USER_TYPE;

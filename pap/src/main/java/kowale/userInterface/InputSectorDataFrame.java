@@ -70,7 +70,7 @@ public class InputSectorDataFrame extends BasicTableFrame {
                 tickets.put(tableData[row][0], numberPrice);
             }
 
-            System.out.println(tickets);
+            // System.out.println(tickets);
 
             option = "confirm";
         } else if (event.getSource()==cancelButton) {
