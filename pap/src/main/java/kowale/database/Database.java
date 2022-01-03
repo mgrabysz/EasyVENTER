@@ -100,22 +100,28 @@ public class Database {
         }
         boolean success;
         CallableStatement pstmt = null;
-
         try {
             if (user.getClass().getSimpleName() == "Client"){
-                pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?)}");
-                pstmt.setString(0, user.getLogin());
-                pstmt.setString(1, user.getPassword());
-                pstmt.setString(2, user.getName());
-                pstmt.setString(3, user.getSurname());
-//todo
+                Client cuser = (Client)user;
+                pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
+                pstmt.setString(0, cuser.getLogin());
+                pstmt.setString(1, cuser.getPassword());
+                pstmt.setString(2, cuser.getName());
+                pstmt.setString(3, cuser.getSurname());
+                pstmt.setString(4, cuser.getEmail());
+                pstmt.setInt(5, cuser.getPhoneNumber());
+                pstmt.setString(6, cuser.getGender());
+                pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
             } else if (user.getClass().getSimpleName() == "Organizer") {
-                pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?)}");
-                pstmt.setString(0, user.getLogin());
-                pstmt.setString(1, user.getPassword());
-                pstmt.setString(2, user.getName());
-                pstmt.setString(3, user.getSurname());
- //todo
+                EventOrganizer euser = (EventOrganizer)user;
+                pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
+                pstmt.setString(0, euser.getLogin());
+                pstmt.setString(1, euser.getPassword());
+                pstmt.setString(2, euser.getName());
+                pstmt.setString(3, euser.getSurname());
+                pstmt.setString(4, euser.getEmail());
+                pstmt.setInt(5, euser.getPhoneNumber());
+                pstmt.setString(6, euser.getCompanyName());
             }
             pstmt.execute();
             success = true;
