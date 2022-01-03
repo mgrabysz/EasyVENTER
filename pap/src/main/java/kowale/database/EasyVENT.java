@@ -51,11 +51,33 @@ public class EasyVENT {
 
     public String hash(String string) throws NoSuchAlgorithmException {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
-        byte[] digest = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
-        string = new String(digest, StandardCharsets.UTF_8);
+        byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
+        // string = new String(digest, StandardCharsets.UTF_8);
         // string = digest.toString(); // nondeterministic behaviour when using .toString()
 
-        return string;
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+
+        System.out.println(hexString.toString());
+        return hexString.toString();
+    }
+
+    private static String bytesToString(byte[] hash) {
+        StringBuilder hexString = new StringBuilder(2 * hash.length);
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) {
+                hexString.append('0');
+            }
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
     public void mainLoop() throws NoSuchAlgorithmException {
