@@ -181,13 +181,13 @@ public class Database {
                 "JOIN TICKET_QUANTITY USING(ticket_quantity_id)";
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-                    String organizer_id = rs.getInt("organizer_id");
-                    String name = rs.getString("event_name");
-                    String location_id = rs.getInt("country_id");
-                    Date start_date = rs.getDate("start_time");
+                    // String organizer_id = rs.getInt("organizer_id");
+                    // String name = rs.getString("event_name");
+                    // String location_id = rs.getInt("country_id");
+                    // Date start_date = rs.getDate("start_time");
 
-                    event = new Event(name, organizer, location, start_date);
-                    events.add(event);
+                    // event = new Event(name, organizer, location, start_date);
+                    // events.add(event);
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
