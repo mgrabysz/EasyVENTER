@@ -8,6 +8,8 @@ public class Ticket {
     private String category;
     private String sector;
     private int seat;
+    private int price;
+    private String owner;
 
     public Ticket(
         String category,
@@ -19,13 +21,13 @@ public class Ticket {
         this.seat = seat;
     }
 
-    // public int getPrice() {
-    //     return price;
-    // }
+    public int getPrice() {
+        return price;
+    }
 
-    // public float getPriceInPLN() {
-    //     return price / 100f;
-    // }
+    public float getPriceInPLN() {
+        return price / 100f;
+    }
 
     public String getCategory() {
         return category;
@@ -43,9 +45,13 @@ public class Ticket {
         this.category = category;
     }
 
-    // public void removeOwner() {
-    //     this.owner = null;
-    // }
+    public String getOwner() {
+        return owner;
+    }
+
+    public void removeOwner() {
+        this.owner = null;
+    }
 
     // public String toString() {
     //     String ticketInfo = "ID: " + id;
