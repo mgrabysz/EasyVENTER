@@ -1,3 +1,4 @@
 *.class
 target/
 .vscode/settings.json
+password.java
