@@ -32,15 +32,13 @@ public class Client extends User {
         type = "client";
     }
 
-    // public void buyTicket(Ticket ticket){
-    //     tickets.add(ticket);
-    //     ticket.setOwner(this.getLogin());
-    // }
+    public void buyTicket(Ticket ticket){
+        tickets.add(ticket);
+    }
 
-    // public void cancelTicket(Ticket ticket){
-    //     tickets.remove(ticket);
-    //     ticket.removeOwner();
-    // }
+    public void cancelTicket(Ticket ticket){
+        tickets.remove(ticket);
+    }
 
     public LinkedList<Ticket> getTicketsList(){
         return tickets;

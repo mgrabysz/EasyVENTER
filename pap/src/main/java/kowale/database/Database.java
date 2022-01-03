@@ -4,6 +4,7 @@ import kowale.user.EventOrganizer;
 import kowale.user.User;
 import kowale.event.Event;
 
+import java.sql.Timestamp;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -184,8 +185,8 @@ public class Database {
                     // String organizer_id = rs.getInt("organizer_id");
                     // String name = rs.getString("event_name");
                     // String location_id = rs.getInt("country_id");
-                    // Date start_date = rs.getDate("start_time");
-
+                    Date start_date = rs.getDate("start_time");
+                    LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
                     // event = new Event(name, organizer, location, start_date);
                     // events.add(event);
                 }

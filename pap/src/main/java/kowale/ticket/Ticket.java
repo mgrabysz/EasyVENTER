@@ -9,16 +9,17 @@ public class Ticket {
     private String sector;
     private int seat;
     private int price;
-    private String owner;
 
     public Ticket(
         String category,
         String sector,
-        int seat
+        int seat,
+        int price
     ) {
         this.category = category;
         this.sector = sector;
         this.seat = seat;
+        this.price = price;
     }
 
     public int getPrice() {
@@ -43,14 +44,6 @@ public class Ticket {
 
     public void setCategory(String category) {
         this.category = category;
-    }
-
-    public String getOwner() {
-        return owner;
-    }
-
-    public void removeOwner() {
-        this.owner = null;
     }
 
     // public String toString() {
