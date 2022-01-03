@@ -2,8 +2,10 @@ package kowale;
 
 import kowale.event.Event;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 import org.junit.Test;
 
@@ -30,5 +32,12 @@ public class EventTest{
     @Test
     public void getDateTimeTest(){
         assertEquals(dateTime, event.getDateTime());
+    }
+
+    @Test
+    public void getEventInfo(){
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        String[] strings = {"Mecz", "PZPN", "PGE Narodowy", dateTime.format(formatter)};
+        assertArrayEquals(strings, event.getEventInfo());
     }
 }

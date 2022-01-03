@@ -2,6 +2,7 @@ package kowale.event;
 
 import java.util.HashMap;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Event {
     /*
@@ -73,11 +74,14 @@ public class Event {
     //     return tickets;
     // }
 
-    public String toString() {
-        String eventInfo = "\nName: " + name;
-        eventInfo += "\nOrganizer: " + organizer;
-        eventInfo += "\nLocation: " + location;
-        eventInfo += "\nDate and time: " + dateTime;
+    public String[] getEventInfo() {
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+
+        String[] eventInfo = {name, organizer, location, dateTime.format(formatter)};
+        // String eventInfo = "\nName: " + name;
+        // eventInfo += "\nOrganizer: " + organizer;
+        // eventInfo += "\nLocation: " + location;
+        // eventInfo += "\nDate and time: " + dateTime;
         // eventInfo += "\nTickets:";
         // for (HashMap.Entry<String, Integer> entry : tickets.entrySet()) {
         //     eventInfo += ("\n   " + entry.getKey() + ": " + entry.getValue());

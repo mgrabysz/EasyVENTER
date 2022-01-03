@@ -10,46 +10,58 @@ import javax.swing.JOptionPane;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.nio.charset.StandardCharsets; 
+import java.nio.charset.StandardCharsets;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
+import java.util.ArrayList;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
 public class EasyVENT {
-    public static Database database;
+    private static Database database;
 
-    public WelcomeFrame welcomeFrame;
-    public RegisterFrame registerFrame;
-    public LoginFrame loginFrame;
-    public MainMenuFrame mainMenuFrame;
-    public CreateEventFrame createEventFrame;
-    public ViewEventsOrganizerFrame viewEventsOrganizerFrame;
-    public ViewEventsFrame viewEventsFrame;
-    public InputSectorDataFrame inputSectorDataFrame;
-    public EventDetailsFrame eventDetailsFrame;
+    private WelcomeFrame welcomeFrame;
+    private RegisterFrame registerFrame;
+    private LoginFrame loginFrame;
+    private MainMenuFrame mainMenuFrame;
+    private CreateEventFrame createEventFrame;
+    private ViewEventsOrganizerFrame viewEventsOrganizerFrame;
+    private ViewEventsFrame viewEventsFrame;
+    private InputSectorDataFrame inputSectorDataFrame;
+    private EventDetailsFrame eventDetailsFrame;
 
-    public String user_type;
-    // public JFrame activeFrame;
+    // private String user_type;
+    // private JFrame activeFrame;
 
     public EasyVENT() throws NoSuchAlgorithmException { // Constructor
         database = new Database(); // create database
 
-        // create an example client
+        // create example clients
         Client newClient = new Client("Stachu", "Jones", "sjones", hash("sjones"));
         EasyVENT.database.register_new_user(newClient);
         newClient = new Client("a", "a", "a", hash("a"));
 
         EasyVENT.database.register_new_user(newClient);
 
-        // create an example organizer
+        // create example organizers
         EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", hash("pzpn"));
         EasyVENT.database.register_new_user(newOrganizer);
         newOrganizer = new EventOrganizer("s", "s", "s", hash("s"));
         EasyVENT.database.register_new_user(newOrganizer);
 
+        // create exampl events
+        LocalDateTime dateTime = LocalDateTime.now();
+        Event event = new Event("Mecz", null, "PGE Narodowy", dateTime);
+        EasyVENT.database.createEvent(event);
+        event = new Event("Meczyk jakiś", null, "Bydgoszcz", dateTime);
+        EasyVENT.database.createEvent(event);
+
         mainLoop();
     }
 
-    public String hash(String string) throws NoSuchAlgorithmException {
+    private String hash(String string) throws NoSuchAlgorithmException {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
         // string = new String(digest, StandardCharsets.UTF_8);
@@ -64,14 +76,37 @@ public class EasyVENT {
             hexString.append(hex);
         }
 
-        System.out.println(hexString.toString());
+        // System.out.println(hexString.toString());
         return hexString.toString();
+    }
+
+    private String[][] eventsToData(ArrayList<Event> events) {
+        String[][] data = new String[events.size()][4];
+        
+        if (events.size() > 0) {
+            // data = new String[events.size()][4];
+
+            for (int i = 0; i < events.size(); i++) {
+                Event event = events.get(i);
+                data[i] = event.getEventInfo();
+            }
+    
+        }
+
+        System.out.println("events:");
+        System.out.println(events);
+        System.out.println("data:");
+        System.out.println(data);
+
+        return data;
     }
 
     public void mainLoop() throws NoSuchAlgorithmException {
         boolean runLoop = true;
         GlobalVariables.FRAME_TYPE = "Welcome";
         String activeFrameType = "";
+        GlobalVariables.USER_NAME = null;
+        GlobalVariables.USER_ID = -1;
         GlobalVariables.USER_TYPE = null;
 
         do {
@@ -136,7 +171,7 @@ public class EasyVENT {
                         } else {
                             registerFrame.setIsReady(false);
 
-                            System.out.println("Not correct");
+                            // System.out.println("Not correct");
                             JOptionPane.showMessageDialog(
                                 null,
                                 "Invalid value in one or more fields.",
@@ -183,6 +218,8 @@ public class EasyVENT {
                     } else if (mainMenuFrame.getOption() != "") {
                         switch (mainMenuFrame.getOption()) {
                             case "logout":
+                                GlobalVariables.USER_NAME = null;
+                                GlobalVariables.USER_ID = -1;
                                 GlobalVariables.USER_TYPE = null;
                                 GlobalVariables.FRAME_TYPE = "Welcome";
                                 break;
@@ -205,12 +242,28 @@ public class EasyVENT {
                         mainMenuFrame = null;
                     }
                     break;
+                case "ViewEvents":
+                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
+                        String[][] data = eventsToData(database.getEvents()); 
+                        viewEventsFrame = new ViewEventsFrame(data);
+                        activeFrameType = GlobalVariables.FRAME_TYPE;
+                    } else if (viewEventsFrame.getOption() != "") {
+                        switch (viewEventsFrame.getOption()) {
+                            case "cancel":
+                                GlobalVariables.FRAME_TYPE = "MainMenu";
+                                break;
+                            case "details":
+                                GlobalVariables.FRAME_TYPE = "EventDetails";
+                                break;
+                        }
+                        viewEventsFrame.dispose();
+                        viewEventsFrame = null;
+                    }
+                    break;
                 case "ViewEventsOrganizer":
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
-                        String[][] data = {
-                            { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
-                            { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
-                        };
+                        // TODO: show only events connected to logged organizer
+                        String[][] data = eventsToData(database.getEvents());
                         viewEventsOrganizerFrame = new ViewEventsOrganizerFrame(data);
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (viewEventsOrganizerFrame.getOption() != "") {
@@ -230,6 +283,7 @@ public class EasyVENT {
                     }
                     break;
                 case "CreateEvent":
+                    // TODO: assign proper organizer to event
                     if(activeFrameType != GlobalVariables.FRAME_TYPE){
                         createEventFrame = new CreateEventFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
@@ -241,7 +295,7 @@ public class EasyVENT {
                             case "create":
                                 GlobalVariables.EVENT = new Event(
                                     createEventFrame.getName(),
-                                    null,
+                                    GlobalVariables.USER_NAME,
                                     createEventFrame.getLocatione(),
                                     createEventFrame.getDateTime()
                                 );
@@ -284,27 +338,6 @@ public class EasyVENT {
                         }
                         inputSectorDataFrame.dispose();
                         inputSectorDataFrame = null;
-                    }
-                    break;
-                case "ViewEvents":
-                    if(activeFrameType != GlobalVariables.FRAME_TYPE){
-                        String[][] data = {
-                            { "Meczyk jakiś", "Firma Krzak", "Bydgoszcz", "35.19.2022 25:72" },
-                            { "Ludzie biegający w kółko", "Google", "Warszafka", "48.17.2023 29:81" }
-                        };
-                        viewEventsFrame = new ViewEventsFrame(data);
-                        activeFrameType = GlobalVariables.FRAME_TYPE;
-                    } else if (viewEventsFrame.getOption() != "") {
-                        switch (viewEventsFrame.getOption()) {
-                            case "cancel":
-                                GlobalVariables.FRAME_TYPE = "MainMenu";
-                                break;
-                            case "details":
-                                GlobalVariables.FRAME_TYPE = "EventDetails";
-                                break;
-                        }
-                        viewEventsFrame.dispose();
-                        viewEventsFrame = null;
                     }
                     break;
                 case "EventDetails":
