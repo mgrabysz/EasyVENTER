@@ -1,8 +1,6 @@
 package kowale.userInterface;
 
 import kowale.database.GlobalVariables;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -15,6 +13,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 
 import java.util.Vector;
+import java.util.HashMap;
 import java.text.DecimalFormat;
 
 
@@ -29,33 +28,21 @@ public class EventDetailsFrame extends BasicTableFrame {
     JComboBox<Integer> childCombo, adultCombo, vipCombo;
     JButton calculateButton;
 
-    private String name, country, city, address, organizer;
-    private LocalDateTime dateTime;
+    private String name, country, city, address, organizer, dateTime;
     private boolean isReady, isCancelled;
     private int numberAdults, numberChildren, numberVips, sector;
 
 
-    public EventDetailsFrame(String[][] data) {
+    public EventDetailsFrame(HashMap<String, String> eventDetails, String[][] data) {
         super(data, new String[]{"Number of sector", "Number of seats", "Adult ticket price"} , "Confirm", false);
         isReady = isCancelled = false;
 
-        // String name = event.getName();
-        // String organizer = event.getOrganizer();
-        // String location = event.getLocation();
-
-        // =============== uwaga hardkodowanie ===================
-        name = "Otwarcie parasola";
-        country = "Wielka Bolzga";
-        city = "Warszawa";
-        address = "Nowowiejska 15/19";
-        dateTime = LocalDateTime.now();
-        organizer = "Polish Meme Association";
-
-        // Custom format
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm");
-
-        // Format LocalDateTime
-        String formattedDateTime = dateTime.format(formatter);
+        name = eventDetails.get("name");
+        country = eventDetails.get("country");
+        city = eventDetails.get("city");
+        address = eventDetails.get("address");
+        dateTime = eventDetails.get("dateTime");
+        organizer = eventDetails.get("organizer");
 
         this.setTitle(name);
 
@@ -88,7 +75,7 @@ public class EventDetailsFrame extends BasicTableFrame {
         Dimension dateTimeTitleLabelSize = dateTimeTitleLabel.getPreferredSize();
         dateTimeTitleLabel.setBounds(0, 0, dateTimeTitleLabelSize.width, dateTimeTitleLabelSize.height);
 
-        dateLabel = new JLabel(formattedDateTime);
+        dateLabel = new JLabel(dateTime);
         dateTimePanel.add(dateLabel);
         Dimension dateLabelSize = dateLabel.getPreferredSize();
         dateLabel.setBounds(0, 30, dateLabelSize.width, dateLabelSize.height);
@@ -216,13 +203,6 @@ public class EventDetailsFrame extends BasicTableFrame {
         DecimalFormat df = new DecimalFormat("###.##");
         return df.format(d);
     }
-
-    // public void setIsCancelled(boolean b) {
-    //     isCancelled = b;
-    // }
-    // public void setIsReady(boolean b) {
-    //     isReady = b;
-    // }
 
     public boolean getIsCancelled() {
         return isCancelled;
