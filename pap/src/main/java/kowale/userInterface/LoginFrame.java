@@ -90,22 +90,10 @@ public class LoginFrame extends JFrame implements ActionListener {
             userPassword = new String(passwordTextField.getPassword());
 
             // mało elegancki sposób na wyczyszczenie textfielda
-            loginTextField.setText(null);
-            passwordTextField.setText(null);
+            // loginTextField.setText(null);
+            // passwordTextField.setText(null);
 
-            boolean login_successfully = EasyVENT.database.logIntoDatabase(userLogin, userPassword);
-
-            if (login_successfully){
-                System.out.println("Log in was successful");
-                isReady = true;
-            } else {
-                JOptionPane.showMessageDialog(
-                    null,
-                    "Login or password incorrect",
-                    "Invalid user input",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                );
-            }
+            isReady = true;
         }
     }
 

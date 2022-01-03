@@ -82,7 +82,7 @@ public class EasyVENT {
                         registerFrame = new RegisterFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (registerFrame.getIsReady()) {
-                        // check if data is correct
+                        // check if user input is correct
                         System.out.println("Ready");
                         
                         if (
@@ -131,9 +131,28 @@ public class EasyVENT {
                         loginFrame = new LoginFrame();
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (loginFrame.getIsReady()) {
-                        GlobalVariables.FRAME_TYPE = "MainMenu";
-                        loginFrame.dispose();
-                        loginFrame = null;
+                        // check if user input is correct
+                        if (
+                            EasyVENT.database.logIntoDatabase(
+                                loginFrame.getUserLogin(),
+                                loginFrame.getUserPassword()
+                            )
+                        ) {
+                            GlobalVariables.FRAME_TYPE = "MainMenu";
+                            loginFrame.dispose();
+                            loginFrame = null;
+                        } else {
+                            loginFrame.setIsReady(false);
+
+                            JOptionPane.showMessageDialog(
+                                null,
+                                "Login or password incorrect.",
+                                "Invalid user input",
+                                JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                            );
+                        }
+
+                        
                     }
                     break;
                 case "MainMenu":
