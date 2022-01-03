@@ -19,11 +19,11 @@ public class ViewEventsFrame extends BasicTableFrame {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
-            int index = table.getSelectedRow(); // returns index of selected row
+            selectedIndex = table.getSelectedRow(); // returns index of selected row
 
             // ============ for testing ==================
             System.out.println("Details button clicked. Index of selected row:");
-            System.out.println(index);
+            System.out.println(selectedIndex);
             // ===========================================
 
             // isReady = true;

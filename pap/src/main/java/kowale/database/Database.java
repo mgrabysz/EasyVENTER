@@ -41,6 +41,7 @@ public class Database {
         {
             if(users.get(i).getLogin().equals(_login)){
                 if(users.get(i).getPassword().equals(_password)){
+                    GlobalVariables.USER_NAME = users.get(i).getName();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
                     return true;
                 }
@@ -63,9 +64,6 @@ public class Database {
         Adds new event to the database. Returns boolean true
         if user has been added successfully.
         */
-        String organizer = "PZPN";
-
-        event.setOrganizer(organizer);
         events.add(event);
 
         return true;
