@@ -1,9 +1,6 @@
 package kowale;
 import kowale.user.Client;
-import kowale.user.User;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedList;
 import kowale.ticket.Ticket;
 import static org.junit.Assert.assertEquals;
