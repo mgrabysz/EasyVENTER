@@ -102,7 +102,7 @@ public class EasyVENT {
         tickets.put("1", numberPrice);
         tickets.put("2", numberPrice);
 
-        
+
 
         Event event = new Event(
             "Ludzie biegający w kółko",
@@ -150,7 +150,7 @@ public class EasyVENT {
 
     private String[][] eventsToData(ArrayList<Event> events) {
         String[][] data = new String[events.size()][4];
-        
+
         if (events.size() > 0) {
             // data = new String[events.size()][4];
             for (int i = 0; i < events.size(); i++) {
@@ -182,7 +182,7 @@ public class EasyVENT {
             }
             welcomeFrame.dispose();
             welcomeFrame = null;
-        }    
+        }
     }
 
     private void register() throws NoSuchAlgorithmException {
@@ -301,7 +301,7 @@ public class EasyVENT {
 
     private void viewEvents() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            String[][] data = eventsToData(database.getEvents()); 
+            String[][] data = eventsToData(database.getEvents());
             viewEventsFrame = new ViewEventsFrame(data);
             activeFrameType = GlobalVariables.FRAME_TYPE;
         } else if (viewEventsFrame.getOption() != "") {

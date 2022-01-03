@@ -26,7 +26,7 @@ public class Main {
         // new InputSectorDataFrame(sectors);
         // new EventDetailsFrame(sectors);
 
-
+        // new CreateEventFrame();
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();
         //        // Create user who is an organizer

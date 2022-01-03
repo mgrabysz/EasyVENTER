@@ -28,11 +28,10 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     JLabel streetLabel, nameLabel, dateLabel, timeLabel, sectorsLabel, cityLabel, countryLabel;
     Border border;
 
-    private String name;
-    private String location;
-    private int numOfSectors;
-    private LocalDateTime dateTime;
-    private String option = "";
+    protected String name, street, city, country;
+    protected int numOfSectors;
+    protected LocalDateTime dateTime;
+    protected String option = "";
 
     public CreateEventFrame() {
         this.setTitle("Create a new event");
@@ -181,7 +180,9 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         if (e.getSource()==createButton){
 
             name = nameTextField.getText();
-            location = streetTextField.getText();
+            street = streetTextField.getText();
+            city = cityTextField.getText();
+            country = (String) countryCombo.getSelectedItem();
             numOfSectors = (Integer) sectorCombo.getSelectedItem();
 
             // prices = new float[3];
@@ -293,8 +294,14 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     // getLocation gives error
     // probably due to collison with Event.getLocation()
     // it's strange
-    public String getLocatione() {
-        return location;
+    public String getStreet() {
+        return street;
+    }
+    public String getCity() {
+        return city;
+    }
+    public String getCountry() {
+        return country;
     }
 
     public LocalDateTime getDateTime() {
