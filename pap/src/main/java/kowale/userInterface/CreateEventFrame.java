@@ -1,6 +1,5 @@
 package kowale.userInterface;
 
-// import kowale.database.EasyVENT;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -15,7 +14,6 @@ import javax.swing.border.Border;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-// import java.lang.StackWalker.Option;
 import java.awt.Color;
 import java.awt.Dimension;
 
@@ -24,10 +22,10 @@ import javax.swing.*;
 public class CreateEventFrame extends JFrame implements ActionListener {
 
     JButton createButton, cancelButton;
-    JTextField nameTextField, locationTextField;
-    JComboBox<String> dayCombo, monthCombo, yearCombo, hourCombo, minuteCombo;
+    JTextField nameTextField, streetTextField, cityTextField;
+    JComboBox<String> dayCombo, monthCombo, yearCombo, hourCombo, minuteCombo, countryCombo;
     JComboBox<Integer> sectorCombo;
-    JLabel locationLabel, nameLabel, dateLabel, timeLabel, sectorsLabel;
+    JLabel streetLabel, nameLabel, dateLabel, timeLabel, sectorsLabel, cityLabel, countryLabel;
     Border border;
 
     private String name;
@@ -41,11 +39,12 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
-        this.setSize(new Dimension(320, 700));
+        this.setSize(new Dimension(640, 550));
         this.setLocationRelativeTo(null);
 
         border = BorderFactory.createLineBorder(new Color(0x004169E1), 3);
 
+        // left column
         nameLabel = new JLabel("Name:");
         nameLabel.setBounds(50, 50, 220, 30);
         nameLabel.setHorizontalAlignment(JLabel.LEFT);
@@ -55,14 +54,14 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         nameTextField.setBounds(50, 80, 220, 30);
         this.add(nameTextField);
 
-        locationLabel = new JLabel("Location:");
-        locationLabel.setBounds(50, 130, 220, 30);
-        locationLabel.setHorizontalAlignment(JLabel.LEFT);
-        this.add(locationLabel);
+        streetLabel = new JLabel("Address:");
+        streetLabel.setBounds(50, 130, 220, 30);
+        streetLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.add(streetLabel);
 
-        locationTextField = new JTextField();
-        locationTextField.setBounds(50, 160, 220, 30);
-        this.add(locationTextField);
+        streetTextField = new JTextField();
+        streetTextField.setBounds(50, 160, 220, 30);
+        this.add(streetTextField);
 
         dateLabel = new JLabel("Date:");
         dateLabel.setBounds(50, 210, 220, 30);
@@ -121,11 +120,33 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         }
         minuteCombo = new JComboBox<String>(minutes);
         minuteCombo.setBounds(160, 320, 110, 30);
-        // monthsCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(minuteCombo);
 
+        // right column
+        cityLabel = new JLabel("City:");
+        cityLabel.setBounds(370, 50, 220, 30);
+        cityLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.add(cityLabel);
+
+        cityTextField = new JTextField();
+        cityTextField.setBounds(370, 80, 220, 30);
+        this.add(cityTextField);
+
+        countryLabel = new JLabel("Country:");
+        countryLabel.setBounds(370, 130, 220, 30);
+        countryLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.add(countryLabel);
+
+        Vector<String> countries = new Vector<String>();
+        countries.add("Polska");
+        countries.add("Hiszpania");
+
+        countryCombo = new JComboBox<String>(countries);
+        countryCombo.setBounds(370, 160, 220, 30);
+        this.add(countryCombo);
+
         sectorsLabel = new JLabel("Number of sectors:");
-        sectorsLabel.setBounds(50, 370, 220, 30);
+        sectorsLabel.setBounds(370, 210, 220, 30);
         sectorsLabel.setHorizontalAlignment(JLabel.LEFT);
         this.add(sectorsLabel);
 
@@ -134,20 +155,20 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             sectors.add(i);
         }
         sectorCombo = new JComboBox<Integer>(sectors);
-        sectorCombo.setBounds(50, 400, 220, 30);
+        sectorCombo.setBounds(370, 240, 220, 30);
         this.add(sectorCombo);
 
         createButton = new JButton();
         createButton.setText("Create");
         createButton.setFocusable(false);
-        createButton.setBounds(50, 480, 220, 50);
+        createButton.setBounds(370, 410, 220, 50);
         createButton.addActionListener(this);
         this.add(createButton);
 
         cancelButton = new JButton();
         cancelButton.setText("Cancel");
         cancelButton.setFocusable(false);
-        cancelButton.setBounds(50, 560, 220, 50);
+        cancelButton.setBounds(50, 410, 220, 50);
         cancelButton.addActionListener(this);
         this.add(cancelButton);
 
@@ -160,7 +181,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         if (e.getSource()==createButton){
 
             name = nameTextField.getText();
-            location = locationTextField.getText();
+            location = streetTextField.getText();
             numOfSectors = (Integer) sectorCombo.getSelectedItem();
 
             // prices = new float[3];
@@ -237,7 +258,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             // System.out.println(dateTimeString);
             // System.out.println(numOfSectors);
 
-            
+
             // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
             option = "create";
