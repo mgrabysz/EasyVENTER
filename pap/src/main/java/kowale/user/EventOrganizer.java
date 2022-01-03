@@ -16,6 +16,14 @@ public class EventOrganizer extends User {
         type = "organizer";
     }
 
+    public EventOrganizer(
+        String login, String password
+    ){
+        super(login, password);
+        events = new LinkedList<Event>();
+        type = "organizer";
+    }
+
     public void addEvent(Event event){
         events.add(event);
     }

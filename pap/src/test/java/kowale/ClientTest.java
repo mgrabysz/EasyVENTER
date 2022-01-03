@@ -1,5 +1,7 @@
 package kowale;
 import kowale.user.Client;
+import kowale.user.User;
+
 import java.util.LinkedList;
 import kowale.ticket.Ticket;
 import static org.junit.Assert.assertEquals;
@@ -9,6 +11,7 @@ import org.junit.Test;
 public class ClientTest {
     Client cl = new Client("John", "Rambo", "johnny", "1234");
     Ticket ticket = new Ticket(1, 100, "A", 25);
+
     @Test
     public void getTicketsTest(){
         LinkedList<Ticket> exp = new LinkedList<Ticket>();

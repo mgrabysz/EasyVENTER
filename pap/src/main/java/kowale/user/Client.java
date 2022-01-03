@@ -16,6 +16,14 @@ public class Client extends User {
         type = "client";
     }
 
+    public Client(
+        String login, String password
+    ){
+        super(login, password);
+        tickets = new LinkedList<Ticket>();
+        type = "client";
+    }
+
     public void buyTicket(Ticket ticket){
         tickets.add(ticket);
         ticket.setOwner(this.getLogin());
