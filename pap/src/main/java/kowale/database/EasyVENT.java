@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 // import java.time.format.DateTimeFormatter;
 
@@ -34,6 +35,9 @@ public class EasyVENT {
     private EventDetailsFrame eventDetailsFrame;
 
     private String activeFrameType = "";
+
+    private LocalDate date = LocalDate.now();
+    private LocalDateTime dateTime = LocalDateTime.now();
     // private String user_type;
     // private JFrame activeFrame;
 
@@ -41,16 +45,50 @@ public class EasyVENT {
         database = new Database(); // create database
 
         // create example clients
-        Client newClient = new Client("Stachu", "Jones", "sjones", hash("sjones"));
+        Client newClient = new Client(
+            "Stachu",
+            "Jones",
+            "sjones",
+            hash("sjones"),
+            "email",
+            -1,
+            "gender",
+            date
+        );
         EasyVENT.database.register_new_user(newClient);
-        newClient = new Client("a", "a", "a", hash("a"));
+        newClient = new Client(
+            "a",
+            "a",
+            "a",
+            hash("a"),
+            "email",
+            -1,
+            "gender",
+            date
+        );
 
         EasyVENT.database.register_new_user(newClient);
 
         // create example organizers
-        EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", hash("pzpn"));
+        EventOrganizer newOrganizer = new EventOrganizer(
+            "Zbigniew",
+            "Boniek",
+            "pzpn",
+            hash("pzpn"),
+            "email",
+            -1,
+            "company"
+        );
         EasyVENT.database.register_new_user(newOrganizer);
-        newOrganizer = new EventOrganizer("s", "s", "s", hash("s"));
+        newOrganizer = new EventOrganizer(
+            "s",
+            "s",
+            "s",
+            hash("s"),
+            "email",
+            -1,
+            "company"
+        );
         EasyVENT.database.register_new_user(newOrganizer);
 
         // create example events
@@ -64,7 +102,7 @@ public class EasyVENT {
         tickets.put("1", numberPrice);
         tickets.put("2", numberPrice);
 
-        LocalDateTime dateTime = LocalDateTime.now();
+        
 
         Event event = new Event("Ludzie biegający w kółko", "Google", "Warszafka", dateTime);
         event.setTickets(tickets);
@@ -150,7 +188,11 @@ public class EasyVENT {
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
-                        hash(registerFrame.getUserPassword())
+                        hash(registerFrame.getUserPassword()),
+                        "email",
+                        -1,
+                        "gender",
+                        date
                     );
                     EasyVENT.database.register_new_user(new_user);
                 } else {
@@ -158,7 +200,10 @@ public class EasyVENT {
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
-                        hash(registerFrame.getUserPassword())
+                        hash(registerFrame.getUserPassword()),
+                        "email",
+                        -1,
+                        "company"
                     );
                     EasyVENT.database.register_new_user(new_user);
                 }
