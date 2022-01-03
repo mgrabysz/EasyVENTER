@@ -11,12 +11,12 @@ public class User {
 
     public User(
         String name, String surname,
-        String login, String pass
+        String login, String password
     ){
         this.name = name;
         this.surname = surname;
         this.login = login;
-        this.password = pass;
+        this.password = password;
     }
 
     public String getLogin(){

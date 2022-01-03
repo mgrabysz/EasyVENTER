@@ -8,6 +8,9 @@ import java.lang.Thread;
 
 import javax.swing.JOptionPane;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.nio.charset.StandardCharsets; 
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -27,25 +30,40 @@ public class EasyVENT {
     public String user_type;
     // public JFrame activeFrame;
 
-    public EasyVENT(){ // Constructor
+    public EasyVENT() throws NoSuchAlgorithmException { // Constructor
         database = new Database(); // create database
 
         // create an example client
-        Client newClient = new Client("Stachu", "Jones", "sjones", "sjones");
+        Client newClient = new Client("Stachu", "Jones", "sjones", hash("sjones"));
         EasyVENT.database.register_new_user(newClient);
-        newClient = new Client("a", "a", "a", "a");
+        newClient = new Client("a", "a", "a", hash("a"));
+        System.out.println("a");
+        System.out.println(hash("a"));
+        System.out.println(hash("a"));
+        System.out.println(hash("a"));
+        System.out.println("---");
+
         EasyVENT.database.register_new_user(newClient);
 
         // create an example organizer
-        EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", "pzpn");
+        EventOrganizer newOrganizer = new EventOrganizer("Zbigniew", "Boniek", "pzpn", hash("pzpn"));
         EasyVENT.database.register_new_user(newOrganizer);
-        newOrganizer = new EventOrganizer("s", "s", "s", "s");
+        newOrganizer = new EventOrganizer("s", "s", "s", hash("s"));
         EasyVENT.database.register_new_user(newOrganizer);
 
         mainLoop();
     }
 
-    public void mainLoop() {
+    public String hash(String string) throws NoSuchAlgorithmException {
+        MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
+        byte[] digest = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
+        string = new String(digest, StandardCharsets.UTF_8);
+        // string = digest.toString(); // nondeterministic behaviour when using .toString()
+
+        return string;
+    }
+
+    public void mainLoop() throws NoSuchAlgorithmException {
         boolean runLoop = true;
         GlobalVariables.FRAME_TYPE = "Welcome";
         String activeFrameType = "";
@@ -83,8 +101,6 @@ public class EasyVENT {
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (registerFrame.getIsReady()) {
                         // check if user input is correct
-                        System.out.println("Ready");
-                        
                         if (
                             registerFrame.getUserName().trim().length() > 0 &&
                             registerFrame.getUserSurname().trim().length() > 0 &&
@@ -96,7 +112,7 @@ public class EasyVENT {
                                     registerFrame.getUserName(),
                                     registerFrame.getUserSurname(),
                                     registerFrame.getUserLogin(),
-                                    registerFrame.getUserPassword()
+                                    hash(registerFrame.getUserPassword())
                                 );
                                 EasyVENT.database.register_new_user(new_user);
                             } else {
@@ -104,7 +120,7 @@ public class EasyVENT {
                                     registerFrame.getUserName(),
                                     registerFrame.getUserSurname(),
                                     registerFrame.getUserLogin(),
-                                    registerFrame.getUserPassword()
+                                    hash(registerFrame.getUserPassword())
                                 );
                                 EasyVENT.database.register_new_user(new_user);
                             }
@@ -132,10 +148,13 @@ public class EasyVENT {
                         activeFrameType = GlobalVariables.FRAME_TYPE;
                     } else if (loginFrame.getIsReady()) {
                         // check if user input is correct
+                        System.out.println(loginFrame.getUserPassword());
+                        System.out.println(hash(loginFrame.getUserPassword()));
+
                         if (
                             EasyVENT.database.logIntoDatabase(
                                 loginFrame.getUserLogin(),
-                                loginFrame.getUserPassword()
+                                hash(loginFrame.getUserPassword())
                             )
                         ) {
                             GlobalVariables.FRAME_TYPE = "MainMenu";

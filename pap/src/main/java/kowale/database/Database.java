@@ -29,7 +29,7 @@ public class Database {
     }
 
     public boolean logIntoDatabase(String _login, String _password){
-        System.out.println("LOGINNG IN:");
+        // System.out.println("LOGINNG IN:");
         // iterate through userlist
         for(int i = 0, size = users.size(); i < size; i ++)
         {

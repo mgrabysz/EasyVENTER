@@ -9,9 +9,9 @@ public class Client extends User {
 
     public Client(
         String name, String surname,
-        String login, String pass
+        String login, String password
     ){
-        super(name, surname, login, pass);
+        super(name, surname, login, password);
         tickets = new LinkedList<Ticket>();
         type = "client";
     }

@@ -2,11 +2,13 @@ package kowale;
 import kowale.database.EasyVENT;
 import kowale.event.Event;
 import kowale.userInterface.*;
+
+import java.security.NoSuchAlgorithmException;
 import java.util.Vector;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NoSuchAlgorithmException {
 
         // String[][] data = {
         //     { "Meczyk jakiś", "Bydgoszcz", "35.19.2022 25:72", "120" },
