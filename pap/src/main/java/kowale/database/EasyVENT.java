@@ -213,22 +213,24 @@ public class EasyVENT {
         return data;
     }
 
-    private void welcome() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            welcomeFrame = new WelcomeFrame();
-            activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
-        } else if (welcomeFrame.getOption() != "") {
-            switch (welcomeFrame.getOption()) {
-                case "register":
-                    GlobalVariables.FRAME_TYPE= "Register";
-                    break;
-                case "login":
-                    GlobalVariables.FRAME_TYPE= "Login";
-                    break;
-            }
-            welcomeFrame.dispose();
-            welcomeFrame = null;
+private void welcome() throws Exception{
+        welcomeFrame = new WelcomeFrame();
+        activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
+        
+        while (welcomeFrame.getOption() == "") {
+            waiting();
         }
+        
+        switch (welcomeFrame.getOption()) {
+            case "register":
+                GlobalVariables.FRAME_TYPE= "Register";
+                break;
+            case "login":
+                GlobalVariables.FRAME_TYPE= "Login";
+                break;
+        }
+        welcomeFrame.dispose();
+        welcomeFrame = null;
     }
 
     private void register() throws Exception {
