@@ -79,7 +79,8 @@ public class Database {
         password password = new password();
         String pass = password.password;
         try {
-            connection = DriverManager.getConnection("ora4.ii.pw.edu.pl", "z01", pass);
+            String url = String.format("jdbc:oracle:thin:z01/%s@//ora4.ii.pw.edu.pl:1521/pdb1.ii.pw.edu.pl", pass);
+            connection = DriverManager.getConnection(url);
         } catch (SQLException ex) {
             System.out.println(ex);
         }
