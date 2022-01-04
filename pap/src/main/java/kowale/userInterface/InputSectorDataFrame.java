@@ -39,6 +39,7 @@ public class InputSectorDataFrame extends BasicTableFrame {
 
     public InputSectorDataFrame(String[][] data) {
         super(data, new String[]{"Sector Name", "Number of seats", "Ticket price"} , "Confirm", true);
+        this.setTitle("Enter number of seats and price of normal ticket");
         // isReady = isCancelled = false;
         // numOfSectors = table.getRowCount();
     }
@@ -69,7 +70,7 @@ public class InputSectorDataFrame extends BasicTableFrame {
             //     // System.out.println(numberPrice);
 
             //     // tickets.put(tableData[row][0], numberPrice);
-                
+
             //     // int number = Integer.parseInt(tableData[row][1]);
             //     // int price = Integer.parseInt(tableData[row][2]);
 

@@ -35,6 +35,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
         isReady = false;
 
+        this.setTitle("Login");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);

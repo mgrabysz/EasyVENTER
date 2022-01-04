@@ -23,6 +23,7 @@ public class WelcomeFrame extends JFrame implements ActionListener {
     private String option = "";
 
     public WelcomeFrame() {
+        this.setTitle("EasyVENTER");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);

@@ -14,6 +14,7 @@ public class ViewEventsFrame extends BasicTableFrame {
 
     public ViewEventsFrame(String[][] data) {
         super(data, new String[]{"Name", "Organizer", "Address", "Date and time"}, "Details", false);
+        this.setTitle("Browse events");
     }
 
     @Override
@@ -34,5 +35,5 @@ public class ViewEventsFrame extends BasicTableFrame {
         }
     }
 
-    
+
 }
