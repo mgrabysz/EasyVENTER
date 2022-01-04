@@ -516,4 +516,4 @@ ALTER TABLE z01.user_credentials
         REFERENCES z01.client_data ( client_id )
     NOT DEFERRABLE;
 
-
+commit;
