@@ -377,7 +377,6 @@ public class EasyVENT {
     }
 
     private void createEvent() {
-        // TODO: assign proper organizer to event
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
             createEventFrame = new CreateEventFrame();
             activeFrameType = GlobalVariables.FRAME_TYPE;
@@ -455,6 +454,7 @@ public class EasyVENT {
     }
 
     private void eventDetails() {
+        // TODO: actual ticket buying
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
             Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
             HashMap<String, String> eventDetails = event.getDetails();
@@ -466,16 +466,20 @@ public class EasyVENT {
             switch (eventDetailsFrame.getOption()) {
                 case "cancel":
                     GlobalVariables.FRAME_TYPE = "MainMenu";
+                    eventDetailsFrame.dispose();
+                    eventDetailsFrame = null;
                     break;
                 case "confirm":
+                    // Database.buyTickets();
+
                     GlobalVariables.FRAME_TYPE = "MainMenu";
+                    eventDetailsFrame.dispose();
+                    eventDetailsFrame = null;
                     break;
                 case "calculate":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
+                    // GlobalVariables.FRAME_TYPE = "MainMenu";
                     break;
             }
-            eventDetailsFrame.dispose();
-            eventDetailsFrame = null;
         }
     }
 
