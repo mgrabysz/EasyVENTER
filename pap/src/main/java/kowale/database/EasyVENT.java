@@ -8,6 +8,7 @@ import kowale.ticket.Ticket;
 import java.lang.Thread;
 
 import javax.print.event.PrintJobAdapter;
+import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
 
 import java.util.HashMap;
@@ -285,10 +286,14 @@ public class EasyVENT {
     }
 
     private void login() throws Exception {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            loginFrame = new LoginFrame();
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (loginFrame.getIsReady()) {
+        loginFrame = new LoginFrame();
+        activeFrameType = GlobalVariables.FRAME_TYPE;
+
+        while (true) {
+            while (loginFrame.getIsReady() == false) {
+                waiting();
+            } 
+            
             // check if user input is correct
             if (
                 EasyVENT.database.logIntoDatabase(
@@ -299,9 +304,10 @@ public class EasyVENT {
                 GlobalVariables.FRAME_TYPE = "MainMenu";
                 loginFrame.dispose();
                 loginFrame = null;
+                return;
             } else {
                 loginFrame.setIsReady(false);
-
+    
                 JOptionPane.showMessageDialog(
                     null,
                     "Login or password incorrect.",
@@ -501,56 +507,6 @@ public class EasyVENT {
         inputSectorDataFrame = null;
         return tickets;
     }
-
-    // private void inputSectorData() {
-    //     if(activeFrameType != GlobalVariables.FRAME_TYPE){
-    //         int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
-    //         String[][] sectors = new String[sectorsNumber][3];
-    //         for (int i=0; i<sectorsNumber; ++i) {
-    //             String iStr = String.valueOf(i+1);
-    //             String[] sector = {iStr, "0", "0", "0"};
-    //             sectors[i] = sector;
-    //         }
-    //         inputSectorDataFrame = new InputSectorDataFrame(sectors);
-    //         activeFrameType = GlobalVariables.FRAME_TYPE;
-    //     } else if (inputSectorDataFrame.getOption() != "") {
-    //         switch (inputSectorDataFrame.getOption()) {
-    //             case "cancel":
-    //                 GlobalVariables.EVENT = null;
-    //                 GlobalVariables.SECTORS_NUMBER = -1;
-
-    //                 GlobalVariables.FRAME_TYPE = "MainMenu";
-    //                 break;
-    //             case "confirm":
-    //                 String[][] tableData = inputSectorDataFrame.getTableData();
-    //                 ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-
-    //                 for (String[] row : tableData) {
-    //                     String sector = row[0];
-    //                     int ticketsNumber = Integer.parseInt(row[1]);
-    //                     int basePrice = Integer.parseInt(row[2]);
-                        
-    //                     for (int seat = 0; seat < ticketsNumber; seat++) {
-    //                         Ticket ticket = new Ticket(
-    //                             sector,
-    //                             seat,
-    //                             basePrice
-    //                         );
-    //                         tickets.add(ticket);
-    //                     }
-    //                 }
-
-    //                 GlobalVariables.EVENT.setTickets(tickets);
-    //                 EasyVENT.database.createEvent(GlobalVariables.EVENT);
-    //                 GlobalVariables.EVENT = null;
-
-    //                 GlobalVariables.FRAME_TYPE = "MainMenu";
-    //                 break;
-    //         }
-    //         inputSectorDataFrame.dispose();
-    //         inputSectorDataFrame = null;
-    //     }
-    // }
 
     private void modifyEvent() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
