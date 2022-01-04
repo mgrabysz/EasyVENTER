@@ -7,6 +7,7 @@ import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
+import javax.print.event.PrintJobAdapter;
 import javax.swing.JOptionPane;
 
 import java.util.HashMap;
@@ -44,7 +45,7 @@ public class EasyVENT {
     // private String user_type;
     // private JFrame activeFrame;
 
-    public EasyVENT() throws NoSuchAlgorithmException { // Constructor
+    public EasyVENT() throws Exception { // Constructor
         database = new Database(); // create database
 
         // create example clients
@@ -141,7 +142,16 @@ public class EasyVENT {
         mainLoop();
     }
 
-    private String hash(String string) throws NoSuchAlgorithmException {
+    private void waiting() throws Exception {
+        try {
+            Thread.sleep(100);
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+
+    private String hash(String string) throws Exception {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
         // string = new String(digest, StandardCharsets.UTF_8);
@@ -220,7 +230,7 @@ public class EasyVENT {
         }
     }
 
-    private void register() throws NoSuchAlgorithmException {
+    private void register() throws Exception {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
             registerFrame = new RegisterFrame();
             activeFrameType = GlobalVariables.FRAME_TYPE;
@@ -274,7 +284,7 @@ public class EasyVENT {
         }
     }
 
-    private void login() throws NoSuchAlgorithmException {
+    private void login() throws Exception {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
             loginFrame = new LoginFrame();
             activeFrameType = GlobalVariables.FRAME_TYPE;
@@ -396,32 +406,151 @@ public class EasyVENT {
         }
     }
 
-    private void createEvent() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            createEventFrame = new CreateEventFrame();
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (createEventFrame.getOption() != "") {
-            switch (createEventFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-                case "confirm":
-                    GlobalVariables.EVENT = new Event(
-                        createEventFrame.getName(),
-                        GlobalVariables.USER_NAME,
-                        createEventFrame.getCountry(),
-                        createEventFrame.getCity(),
-                        createEventFrame.getAddress(),
-                        createEventFrame.getDateTime()
-                    );
-                    GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
-                    GlobalVariables.FRAME_TYPE = "InputSectorDataFrame";
-                    break;
-            }
-            createEventFrame.dispose();
-            createEventFrame = null;
+    private void createEvent() throws Exception{
+        createEventFrame = new CreateEventFrame();
+        activeFrameType = GlobalVariables.FRAME_TYPE;
+
+        while (createEventFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (createEventFrame.getOption()) {
+            case "cancel":
+                GlobalVariables.FRAME_TYPE = "MainMenu";
+                createEventFrame.dispose();
+                createEventFrame = null;
+                break;
+            case "confirm":
+                Event event = new Event(
+                    createEventFrame.getName(),
+                    GlobalVariables.USER_NAME,
+                    createEventFrame.getCountry(),
+                    createEventFrame.getCity(),
+                    createEventFrame.getAddress(),
+                    createEventFrame.getDateTime()
+                );
+                int sectorsNumber = createEventFrame.getNumOfSectors();
+
+                createEventFrame.dispose();
+                createEventFrame = null;
+        
+                ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
+                if (tickets != null) {
+                    event.setTickets(tickets);
+                    EasyVENT.database.createEvent(event);
+                    // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
+                    // GlobalVariables.FRAME_TYPE = "InputSectorDataFrame";
+                    
+                }
+                GlobalVariables.FRAME_TYPE = "MainMenu";
+                break;
         }
     }
+
+    private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
+        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+
+        // int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
+        String[][] sectors = new String[sectorsNumber][3];
+        for (int i=0; i<sectorsNumber; ++i) {
+            String iStr = String.valueOf(i+1);
+            String[] sector = {iStr, "1", "1", "1"};
+            sectors[i] = sector;
+        }
+        inputSectorDataFrame = new InputSectorDataFrame(sectors);
+        // activeFrameType = GlobalVariables.FRAME_TYPE;
+
+        while (inputSectorDataFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (inputSectorDataFrame.getOption()) {
+            case "cancel":
+                // GlobalVariables.EVENT = null;
+                // GlobalVariables.SECTORS_NUMBER = -1;
+
+                // GlobalVariables.FRAME_TYPE = "MainMenu";
+                return null;
+                // break;
+            case "confirm":
+                String[][] tableData = inputSectorDataFrame.getTableData();
+
+                for (String[] row : tableData) {
+                    String sector = row[0];
+                    int ticketsNumber = Integer.parseInt(row[1]);
+                    int basePrice = Integer.parseInt(row[2]);
+                    
+                    for (int seat = 0; seat < ticketsNumber; seat++) {
+                        Ticket ticket = new Ticket(
+                            sector,
+                            seat,
+                            basePrice
+                        );
+                        tickets.add(ticket);
+                    }
+                }
+
+                // GlobalVariables.EVENT.setTickets(tickets);
+                // EasyVENT.database.createEvent(GlobalVariables.EVENT);
+                // GlobalVariables.EVENT = null;
+
+                // GlobalVariables.FRAME_TYPE = "MainMenu";
+                break;
+        }
+        inputSectorDataFrame.dispose();
+        inputSectorDataFrame = null;
+        return tickets;
+    }
+
+    // private void inputSectorData() {
+    //     if(activeFrameType != GlobalVariables.FRAME_TYPE){
+    //         int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
+    //         String[][] sectors = new String[sectorsNumber][3];
+    //         for (int i=0; i<sectorsNumber; ++i) {
+    //             String iStr = String.valueOf(i+1);
+    //             String[] sector = {iStr, "0", "0", "0"};
+    //             sectors[i] = sector;
+    //         }
+    //         inputSectorDataFrame = new InputSectorDataFrame(sectors);
+    //         activeFrameType = GlobalVariables.FRAME_TYPE;
+    //     } else if (inputSectorDataFrame.getOption() != "") {
+    //         switch (inputSectorDataFrame.getOption()) {
+    //             case "cancel":
+    //                 GlobalVariables.EVENT = null;
+    //                 GlobalVariables.SECTORS_NUMBER = -1;
+
+    //                 GlobalVariables.FRAME_TYPE = "MainMenu";
+    //                 break;
+    //             case "confirm":
+    //                 String[][] tableData = inputSectorDataFrame.getTableData();
+    //                 ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+
+    //                 for (String[] row : tableData) {
+    //                     String sector = row[0];
+    //                     int ticketsNumber = Integer.parseInt(row[1]);
+    //                     int basePrice = Integer.parseInt(row[2]);
+                        
+    //                     for (int seat = 0; seat < ticketsNumber; seat++) {
+    //                         Ticket ticket = new Ticket(
+    //                             sector,
+    //                             seat,
+    //                             basePrice
+    //                         );
+    //                         tickets.add(ticket);
+    //                     }
+    //                 }
+
+    //                 GlobalVariables.EVENT.setTickets(tickets);
+    //                 EasyVENT.database.createEvent(GlobalVariables.EVENT);
+    //                 GlobalVariables.EVENT = null;
+
+    //                 GlobalVariables.FRAME_TYPE = "MainMenu";
+    //                 break;
+    //         }
+    //         inputSectorDataFrame.dispose();
+    //         inputSectorDataFrame = null;
+    //     }
+    // }
 
     private void modifyEvent() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
@@ -446,56 +575,6 @@ public class EasyVENT {
             }
             modifyEventFrame.dispose();
             modifyEventFrame = null;
-        }
-    }
-
-    private void inputSectorData() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
-            String[][] sectors = new String[sectorsNumber][3];
-            for (int i=0; i<sectorsNumber; ++i) {
-                String iStr = String.valueOf(i+1);
-                String[] sector = {iStr, "0", "0", "0"};
-                sectors[i] = sector;
-            }
-            inputSectorDataFrame = new InputSectorDataFrame(sectors);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (inputSectorDataFrame.getOption() != "") {
-            switch (inputSectorDataFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.EVENT = null;
-                    GlobalVariables.SECTORS_NUMBER = -1;
-
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-                case "confirm":
-                    String[][] tableData = inputSectorDataFrame.getTableData();
-                    ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-
-                    for (String[] row : tableData) {
-                        String sector = row[0];
-                        int ticketsNumber = Integer.parseInt(row[1]);
-                        int basePrice = Integer.parseInt(row[2]);
-                        
-                        for (int seat = 0; seat < ticketsNumber; seat++) {
-                            Ticket ticket = new Ticket(
-                                sector,
-                                seat,
-                                basePrice
-                            );
-                            tickets.add(ticket);
-                        }
-                    }
-
-                    GlobalVariables.EVENT.setTickets(tickets);
-                    EasyVENT.database.createEvent(GlobalVariables.EVENT);
-                    GlobalVariables.EVENT = null;
-
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-            }
-            inputSectorDataFrame.dispose();
-            inputSectorDataFrame = null;
         }
     }
 
@@ -529,7 +608,7 @@ public class EasyVENT {
         }
     }
 
-    public void mainLoop() throws NoSuchAlgorithmException {
+    public void mainLoop() throws Exception {
         boolean runLoop = true;
         GlobalVariables.FRAME_TYPE = "Welcome";
         GlobalVariables.USER_NAME = null;
@@ -537,12 +616,7 @@ public class EasyVENT {
         GlobalVariables.USER_TYPE = null;
 
         do {
-            try {
-                Thread.sleep(100);
-            }
-            catch (Exception e) {
-                System.out.println(e);
-            }
+            waiting();
 
             switch (GlobalVariables.FRAME_TYPE) {
                 case "Welcome":
@@ -569,9 +643,9 @@ public class EasyVENT {
                 case "CreateEvent":
                     createEvent();
                     break;
-                case "InputSectorDataFrame":
-                    inputSectorData();
-                    break;
+                // case "InputSectorDataFrame":
+                //     inputSectorData();
+                //     break;
                 case "EventDetails":
                     eventDetails();
                     break;
