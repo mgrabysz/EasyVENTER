@@ -16,10 +16,10 @@ import java.util.HashMap;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-
+import java.nio.file.WatchService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-// import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
 // import java.awt.Frame;
@@ -30,6 +30,8 @@ public class EasyVENT {
 
     private WelcomeFrame welcomeFrame;
     private RegisterFrame registerFrame;
+    private RegisterClientFrame registerClientFrame;
+    private RegisterOrganizerFrame registerOrganizerFrame;
     private LoginFrame loginFrame;
     private MainMenuFrame mainMenuFrame;
     private CreateEventFrame createEventFrame;
@@ -40,7 +42,7 @@ public class EasyVENT {
     private ModifyEventFrame modifyEventFrame;
     
     private String nextFrame = "welcome";
-    private String activeFrameType = "";
+    // private String activeFrameType = "";
 
     private LocalDate date = LocalDate.now();
     private LocalDateTime dateTime = LocalDateTime.now();
@@ -249,17 +251,26 @@ public class EasyVENT {
                 registerFrame.getUserLogin().trim().length() > 0 &&
                 registerFrame.getUserPassword().trim().length() > 0
             ) {
-                if (registerFrame.getAccountType() == 0){
+                int accountType = registerFrame.getAccountType();
+                registerFrame.dispose();
+
+                if (accountType == 0){
+                    HashMap<String, String> additionalInfo = registerClient();
+                    LocalDate date = LocalDate.parse(
+                        additionalInfo.get("date")
+                    );
+
                     Client new_user = new Client(
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
                         hash(registerFrame.getUserPassword()),
-                        "email",
-                        -1,
-                        "gender",
+                        additionalInfo.get("email"),
+                        Integer.parseInt(additionalInfo.get("telephone")),
+                        additionalInfo.get("gender"),
                         date
                     );
+
                     EasyVENT.database.register_new_user(new_user);
                 } else {
                     EventOrganizer new_user = new EventOrganizer(
@@ -274,7 +285,6 @@ public class EasyVENT {
                     EasyVENT.database.register_new_user(new_user);
                 }
 
-                registerFrame.dispose();
                 registerFrame = null;
                 nextFrame = "welcome";
                 break;
@@ -290,6 +300,29 @@ public class EasyVENT {
             }
         }
     }
+
+    private HashMap<String, String> registerClient() throws Exception {
+        // TODO: input checking
+        registerClientFrame = new RegisterClientFrame();
+    
+        while(registerClientFrame.getIsReady() == false) {
+            waiting();
+        }
+
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put("email", registerClientFrame.getEmail());
+        map.put("telephone", registerClientFrame.getTelephone());
+        map.put("gender", registerClientFrame.getGender());
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+        map.put("date", registerClientFrame.getDate().format(formatter));
+
+        registerClientFrame.dispose();
+        registerClientFrame = null;
+
+        return map;
+    }
+
 
     private void login() throws Exception {
         loginFrame = new LoginFrame();
@@ -426,7 +459,6 @@ public class EasyVENT {
 
     private void createEvent() throws Exception{
         createEventFrame = new CreateEventFrame();
-        activeFrameType = GlobalVariables.FRAME_TYPE;
 
         while (createEventFrame.getOption() == "") {
             waiting();

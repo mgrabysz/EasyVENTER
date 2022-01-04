@@ -13,6 +13,7 @@ public class RegisterClientFrame extends RegisterOrganizerFrame {
 
     private String email, telephone, gender;
     private LocalDate date;
+    private boolean isReady = false;
 
     public RegisterClientFrame() {
         super();
@@ -81,6 +82,8 @@ public class RegisterClientFrame extends RegisterOrganizerFrame {
             email = nameTextField.getText();
             telephone = loginTextField.getText();
             gender = (String) genderCombo.getSelectedItem();
+
+            isReady = true;
         }
     }
 
@@ -95,5 +98,9 @@ public class RegisterClientFrame extends RegisterOrganizerFrame {
     }
     public LocalDate getDate() {
         return date;
+    }
+
+    public boolean getIsReady() {
+        return isReady;
     }
 }
