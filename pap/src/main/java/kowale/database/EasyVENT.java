@@ -35,6 +35,7 @@ public class EasyVENT {
     private ViewEventsFrame viewEventsFrame;
     private InputSectorDataFrame inputSectorDataFrame;
     private EventDetailsFrame eventDetailsFrame;
+    private ModifyEventFrame modifyEventFrame;
 
     private String activeFrameType = "";
 
@@ -324,6 +325,12 @@ public class EasyVENT {
                     break;
                 case "manageTickets":
                     // GlobalVariables.FRAME_TYPE = "ManageTickets";
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "TODO",
+                        "TODO",
+                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                    );
                     GlobalVariables.FRAME_TYPE = "MainMenu";
                     activeFrameType = null;
                     break;
@@ -353,9 +360,12 @@ public class EasyVENT {
         }
     }
 
-    private void viewEventsOrganizer() {
+    private void manageEvents() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            // TODO: show only events connected to logged organizer
+            // TODO:
+            // show only events connected to logged organizer
+            // remove events
+            // modify events
             String[][] data = eventsToData(database.getEvents());
             manageEventsFrame = new ManageEventsFrame(data);
             activeFrameType = GlobalVariables.FRAME_TYPE;
@@ -365,10 +375,20 @@ public class EasyVENT {
                     GlobalVariables.FRAME_TYPE = "MainMenu";
                     break;
                 case "remove":
+                    GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                    //Database.removeEvent();
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "TODO",
+                        "TODO",
+                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                    );
                     GlobalVariables.FRAME_TYPE = "MainMenu";
                     break;
                 case "modify":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
+                    GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                    //Database.modifyEvent();
+                    GlobalVariables.FRAME_TYPE = "ModifyEvent";
                     break;
             }
             manageEventsFrame.dispose();
@@ -385,13 +405,13 @@ public class EasyVENT {
                 case "cancel":
                     GlobalVariables.FRAME_TYPE = "MainMenu";
                     break;
-                case "create":
+                case "confirm":
                     GlobalVariables.EVENT = new Event(
                         createEventFrame.getName(),
                         GlobalVariables.USER_NAME,
                         createEventFrame.getCountry(),
                         createEventFrame.getCity(),
-                        createEventFrame.getStreet(),
+                        createEventFrame.getAddress(),
                         createEventFrame.getDateTime()
                     );
                     GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
@@ -400,6 +420,32 @@ public class EasyVENT {
             }
             createEventFrame.dispose();
             createEventFrame = null;
+        }
+    }
+
+    private void modifyEvent() {
+        if(activeFrameType != GlobalVariables.FRAME_TYPE){
+            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+            HashMap<String, String> extendedDetails = event.getExtendedDetails();
+            modifyEventFrame = new ModifyEventFrame(extendedDetails);
+            activeFrameType = GlobalVariables.FRAME_TYPE;
+        } else if (modifyEventFrame.getOption() != "") {
+            switch (modifyEventFrame.getOption()) {
+                case "cancel":
+                    GlobalVariables.FRAME_TYPE = "ManageEvents";
+                    break;
+                case "confirm":
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "TODO",
+                        "TODO",
+                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                    );
+                    GlobalVariables.FRAME_TYPE = "ManageEvents";
+                    break;
+            }
+            modifyEventFrame.dispose();
+            modifyEventFrame = null;
         }
     }
 
@@ -515,7 +561,10 @@ public class EasyVENT {
                     viewEvents();
                     break;
                 case "ManageEvents":
-                    viewEventsOrganizer();
+                    manageEvents();
+                    break;
+                case "ModifyEvent":
+                    modifyEvent();
                     break;
                 case "CreateEvent":
                     createEvent();

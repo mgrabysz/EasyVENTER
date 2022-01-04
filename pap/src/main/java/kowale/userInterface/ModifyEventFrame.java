@@ -13,9 +13,9 @@ public class ModifyEventFrame extends CreateEventFrame {
         this.remove(sectorCombo);
 
         name = stringData.get("name");
-        city = stringData.get("city");
-        street = stringData.get("street");
         country = stringData.get("country");
+        city = stringData.get("city");
+        address = stringData.get("address");
         year = stringData.get("year");
         month = stringData.get("month");
         day = stringData.get("day");
@@ -24,7 +24,7 @@ public class ModifyEventFrame extends CreateEventFrame {
 
         nameTextField.setText(name);
         cityTextField.setText(city);
-        streetTextField.setText(street);
+        addressTextField.setText(address);
 
         countryCombo.setSelectedItem(country);
         yearCombo.setSelectedItem(year);
@@ -32,9 +32,5 @@ public class ModifyEventFrame extends CreateEventFrame {
         dayCombo.setSelectedItem(day);
         hourCombo.setSelectedItem(hour);
         minuteCombo.setSelectedItem(minute);
-
-
-
-
     }
 }

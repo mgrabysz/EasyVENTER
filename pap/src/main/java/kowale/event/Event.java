@@ -112,8 +112,25 @@ public class Event {
         return eventInfo;
     }
 
+    public HashMap<String, String> getExtendedDetails() {
+        HashMap<String, String> details = new HashMap<String, String>();
+
+        details.put("name", name);
+        details.put("organizer", organizer);
+        details.put("country", country);
+        details.put("city", city);
+        details.put("address", address);
+        // details.put("dateTime", dateTime.format(formatter));
+        details.put("year", String.valueOf(dateTime.getYear()));
+        details.put("month", String.valueOf(dateTime.getMonth()));
+        details.put("day", String.valueOf(dateTime.getDayOfMonth()));
+        details.put("hour", String.valueOf(dateTime.getHour()));
+        details.put("minute", String.valueOf(dateTime.getMinute()));
+
+        return details;
+    }
+
     public HashMap<String, String> getDetails() {
-        // {"Number of sector", "Number of seats", "Adult ticket price"}
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
         HashMap<String, String> details = new HashMap<String, String>();
@@ -128,6 +145,7 @@ public class Event {
     }
 
     public HashMap<String, HashMap<String, Integer>> getTicketsMap() {
+        // {"Sector", "Number of seats", "Base ticket price"}
         HashMap<String, HashMap<String, Integer>> sectors = new HashMap<String, HashMap<String, Integer>>(); 
         
         if (tickets.size() > 0) {
