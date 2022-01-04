@@ -172,10 +172,7 @@ public class Database {
         }
         return users;
     }
-//todo
-    public boolean insertEvent(Event event) {
-        return false;
-    }
+
 
     public ArrayList<Event> getAllEvents() {
         ArrayList<Event> events = new ArrayList<Event>();
@@ -211,7 +208,11 @@ public class Database {
         }
         return events;
     }
-//todo
+//todo//todo==============================
+    public boolean insertEvent(Event event) {
+        return false;
+    }
+
     public LinkedList<Ticket> getTicketsOfUser(User user){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
         return tickets;
