@@ -17,6 +17,7 @@ public class ManageEventsFrame extends BasicTableFrame {
 
     public ManageEventsFrame(String[][] data) {
         super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Modify", false);
+        this.setTitle("Manage your events");
 
         removeButton = new JButton("Remove");
         removeButton.setFocusable(false);

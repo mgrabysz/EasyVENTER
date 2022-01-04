@@ -22,13 +22,13 @@ import javax.swing.*;
 public class CreateEventFrame extends JFrame implements ActionListener {
 
     JButton createButton, cancelButton;
-    JTextField nameTextField, streetTextField, cityTextField;
+    JTextField nameTextField, addressTextField, cityTextField;
     JComboBox<String> dayCombo, monthCombo, yearCombo, hourCombo, minuteCombo, countryCombo;
     JComboBox<Integer> sectorCombo;
-    JLabel streetLabel, nameLabel, dateLabel, timeLabel, sectorsLabel, cityLabel, countryLabel;
+    JLabel addressLabel, nameLabel, dateLabel, timeLabel, sectorsLabel, cityLabel, countryLabel;
     Border border;
 
-    protected String name, street, city, country;
+    protected String name, address, city, country;
     protected int numOfSectors;
     protected LocalDateTime dateTime;
     protected String option = "";
@@ -53,14 +53,14 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         nameTextField.setBounds(50, 80, 220, 30);
         this.add(nameTextField);
 
-        streetLabel = new JLabel("Address:");
-        streetLabel.setBounds(50, 130, 220, 30);
-        streetLabel.setHorizontalAlignment(JLabel.LEFT);
-        this.add(streetLabel);
+        addressLabel = new JLabel("Address:");
+        addressLabel.setBounds(50, 130, 220, 30);
+        addressLabel.setHorizontalAlignment(JLabel.LEFT);
+        this.add(addressLabel);
 
-        streetTextField = new JTextField();
-        streetTextField.setBounds(50, 160, 220, 30);
-        this.add(streetTextField);
+        addressTextField = new JTextField();
+        addressTextField.setBounds(50, 160, 220, 30);
+        this.add(addressTextField);
 
         dateLabel = new JLabel("Date:");
         dateLabel.setBounds(50, 210, 220, 30);
@@ -180,7 +180,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         if (e.getSource()==createButton){
 
             name = nameTextField.getText();
-            street = streetTextField.getText();
+            address = addressTextField.getText();
             city = cityTextField.getText();
             country = (String) countryCombo.getSelectedItem();
             numOfSectors = (Integer) sectorCombo.getSelectedItem();
@@ -262,7 +262,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
 
             // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
 
-            option = "create";
+            option = "confirm";
 
         } else if (e.getSource()==cancelButton) {
             // something to do
@@ -294,8 +294,8 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     // getLocation gives error
     // probably due to collison with Event.getLocation()
     // it's strange
-    public String getStreet() {
-        return street;
+    public String getAddress() {
+        return address;
     }
     public String getCity() {
         return city;

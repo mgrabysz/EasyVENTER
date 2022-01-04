@@ -40,6 +40,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
         isReady = false;
 
+        this.setTitle("Register");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
