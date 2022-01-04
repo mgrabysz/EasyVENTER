@@ -177,7 +177,6 @@ public class EventDetailsFrame extends BasicTableFrame {
             String to_print = formatDouble(calculateTotalPrice());
             System.out.println(to_print);
             totalPriceLabel.setText(to_print + " PLN");
-            option = "calculate";
         } else if (e.getSource()==cancelButton){
             isCancelled = true;
             option = "cancel";

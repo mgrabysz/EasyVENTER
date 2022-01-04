@@ -38,7 +38,8 @@ public class EasyVENT {
     private InputSectorDataFrame inputSectorDataFrame;
     private EventDetailsFrame eventDetailsFrame;
     private ModifyEventFrame modifyEventFrame;
-
+    
+    private String nextFrame = "welcome";
     private String activeFrameType = "";
 
     private LocalDate date = LocalDate.now();
@@ -213,31 +214,34 @@ public class EasyVENT {
         return data;
     }
 
-private void welcome() throws Exception{
+    private void welcome() throws Exception {
         welcomeFrame = new WelcomeFrame();
-        activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
         
         while (welcomeFrame.getOption() == "") {
             waiting();
         }
-        
+
         switch (welcomeFrame.getOption()) {
             case "register":
-                GlobalVariables.FRAME_TYPE= "Register";
+                nextFrame = "register";
                 break;
             case "login":
-                GlobalVariables.FRAME_TYPE= "Login";
+                nextFrame = "login";
                 break;
         }
+
         welcomeFrame.dispose();
         welcomeFrame = null;
     }
 
     private void register() throws Exception {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            registerFrame = new RegisterFrame();
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (registerFrame.getIsReady()) {
+        registerFrame = new RegisterFrame();
+
+        while (true) {
+            while (registerFrame.getIsReady() == false) {
+                waiting();
+            }
+    
             // check if user input is correct
             if (
                 registerFrame.getUserName().trim().length() > 0 &&
@@ -270,13 +274,13 @@ private void welcome() throws Exception{
                     EasyVENT.database.register_new_user(new_user);
                 }
 
-                GlobalVariables.FRAME_TYPE = "Welcome";
                 registerFrame.dispose();
                 registerFrame = null;
+                nextFrame = "welcome";
+                break;
             } else {
                 registerFrame.setIsReady(false);
 
-                // System.out.println("Not correct");
                 JOptionPane.showMessageDialog(
                     null,
                     "Invalid value in one or more fields.",
@@ -289,24 +293,23 @@ private void welcome() throws Exception{
 
     private void login() throws Exception {
         loginFrame = new LoginFrame();
-        activeFrameType = GlobalVariables.FRAME_TYPE;
 
         while (true) {
             while (loginFrame.getIsReady() == false) {
                 waiting();
             } 
             
-            // check if user input is correct
+            // try to log in with provided credentials
             if (
                 EasyVENT.database.logIntoDatabase(
                     loginFrame.getUserLogin(),
                     hash(loginFrame.getUserPassword())
                 )
             ) {
-                GlobalVariables.FRAME_TYPE = "MainMenu";
+                nextFrame = "mainMenu";
                 loginFrame.dispose();
                 loginFrame = null;
-                return;
+                break;
             } else {
                 loginFrame.setIsReady(false);
     
@@ -322,7 +325,6 @@ private void welcome() throws Exception{
 
     private void mainMenu() throws Exception{
         mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
-        activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
 
         while (mainMenuFrame.getOption() == "") {
             waiting();
@@ -333,29 +335,29 @@ private void welcome() throws Exception{
                 GlobalVariables.USER_NAME = null;
                 GlobalVariables.USER_ID = -1;
                 GlobalVariables.USER_TYPE = null;
-                GlobalVariables.FRAME_TYPE = "Welcome";
+                nextFrame = "welcome";
                 break;
             case "viewEvents":
-                GlobalVariables.FRAME_TYPE = "ViewEvents";
+                nextFrame = "viewEvents";
                 break;
             case "manageEvents":
-                GlobalVariables.FRAME_TYPE = "ManageEvents";
+                nextFrame = "manageEvents";
                 break;
             case "createEvent":
-                GlobalVariables.FRAME_TYPE = "CreateEvent";
+                nextFrame = "createEvent";
                 break;
             case "manageTickets":
-                // GlobalVariables.FRAME_TYPE = "ManageTickets";
+                // nextFrame = "manageTickets";
                 JOptionPane.showMessageDialog(
                     null,
                     "TODO",
                     "TODO",
                     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
                 );
-                GlobalVariables.FRAME_TYPE = "MainMenu";
-                activeFrameType = null;
+                nextFrame = "mainMenu";
                 break;
         }
+
         mainMenuFrame.dispose();
         mainMenuFrame = null;
     }
@@ -363,7 +365,7 @@ private void welcome() throws Exception{
     private void viewEvents() throws Exception{
         String[][] data = eventsToData(database.getEvents());
         viewEventsFrame = new ViewEventsFrame(data);
-        activeFrameType = GlobalVariables.FRAME_TYPE;
+        // activeFrameType = GlobalVariables.FRAME_TYPE;
 
         while (viewEventsFrame.getOption() == "") {
             waiting();
@@ -371,51 +373,55 @@ private void welcome() throws Exception{
 
         switch (viewEventsFrame.getOption()) {
             case "cancel":
-                GlobalVariables.FRAME_TYPE = "MainMenu";
+                nextFrame = "mainMenu";
                 break;
             case "details":
-                GlobalVariables.FRAME_TYPE = "EventDetails";
+                nextFrame = "eventDetails";
                 GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
                 break;
         }
+
         viewEventsFrame.dispose();
         viewEventsFrame = null;
     }
 
-    private void manageEvents() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            // TODO:
-            // show only events connected to logged organizer
-            // remove events
-            // modify events
-            String[][] data = eventsToData(database.getEvents());
-            manageEventsFrame = new ManageEventsFrame(data);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (manageEventsFrame.getOption() != "") {
-            switch (manageEventsFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-                case "remove":
-                    GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
-                    //Database.removeEvent();
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "TODO",
-                        "TODO",
-                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-                case "modify":
-                    GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
-                    //Database.modifyEvent();
-                    GlobalVariables.FRAME_TYPE = "ModifyEvent";
-                    break;
-            }
-            manageEventsFrame.dispose();
-            manageEventsFrame = null;
+    private void manageEvents() throws Exception{
+        // TODO:
+        // show only events connected to logged organizer
+        // remove events
+        // modify events
+        String[][] data = eventsToData(database.getEvents());
+        manageEventsFrame = new ManageEventsFrame(data);
+
+        while (manageEventsFrame.getOption() == "") {
+            waiting();
         }
+
+        switch (manageEventsFrame.getOption()) {
+            case "cancel":
+                nextFrame = "mainMenu";
+                break;
+            case "remove":
+                // TODO
+                GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                //Database.removeEvent();
+                JOptionPane.showMessageDialog(
+                    null,
+                    "TODO",
+                    "TODO",
+                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                );
+                nextFrame = "manageEvents";
+                break;
+            case "modify":
+                GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                //Database.modifyEvent();
+                nextFrame = "modifyEvent";
+                break;
+        }
+
+        manageEventsFrame.dispose();
+        manageEventsFrame = null;
     }
 
     private void createEvent() throws Exception{
@@ -428,7 +434,7 @@ private void welcome() throws Exception{
 
         switch (createEventFrame.getOption()) {
             case "cancel":
-                GlobalVariables.FRAME_TYPE = "MainMenu";
+                nextFrame = "mainMenu";
                 createEventFrame.dispose();
                 createEventFrame = null;
                 break;
@@ -451,17 +457,15 @@ private void welcome() throws Exception{
                     event.setTickets(tickets);
                     EasyVENT.database.createEvent(event);
                     // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
-                    // GlobalVariables.FRAME_TYPE = "InputSectorDataFrame";
+                    // nextFrame = "InputSectorDataFrame";
                     
                 }
-                GlobalVariables.FRAME_TYPE = "MainMenu";
+                nextFrame = "mainMenu";
                 break;
         }
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
-        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-
         // int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
         String[][] sectors = new String[sectorsNumber][3];
         for (int i=0; i<sectorsNumber; ++i) {
@@ -470,7 +474,8 @@ private void welcome() throws Exception{
             sectors[i] = sector;
         }
         inputSectorDataFrame = new InputSectorDataFrame(sectors);
-        // activeFrameType = GlobalVariables.FRAME_TYPE;
+
+        ArrayList<Ticket> tickets = new ArrayList<Ticket>();   
 
         while (inputSectorDataFrame.getOption() == "") {
             waiting();
@@ -478,12 +483,7 @@ private void welcome() throws Exception{
 
         switch (inputSectorDataFrame.getOption()) {
             case "cancel":
-                // GlobalVariables.EVENT = null;
-                // GlobalVariables.SECTORS_NUMBER = -1;
-
-                // GlobalVariables.FRAME_TYPE = "MainMenu";
                 return null;
-                // break;
             case "confirm":
                 String[][] tableData = inputSectorDataFrame.getTableData();
 
@@ -502,77 +502,73 @@ private void welcome() throws Exception{
                     }
                 }
 
-                // GlobalVariables.EVENT.setTickets(tickets);
-                // EasyVENT.database.createEvent(GlobalVariables.EVENT);
-                // GlobalVariables.EVENT = null;
+                inputSectorDataFrame.dispose();
+                inputSectorDataFrame = null;
+                return tickets;
+        }
 
-                // GlobalVariables.FRAME_TYPE = "MainMenu";
+        return null;
+    }
+
+    private void modifyEvent() throws Exception{
+        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        HashMap<String, String> extendedDetails = event.getExtendedDetails();
+        modifyEventFrame = new ModifyEventFrame(extendedDetails);
+
+        while (modifyEventFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (modifyEventFrame.getOption()) {
+            case "cancel":
+                nextFrame = "manageEvents";
+                break;
+            case "confirm":
+                // TODO 
+                JOptionPane.showMessageDialog(
+                    null,
+                    "TODO",
+                    "TODO",
+                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                );
+                nextFrame = "modifyEvent";
                 break;
         }
-        inputSectorDataFrame.dispose();
-        inputSectorDataFrame = null;
-        return tickets;
+
+        modifyEventFrame.dispose();
+        modifyEventFrame = null;
     }
 
-    private void modifyEvent() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
-            HashMap<String, String> extendedDetails = event.getExtendedDetails();
-            modifyEventFrame = new ModifyEventFrame(extendedDetails);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (modifyEventFrame.getOption() != "") {
-            switch (modifyEventFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.FRAME_TYPE = "ManageEvents";
-                    break;
-                case "confirm":
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "TODO",
-                        "TODO",
-                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
-                    GlobalVariables.FRAME_TYPE = "ManageEvents";
-                    break;
-            }
-            modifyEventFrame.dispose();
-            modifyEventFrame = null;
-        }
-    }
-
-    private void eventDetails() {
+    private void eventDetails() throws Exception{
         // TODO: actual ticket buying
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
-            HashMap<String, String> eventDetails = event.getDetails();
-            HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
-            String[][] ticketsData = ticketsMapToData(ticketsMap);
-            eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (eventDetailsFrame.getOption() != "") {
-            switch (eventDetailsFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    eventDetailsFrame.dispose();
-                    eventDetailsFrame = null;
-                    break;
-                case "confirm":
-                    // Database.buyTickets();
+        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        HashMap<String, String> eventDetails = event.getDetails();
+        HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
+        String[][] ticketsData = ticketsMapToData(ticketsMap);
+        eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
 
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    eventDetailsFrame.dispose();
-                    eventDetailsFrame = null;
-                    break;
-                case "calculate":
-                    // GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-            }
+        while(eventDetailsFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (eventDetailsFrame.getOption()) {
+            case "cancel":
+                nextFrame = "mainMenu";
+                eventDetailsFrame.dispose();
+                eventDetailsFrame = null;
+                break;
+            case "confirm":
+                // Database.buyTickets();
+                nextFrame = "mainMenu";
+                eventDetailsFrame.dispose();
+                eventDetailsFrame = null;
+                break;
         }
     }
 
     public void mainLoop() throws Exception {
         boolean runLoop = true;
-        GlobalVariables.FRAME_TYPE = "Welcome";
+        // nextFrame = "Welcome";
         GlobalVariables.USER_NAME = null;
         GlobalVariables.USER_ID = -1;
         GlobalVariables.USER_TYPE = null;
@@ -580,35 +576,32 @@ private void welcome() throws Exception{
         do {
             waiting();
 
-            switch (GlobalVariables.FRAME_TYPE) {
-                case "Welcome":
+            switch (nextFrame) {
+                case "welcome":
                     welcome();
                     break;
-                case "Register":
+                case "register":
                     register();
                     break;
-                case "Login":
+                case "login":
                     login();
                     break;
-                case "MainMenu":
+                case "mainMenu":
                     mainMenu();
                     break;
-                case "ViewEvents":
+                case "viewEvents":
                     viewEvents();
                     break;
-                case "ManageEvents":
+                case "manageEvents":
                     manageEvents();
                     break;
-                case "ModifyEvent":
+                case "modifyEvent":
                     modifyEvent();
                     break;
-                case "CreateEvent":
+                case "createEvent":
                     createEvent();
                     break;
-                // case "InputSectorDataFrame":
-                //     inputSectorData();
-                //     break;
-                case "EventDetails":
+                case "eventDetails":
                     eventDetails();
                     break;
             }
