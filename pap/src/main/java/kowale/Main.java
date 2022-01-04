@@ -25,10 +25,10 @@ public class Main {
 
         // new InputSectorDataFrame(sectors);
         // new EventDetailsFrame(sectors);
-
+        new RegisterClientFrame();
         // new CreateEventFrame();
         // Create EasyVENT object
-        EasyVENT easyVENT = new EasyVENT();
+        // EasyVENT easyVENT = new EasyVENT();
         //        // Create user who is an organizer
         //        NewUserData user1 = new NewUserData("seanMurphy", "murphylaw123", 'O');
         //
