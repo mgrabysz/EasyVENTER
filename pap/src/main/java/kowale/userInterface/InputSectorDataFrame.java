@@ -3,7 +3,7 @@ package kowale.userInterface;
 // import kowale.ticket.Ticket;
 // import kowale.database.EasyVENT;
 
-import java.util.HashMap;
+// import java.util.HashMap;
 
 import java.awt.event.ActionEvent;
 
@@ -46,7 +46,8 @@ public class InputSectorDataFrame extends BasicTableFrame {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
-            String[][] tableData = readTableData();
+            tableData = readTableData();
+            option = "confirm";
             // something to do with tableData
             // System.out.println(tableData[0][1]);
 
@@ -75,8 +76,6 @@ public class InputSectorDataFrame extends BasicTableFrame {
             // }
 
             // System.out.println(tickets);
-
-            option = "confirm";
         } else if (event.getSource()==cancelButton) {
             // something to do when cancelled
             option = "cancel";
