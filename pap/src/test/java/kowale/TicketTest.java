@@ -6,7 +6,7 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 
 public class TicketTest{
-    Ticket ticket = new Ticket("ADULT", "A", 20, 2000);
+    Ticket ticket = new Ticket("A", 20, 2000);
 
     @Test
     public void getPrice(){
@@ -21,7 +21,8 @@ public class TicketTest{
 
     @Test
     public void getCategory(){
-        assertEquals("ADULT", ticket.getCategory());
+        ticket.setCategory("VIP");
+        assertEquals("VIP", ticket.getCategory());
     }
 
     @Test

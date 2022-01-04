@@ -11,12 +11,12 @@ public class Ticket {
     private int price;
 
     public Ticket(
-        String category,
+        // String category,
         String sector,
         int seat,
         int price
     ) {
-        this.category = category;
+        // this.category = category;
         this.sector = sector;
         this.seat = seat;
         this.price = price;

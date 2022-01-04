@@ -13,7 +13,7 @@ public class ViewEventsFrame extends BasicTableFrame {
     */
 
     public ViewEventsFrame(String[][] data) {
-        super(data, new String[]{"Name", "Organizer", "Location", "Date and time"}, "Details", false);
+        super(data, new String[]{"Name", "Organizer", "Address", "Date and time"}, "Details", false);
     }
 
     @Override

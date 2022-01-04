@@ -16,10 +16,10 @@ public class Main {
         // };
         // String[] columnNames = {"Name", "Location", "Date and time", "Tickets sold"};
         // int number = 10;   // dowolna liczba sektorów
-        // String[][] sectors = new String[number][3];
-        // for (int i=0; i<number; ++i) {
+        // String[][] sectors = new String[3][3];
+        // for (int i=0; i<3; ++i) {
         //     String iStr = String.valueOf(i+1);
-        //     String[] sector = {iStr, "0", "0", "0"};
+        //     String[] sector = {iStr, "1", "1", "1"};
         //     sectors[i] = sector;
         // }
 

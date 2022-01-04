@@ -10,7 +10,7 @@ import org.junit.Test;
 public class ClientTest {
     LocalDate date = LocalDate.now();
     Client cl = new Client("John", "Rambo", "johnny", "1234", "gmail@gmail.com", 666666666, "M", date);
-    Ticket ticket = new Ticket("ADULT", "A", 20, 2500);
+    Ticket ticket = new Ticket("A", 20, 2500);
 
     @Test
     public void getTicketsTest(){

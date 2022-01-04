@@ -1,6 +1,9 @@
 package kowale.event;
 
-import java.util.HashMap;
+import kowale.ticket.Ticket;
+
+// import java.util.HashMap;
+import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -13,24 +16,24 @@ public class Event {
     private String organizer;
     private String country;
     private String city;
-    private String street;
+    private String address;
     private LocalDateTime dateTime;
-    // private int numOfSectors;
-    private HashMap<String, HashMap<String, Integer>> tickets;
+    private ArrayList<Ticket> tickets;
+    // private HashMap<String, HashMap<String, Integer>> tickets;
 
     public Event(
         String name,
         String organizer,
         String country,
         String city,
-        String street,
+        String address,
         LocalDateTime dateTime
     ) {
         this.name = name;
         this.organizer = organizer;
         this.country = country;
         this.city = city;
-        this.street = street;
+        this.address = address;
         this.dateTime = dateTime;
     }
 
@@ -66,12 +69,12 @@ public class Event {
         this.city = city;
     }
 
-    public String getStreet() {
-        return street;
+    public String getAddress() {
+        return address;
     }
 
-    public void setStreet(String street) {
-        this.street = street;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public LocalDateTime getDateTime() {
@@ -82,60 +85,56 @@ public class Event {
         this.dateTime = dateTime;
     }
 
-    public HashMap<String, HashMap<String, Integer>> getTickets() {
-        return this.tickets;
-    }
-
-    public void setTickets(HashMap<String, HashMap<String, Integer>> tickets) {
-        this.tickets = tickets;
-        // System.out.println(tickets);
-        // System.out.println(tickets.size());
-    }
-
-    // public HashMap<String, Integer> getTickets() {
-    //     return tickets;
+    // public HashMap<String, HashMap<String, Integer>> getTickets() {
+    //     return this.tickets;
     // }
 
-    public String[] getEventInfo() {
+    // public void setTickets(HashMap<String, HashMap<String, Integer>> tickets) {
+    //     this.tickets = tickets;
+    //     // System.out.println(tickets);
+    //     // System.out.println(tickets.size());
+    // }
+
+    public ArrayList<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(ArrayList<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public String[] getInfo() {
         DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
-        String[] eventInfo = {name, country, city, dateTime.format(formatter)};
-        // String eventInfo = "\nName: " + name;
-        // eventInfo += "\nOrganizer: " + organizer;
-        // eventInfo += "\nLocation: " + location;
-        // eventInfo += "\nDate and time: " + dateTime;
-        // eventInfo += "\nTickets:";
-        // for (HashMap.Entry<String, Integer> entry : tickets.entrySet()) {
-        //     eventInfo += ("\n   " + entry.getKey() + ": " + entry.getValue());
-        // }
+        String[] eventInfo = {name, organizer, address, dateTime.format(formatter)};
 
         return eventInfo;
     }
 
-    public String[][] getDetails() {
-        // {"Number of sector", "Number of seats", "Adult ticket price"}
+    // public String[][] getDetails() {
+    //     // {"Number of sector", "Number of seats", "Adult ticket price"}
 
-        String[][] details = new String[tickets.size()][3];
+    //     String[][] details = new String[tickets.size()][3];
         
-        if (tickets.size() > 0) {
-            // details = new String[events.size()][4];
-            System.out.println(tickets);
+    //     if (tickets.size() > 0) {
+    //         // details = new String[events.size()][4];
+    //         System.out.println(tickets);
 
-            for (int i = 0; i < tickets.size(); i++) {
-                System.out.println(String.valueOf(i));
-                HashMap<String, Integer> sector = tickets.get(String.valueOf(i+1));
-                System.out.println(sector);
-                details[i][0] = String.valueOf(i+1);
-                details[i][1] = String.valueOf(sector.get("Number"));
-                details[i][2] = String.valueOf(sector.get("Price"));
-                // details[i][0] = String.valueOf(i+1);
-            }
-        }
+    //         for (int i = 0; i < tickets.size(); i++) {
+    //             System.out.println(String.valueOf(i));
+    //             HashMap<String, Integer> sector = tickets.get(String.valueOf(i+1));
+    //             System.out.println(sector);
+    //             details[i][0] = String.valueOf(i+1);
+    //             details[i][1] = String.valueOf(sector.get("Number"));
+    //             details[i][2] = String.valueOf(sector.get("Price"));
+    //             // details[i][0] = String.valueOf(i+1);
+    //         }
+    //     }
 
-        // System.out.println("details:");
-        // System.out.println(details);
+    //     // System.out.println("details:");
+    //     // System.out.println(details);
 
-        return details;
-    }
+    //     return details;
+    // }
 
 }

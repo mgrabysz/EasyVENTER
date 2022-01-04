@@ -14,7 +14,7 @@ public class EventTest{
         "PZPN",
         "Polska",
         "Warszafka",
-        "Ulica",
+        "Adres",
         dateTime
     );
 

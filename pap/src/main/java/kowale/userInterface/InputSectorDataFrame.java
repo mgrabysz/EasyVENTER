@@ -34,11 +34,11 @@ public class InputSectorDataFrame extends BasicTableFrame {
     private String[][] tableData;
 
     // private boolean isReady, isCancelled;
-    private HashMap<String, HashMap<String, Integer>> tickets;
+    // private HashMap<String, HashMap<String, Integer>> tickets;
 
 
     public InputSectorDataFrame(String[][] data) {
-        super(data, new String[]{"Number of sector", "Number of seats", "Ticket price"} , "Confirm", true);
+        super(data, new String[]{"Sector Name", "Number of seats", "Ticket price"} , "Confirm", true);
         // isReady = isCancelled = false;
         // numOfSectors = table.getRowCount();
     }
@@ -50,25 +50,29 @@ public class InputSectorDataFrame extends BasicTableFrame {
             // something to do with tableData
             // System.out.println(tableData[0][1]);
 
-            System.out.println(tableData[0][0]);
-            System.out.println(tableData[0][1]);
-            System.out.println(tableData[0][2]);
+            // System.out.println(tableData[0][0]);
+            // System.out.println(tableData[0][1]);
+            // System.out.println(tableData[0][2]);
+
+            // System.out.println(tableData);
 
             // HashMap<String, HashMap<String, Integer>> tickets = new HashMap<String, HashMap<String, Integer>>();
-            tickets = new HashMap<String, HashMap<String, Integer>>();
+            // tickets = new HashMap<String, HashMap<String, Integer>>();
 
-            TableModel dtm = table.getModel();
-            int nRow = dtm.getRowCount();
-            for (int row = 0 ; row < nRow ; row++) {
-                HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
-                int number = Integer.parseInt(tableData[row][1]);
-                int price = Integer.parseInt(tableData[row][2]);
-                numberPrice.put("Number", number);
-                numberPrice.put("Price", price);
-                // System.out.println(numberPrice);
+            // for (int row = 0 ; row < table.getModel().getRowCount() ; row++) {
+            //     // HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
+            //     // int number = Integer.parseInt(tableData[row][1]);
+            //     // int price = Integer.parseInt(tableData[row][2]);
+            //     // numberPrice.put("Number", number);
+            //     // numberPrice.put("Price", price);
+            //     // System.out.println(numberPrice);
 
-                tickets.put(tableData[row][0], numberPrice);
-            }
+            //     // tickets.put(tableData[row][0], numberPrice);
+                
+            //     // int number = Integer.parseInt(tableData[row][1]);
+            //     // int price = Integer.parseInt(tableData[row][2]);
+
+            // }
 
             // System.out.println(tickets);
 
@@ -104,10 +108,10 @@ public class InputSectorDataFrame extends BasicTableFrame {
     // public void setIsCancelled(boolean b) {
     //     isCancelled = b;
     // }
-    public HashMap<String, HashMap<String, Integer>> getTickets()
-    {
-        return tickets;
-    }
+    // public HashMap<String, HashMap<String, Integer>> getTickets()
+    // {
+    //     return tickets;
+    // }
 
     public String[][] getTableData() {
         return tableData;

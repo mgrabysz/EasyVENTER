@@ -3,6 +3,7 @@ package kowale.database;
 import kowale.userInterface.*;
 import kowale.user.*;
 import kowale.event.Event;
+import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
@@ -17,7 +18,6 @@ import java.time.LocalDateTime;
 // import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -92,17 +92,26 @@ public class EasyVENT {
         EasyVENT.database.register_new_user(newOrganizer);
 
         // create example events
-        HashMap<String, HashMap<String, Integer>> tickets = new HashMap<String, HashMap<String, Integer>>();
-        HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
-        int number = 1;
-        int price = 1;
-        numberPrice.put("Number", number);
-        numberPrice.put("Price", price);
-
-        tickets.put("1", numberPrice);
-        tickets.put("2", numberPrice);
-
-
+        
+        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+        String[][] data = {
+            {"A", "100", "999999"},
+            {"B", "200", "888888"}
+        };
+        for (String[] row : data) {
+            String sector = row[0];
+            int ticketsNumber = Integer.parseInt(row[1]);
+            int basePrice = Integer.parseInt(row[2]);
+            
+            for (int seat = 0; seat < ticketsNumber; seat++) {
+                Ticket ticket = new Ticket(
+                    sector,
+                    seat,
+                    basePrice
+                );
+                tickets.add(ticket);
+            }
+        }
 
         Event event = new Event(
             "Ludzie biegający w kółko",
@@ -115,16 +124,16 @@ public class EasyVENT {
         event.setTickets(tickets);
         EasyVENT.database.createEvent(event);
 
-        event = new Event(
-            "Meczyk jakiś",
-            "Firma Krzak",
-            "Polska",
-            "Bydgoszcz",
-            "Ulica",
-            dateTime
-        );
-        event.setTickets(tickets);
-        EasyVENT.database.createEvent(event);
+        // event = new Event(
+        //     "Meczyk jakiś",
+        //     "Firma Krzak",
+        //     "Polska",
+        //     "Bydgoszcz",
+        //     "Ulica",
+        //     dateTime
+        // );
+        // event.setTickets(tickets);
+        // EasyVENT.database.createEvent(event);
 
         mainLoop();
     }
@@ -155,7 +164,7 @@ public class EasyVENT {
             // data = new String[events.size()][4];
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
-                data[i] = event.getEventInfo();
+                data[i] = event.getInfo();
             }
         }
 
@@ -356,9 +365,9 @@ public class EasyVENT {
                     GlobalVariables.EVENT = new Event(
                         createEventFrame.getName(),
                         GlobalVariables.USER_NAME,
-                        "Kraj",
-                        createEventFrame.getLocatione(),
-                        "Ulica",
+                        createEventFrame.getCountry(),
+                        createEventFrame.getCity(),
+                        createEventFrame.getStreet(),
                         createEventFrame.getDateTime()
                     );
                     GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
@@ -372,9 +381,9 @@ public class EasyVENT {
 
     private void inputSectorData() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            int number = GlobalVariables.SECTORS_NUMBER;
-            String[][] sectors = new String[number][3];
-            for (int i=0; i<number; ++i) {
+            int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
+            String[][] sectors = new String[sectorsNumber][3];
+            for (int i=0; i<sectorsNumber; ++i) {
                 String iStr = String.valueOf(i+1);
                 String[] sector = {iStr, "0", "0", "0"};
                 sectors[i] = sector;
@@ -390,9 +399,25 @@ public class EasyVENT {
                     GlobalVariables.FRAME_TYPE = "MainMenu";
                     break;
                 case "confirm":
-                    GlobalVariables.EVENT.setTickets(
-                        inputSectorDataFrame.getTickets()
-                    );
+                    String[][] tableData = inputSectorDataFrame.getTableData();
+                    ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+
+                    for (String[] row : tableData) {
+                        String sector = row[0];
+                        int ticketsNumber = Integer.parseInt(row[1]);
+                        int basePrice = Integer.parseInt(row[2]);
+                        
+                        for (int seat = 0; seat < ticketsNumber; seat++) {
+                            Ticket ticket = new Ticket(
+                                sector,
+                                seat,
+                                basePrice
+                            );
+                            tickets.add(ticket);
+                        }
+                    }
+
+                    GlobalVariables.EVENT.setTickets(tickets);
                     EasyVENT.database.createEvent(GlobalVariables.EVENT);
                     GlobalVariables.EVENT = null;
 
@@ -406,12 +431,12 @@ public class EasyVENT {
 
     private void eventDetails() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
-            // System.out.println(event);
-            String[][] data = event.getDetails();
-            // System.out.println(data);
-            eventDetailsFrame = new EventDetailsFrame(data);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
+            // Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+            // // System.out.println(event);
+            // String[][] data = event.getDetails();
+            // // System.out.println(data);
+            // eventDetailsFrame = new EventDetailsFrame(data);
+            // activeFrameType = GlobalVariables.FRAME_TYPE;
         } else if (eventDetailsFrame.getOption() != "") {
             switch (eventDetailsFrame.getOption()) {
                 case "cancel":
