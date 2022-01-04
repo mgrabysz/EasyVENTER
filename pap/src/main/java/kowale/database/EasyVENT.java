@@ -318,42 +318,44 @@ public class EasyVENT {
         }
     }
 
-    private void mainMenu() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
+    private void mainMenu() throws Exception{
             mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
             activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
-        } else if (mainMenuFrame.getOption() != "") {
-            switch (mainMenuFrame.getOption()) {
-                case "logout":
-                    GlobalVariables.USER_NAME = null;
-                    GlobalVariables.USER_ID = -1;
-                    GlobalVariables.USER_TYPE = null;
-                    GlobalVariables.FRAME_TYPE = "Welcome";
-                    break;
-                case "viewEvents":
-                    GlobalVariables.FRAME_TYPE = "ViewEvents";
-                    break;
-                case "manageEvents":
-                    GlobalVariables.FRAME_TYPE = "ManageEvents";
-                    break;
-                case "createEvent":
-                    GlobalVariables.FRAME_TYPE = "CreateEvent";
-                    break;
-                case "manageTickets":
-                    // GlobalVariables.FRAME_TYPE = "ManageTickets";
-                    JOptionPane.showMessageDialog(
-                        null,
-                        "TODO",
-                        "TODO",
-                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                    );
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    activeFrameType = null;
-                    break;
-            }
-            mainMenuFrame.dispose();
-            mainMenuFrame = null;
+
+        while (mainMenuFrame.getOption() == "") {
+            waiting();
         }
+
+        switch (mainMenuFrame.getOption()) {
+            case "logout":
+                GlobalVariables.USER_NAME = null;
+                GlobalVariables.USER_ID = -1;
+                GlobalVariables.USER_TYPE = null;
+                GlobalVariables.FRAME_TYPE = "Welcome";
+                break;
+            case "viewEvents":
+                GlobalVariables.FRAME_TYPE = "ViewEvents";
+                break;
+            case "manageEvents":
+                GlobalVariables.FRAME_TYPE = "ManageEvents";
+                break;
+            case "createEvent":
+                GlobalVariables.FRAME_TYPE = "CreateEvent";
+                break;
+            case "manageTickets":
+                // GlobalVariables.FRAME_TYPE = "ManageTickets";
+                JOptionPane.showMessageDialog(
+                    null,
+                    "TODO",
+                    "TODO",
+                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                );
+                GlobalVariables.FRAME_TYPE = "MainMenu";
+                activeFrameType = null;
+                break;
+        }
+        mainMenuFrame.dispose();
+        mainMenuFrame = null;
     }
 
     private void viewEvents() {
