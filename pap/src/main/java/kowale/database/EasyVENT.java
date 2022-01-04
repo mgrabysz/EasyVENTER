@@ -9,6 +9,8 @@ import java.lang.Thread;
 
 import javax.swing.JOptionPane;
 
+import java.util.HashMap;
+
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
@@ -165,6 +167,29 @@ public class EasyVENT {
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
                 data[i] = event.getInfo();
+            }
+        }
+
+        // System.out.println("events:");
+        // System.out.println(events);
+        // System.out.println("data:");
+        // System.out.println(data);
+
+        return data;
+    }
+
+    private String[][] ticketsMapToData(HashMap<String, HashMap<String, Integer>> ticketsMap) {
+        String[][]data = new String[ticketsMap.size()][3];
+
+        if (ticketsMap.size() > 0) {
+            // data = new String[events.size()][4];
+            int i = 0;
+            for (String sector : ticketsMap.keySet()) {
+                HashMap<String, Integer> numberPrice = ticketsMap.get(sector);
+                data[i][0] = sector;
+                data[i][1] = numberPrice.get("number").toString();
+                data[i][2] = numberPrice.get("price").toString();
+                i++;
             }
         }
 
@@ -431,12 +456,12 @@ public class EasyVENT {
 
     private void eventDetails() {
         if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            // Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
-            // // System.out.println(event);
-            // String[][] data = event.getDetails();
-            // // System.out.println(data);
-            // eventDetailsFrame = new EventDetailsFrame(data);
-            // activeFrameType = GlobalVariables.FRAME_TYPE;
+            Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+            HashMap<String, String> eventDetails = event.getDetails();
+            HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
+            String[][] ticketsData = ticketsMapToData(ticketsMap);
+            eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
+            activeFrameType = GlobalVariables.FRAME_TYPE;
         } else if (eventDetailsFrame.getOption() != "") {
             switch (eventDetailsFrame.getOption()) {
                 case "cancel":

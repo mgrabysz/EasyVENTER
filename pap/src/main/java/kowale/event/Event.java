@@ -2,8 +2,9 @@ package kowale.event;
 
 import kowale.ticket.Ticket;
 
-// import java.util.HashMap;
+import java.util.HashMap;
 import java.util.ArrayList;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -111,30 +112,47 @@ public class Event {
         return eventInfo;
     }
 
-    // public String[][] getDetails() {
-    //     // {"Number of sector", "Number of seats", "Adult ticket price"}
+    public HashMap<String, String> getDetails() {
+        // {"Number of sector", "Number of seats", "Adult ticket price"}
+        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
 
-    //     String[][] details = new String[tickets.size()][3];
+        HashMap<String, String> details = new HashMap<String, String>();
+        details.put("name", name);
+        details.put("organizer", organizer);
+        details.put("country", country);
+        details.put("city", city);
+        details.put("address", address);
+        details.put("dateTime", dateTime.format(formatter));
+
+        return details;
+    }
+
+    public HashMap<String, HashMap<String, Integer>> getTicketsMap() {
+        HashMap<String, HashMap<String, Integer>> sectors = new HashMap<String, HashMap<String, Integer>>(); 
         
-    //     if (tickets.size() > 0) {
-    //         // details = new String[events.size()][4];
-    //         System.out.println(tickets);
+        if (tickets.size() > 0) {
+            for (int i = 0; i < tickets.size(); i++) {
+                Ticket ticket = tickets.get(i);
+    
+                if (sectors.containsKey(ticket.getSector()) == false) {
+                    // create new sector in sectors map
+                    HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
+                    numberPrice.put("number", 1);
+                    numberPrice.put("price", ticket.getPrice());
+                    sectors.put(ticket.getSector(), numberPrice);
+                } else {
+                    // increase number of tickets in sector
+                    String sector = ticket.getSector();
+                    HashMap<String, Integer> numberPrice = sectors.get(sector);
+                    int number = numberPrice.get("number");
+                    sectors.get(sector).put("number", number+1);
+                }
+            }
+        } else {
+            // TODO: no tickets available
+        }
 
-    //         for (int i = 0; i < tickets.size(); i++) {
-    //             System.out.println(String.valueOf(i));
-    //             HashMap<String, Integer> sector = tickets.get(String.valueOf(i+1));
-    //             System.out.println(sector);
-    //             details[i][0] = String.valueOf(i+1);
-    //             details[i][1] = String.valueOf(sector.get("Number"));
-    //             details[i][2] = String.valueOf(sector.get("Price"));
-    //             // details[i][0] = String.valueOf(i+1);
-    //         }
-    //     }
-
-    //     // System.out.println("details:");
-    //     // System.out.println(details);
-
-    //     return details;
-    // }
+        return sectors;
+    }
 
 }
