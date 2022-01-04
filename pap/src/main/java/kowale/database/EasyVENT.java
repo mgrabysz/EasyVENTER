@@ -319,8 +319,8 @@ public class EasyVENT {
     }
 
     private void mainMenu() throws Exception{
-            mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
-            activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
+        mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
+        activeFrameType = GlobalVariables.FRAME_TYPE;  // prevents from creating another window
 
         while (mainMenuFrame.getOption() == "") {
             waiting();
@@ -358,24 +358,26 @@ public class EasyVENT {
         mainMenuFrame = null;
     }
 
-    private void viewEvents() {
-        if(activeFrameType != GlobalVariables.FRAME_TYPE){
-            String[][] data = eventsToData(database.getEvents());
-            viewEventsFrame = new ViewEventsFrame(data);
-            activeFrameType = GlobalVariables.FRAME_TYPE;
-        } else if (viewEventsFrame.getOption() != "") {
-            switch (viewEventsFrame.getOption()) {
-                case "cancel":
-                    GlobalVariables.FRAME_TYPE = "MainMenu";
-                    break;
-                case "details":
-                    GlobalVariables.FRAME_TYPE = "EventDetails";
-                    GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
-                    break;
-            }
-            viewEventsFrame.dispose();
-            viewEventsFrame = null;
+    private void viewEvents() throws Exception{
+        String[][] data = eventsToData(database.getEvents());
+        viewEventsFrame = new ViewEventsFrame(data);
+        activeFrameType = GlobalVariables.FRAME_TYPE;
+
+        while (viewEventsFrame.getOption() == "") {
+            waiting();
         }
+
+        switch (viewEventsFrame.getOption()) {
+            case "cancel":
+                GlobalVariables.FRAME_TYPE = "MainMenu";
+                break;
+            case "details":
+                GlobalVariables.FRAME_TYPE = "EventDetails";
+                GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
+                break;
+        }
+        viewEventsFrame.dispose();
+        viewEventsFrame = null;
     }
 
     private void manageEvents() {
