@@ -456,17 +456,5 @@ ALTER TABLE z01.tickets
     ADD CONSTRAINT ticket_ticket_categories_fk FOREIGN KEY ( category_id )
         REFERENCES z01.ticket_categories ( category_id )
     NOT DEFERRABLE;
-
-ALTER TABLE z01.user_credentials
-    ADD CONSTRAINT user_credentials_fk1 FOREIGN KEY ( user_id )
-        REFERENCES z01.client_data ( client_id )
-            ON DELETE CASCADE
-    NOT DEFERRABLE;
-
-ALTER TABLE z01.user_credentials
-    ADD CONSTRAINT user_credentials_fk2 FOREIGN KEY ( user_id )
-        REFERENCES z01.organizer_data ( organizer_id )
-            ON DELETE CASCADE
-    NOT DEFERRABLE;
     
 COMMIT;
