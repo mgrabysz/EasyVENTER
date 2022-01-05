@@ -33,11 +33,28 @@ INSERT INTO z01.addresses VALUES (113, 'Calle de Maldonaldo 110', 110);
 INSERT INTO z01.addresses VALUES (114, 'Calle de Juan Bravo 11', 111);
 INSERT INTO z01.addresses VALUES (115, 'Ruska 92', 112);
 
-INSERT INTO z01.events VALUES (101, 101, 'Festiwal kawy', 101, 101);
-INSERT INTO z01.events VALUES (102, 101, 'Festiwal morza', 102, 102);
-INSERT INTO z01.events VALUES (103, 102, 'Mecz', 103, 103);
-INSERT INTO z01.events VALUES (104, 103, 'Konferencja NASA', 104, 104);
-INSERT INTO z01.events VALUES (105, 103, 'Pokazy lotnicze', 105, 105);
+INSERT INTO z01.companies VALUES (101, 'Firma Krzak');
+INSERT INTO z01.companies VALUES (102, 'PZPN');
+INSERT INTO z01.companies VALUES (103, 'Anonymous');
+
+INSERT INTO z01.organizer_data VALUES (101, 'Patryk', 'Grabysz', 'patryk@gmail.com', 698698698, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 101);
+INSERT INTO z01.organizer_data VALUES (102, 'Zbigniew', 'Boniek', 'zibi@gmail.com', 794398618, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 102);
+INSERT INTO z01.organizer_data VALUES (103, 'Haker', 'Bonzo', 'hackyou@gmail.com', 666666666, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 103);
+
+INSERT INTO z01.client_data VALUES (101, 'Marcin', 'Szarejko', 'szary@wp.pl', TO_DATE('04/01/2001', 'DD/MM/YYYY'), 'M', 698011215);
+INSERT INTO z01.client_data VALUES (102, 'Stachu', 'Jones', 'sjones@gmail.com', TO_DATE('04/01/1956', 'DD/MM/YYYY'), 'M', 777777777);
+
+INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', 'password');
+INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'sjones');
+INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', 'admin');
+INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'pzpn');
+INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', 'root');
+
+INSERT INTO z01.events VALUES (101, 101, 'Festiwal kawy');
+INSERT INTO z01.events VALUES (102, 101, 'Festiwal morza');
+INSERT INTO z01.events VALUES (103, 102, 'Mecz');
+INSERT INTO z01.events VALUES (104, 103, 'Konferencja NASA');
+INSERT INTO z01.events VALUES (105, 103, 'Pokazy lotnicze');
 
 INSERT INTO z01.expected_income VALUES (101, 101, NULL);
 INSERT INTO z01.expected_income VALUES (102, 102, NULL);
@@ -45,11 +62,11 @@ INSERT INTO z01.expected_income VALUES (103, 103, NULL);
 INSERT INTO z01.expected_income VALUES (104, 104, NULL);
 INSERT INTO z01.expected_income VALUES (105, 105, NULL);
 
-INSERT INTO z01.event_details VALUES (101, 'Festiwal kawy', '01/01/2022', 101, 101);
-INSERT INTO z01.event_details VALUES (102, 'Festiwal morza', '20/01/2022', 103, 102);
-INSERT INTO z01.event_details VALUES (103, 'Mecz', '19/01/2022', 104, 103);
-INSERT INTO z01.event_details VALUES (104, 'Konferencja NASA', '01/03/2022', 105, 104);
-INSERT INTO z01.event_details VALUES (105, 'Pokazy lotnicze', '01/02/2022', 106, 105);
+INSERT INTO z01.event_details VALUES (101, 'Festiwal kawy', TO_DATE('20/01/2022', 'DD/MM/YYYY'), 101, 101);
+INSERT INTO z01.event_details VALUES (102, 'Festiwal morza', TO_DATE('24/01/2022', 'DD/MM/YYYY'), 103, 102);
+INSERT INTO z01.event_details VALUES (103, 'Mecz', TO_DATE('04/02/2022', 'DD/MM/YYYY'), 104, 103);
+INSERT INTO z01.event_details VALUES (104, 'Konferencja NASA', TO_DATE('04/03/2022', 'DD/MM/YYYY'), 105, 104);
+INSERT INTO z01.event_details VALUES (105, 'Pokazy lotnicze', TO_DATE('04/04/2022', 'DD/MM/YYYY'), 106, 105);
 
 INSERT INTO z01.ticket_quantities VALUES (101, 'A', 1000, 101);
 INSERT INTO z01.ticket_quantities VALUES (102, 'A', 500, 102);
@@ -58,37 +75,22 @@ INSERT INTO z01.ticket_quantities VALUES (104, 'A', 300, 103);
 INSERT INTO z01.ticket_quantities VALUES (105, 'A', 200, 104);
 INSERT INTO z01.ticket_quantities VALUES (106, 'A', 200, 105);
 
-INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', 'password');
-INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'sjones');
-INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', 'admin');
-INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'pzpn');
-INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', 'root');
-
-INSERT INTO z01.organizer_data VALUES (101, 'Patryk', 'Grabysz', 'patryk@gmail.com', 698698698, '04/01/2022', 101, 103);
-INSERT INTO z01.organizer_data VALUES (102, 'Zbigniew', 'Boniek', 'zibi@gmail.com', 794398618, '04/01/2022', 102, 104);
-INSERT INTO z01.organizer_data VALUES (103, 'Haker', 'Bonzo', 'hackyou@gmail.com', 666666666, '01/01/2022', 103, 105);
-
-INSERT INTO z01.companies VALUES (101, 'Firma Krzak');
-INSERT INTO z01.companies VALUES (102, 'PZPN');
-INSERT INTO z01.companies VALUES (103, 'Anonymous');
-
-INSERT INTO z01.client_data VALUES (101, 'Marcin', 'Szarejko', 'szary@wp.pl', '09/01/2001', 'M', 101, 698011215);
-INSERT INTO z01.client_data VALUES (102, 'Stachu', 'Jones', 'sjones@gmail.com', '09/01/1956', 'M', 102, 777777777);
-
-INSERT INTO z01.tickets VALUES (101, 1, 101, 101,  '04/01/2022', 'A', 100, 101);
-INSERT INTO z01.tickets VALUES (102, 2, 101, 102,  '04/01/2022', 'A', 70, 101);
-INSERT INTO z01.tickets VALUES (103, 10, 101, 101,  '04/01/2022', 'A', 100, 102);
-INSERT INTO z01.tickets VALUES (104, 11, 102, 102,  '04/01/2022', 'A', 70, 103);
-INSERT INTO z01.tickets VALUES (105, 25, 102, 102, '04/01/2022', 'B', 70, 104);
-INSERT INTO z01.tickets VALUES (106, 9, 104, 103,  '04/01/2022', 'A', 150, 105);
-INSERT INTO z01.tickets VALUES (107, 17, 105, 101,  '04/01/2022', 'A', 100, 105);
-
 INSERT INTO z01.ticket_categories VALUES (101, 'ADULT');
 INSERT INTO z01.ticket_categories VALUES (102, 'CHILD');
 INSERT INTO z01.ticket_categories VALUES (103, 'VIP');
 
-INSERT INTO z01.client_orders VALUES (101, '04/01/2022 09:26:50.12', 170, 101);
-INSERT INTO z01.client_orders VALUES (102, '04/01/2022 09:26:50.12', 100, 102);
-INSERT INTO z01.client_orders VALUES (103, '04/01/2022 09:26:50.12', 70, 102);
-INSERT INTO z01.client_orders VALUES (104, '04/01/2022 09:26:50.12', 70, 101);
-INSERT INTO z01.client_orders VALUES (105, '04/01/2022 09:26:50.12', 250, 101);
+INSERT INTO z01.client_orders VALUES (101, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 170, 101);
+INSERT INTO z01.client_orders VALUES (102, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 100, 102);
+INSERT INTO z01.client_orders VALUES (103, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 70, 102);
+INSERT INTO z01.client_orders VALUES (104, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 70, 101);
+INSERT INTO z01.client_orders VALUES (105, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 250, 101);
+
+INSERT INTO z01.tickets VALUES (101, 1, 101, 101,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 100, 101);
+INSERT INTO z01.tickets VALUES (102, 2, 101, 102,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 70, 101);
+INSERT INTO z01.tickets VALUES (103, 10, 101, 101,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 100, 102);
+INSERT INTO z01.tickets VALUES (104, 11, 102, 102,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 70, 103);
+INSERT INTO z01.tickets VALUES (105, 25, 102, 102, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'B', 70, 104);
+INSERT INTO z01.tickets VALUES (106, 9, 104, 103,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 150, 105);
+INSERT INTO z01.tickets VALUES (107, 17, 105, 101,  TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 100, 105);
+
+commit;
