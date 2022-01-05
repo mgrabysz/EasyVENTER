@@ -273,14 +273,16 @@ public class EasyVENT {
 
                     EasyVENT.database.register_new_user(new_user);
                 } else {
+                    HashMap<String, String> additionalInfo = registerOrganizer();
+
                     EventOrganizer new_user = new EventOrganizer(
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
                         hash(registerFrame.getUserPassword()),
-                        "email",
-                        -1,
-                        "company"
+                        additionalInfo.get("email"),
+                        Integer.parseInt(additionalInfo.get("telephone")),
+                        additionalInfo.get("company")
                     );
                     EasyVENT.database.register_new_user(new_user);
                 }
@@ -319,6 +321,26 @@ public class EasyVENT {
 
         registerClientFrame.dispose();
         registerClientFrame = null;
+
+        return map;
+    }
+
+    private HashMap<String, String> registerOrganizer() throws Exception {
+        // TODO: input checking
+        registerOrganizerFrame = new RegisterOrganizerFrame();
+    
+        while(registerOrganizerFrame.getIsReady() == false) {
+            waiting();
+        }
+
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        map.put("email", registerOrganizerFrame.getEmail());
+        map.put("telephone", registerOrganizerFrame.getTelephone());
+        map.put("company", registerOrganizerFrame.getCompany());
+
+        registerOrganizerFrame.dispose();
+        registerOrganizerFrame = null;
 
         return map;
     }
@@ -543,6 +565,8 @@ public class EasyVENT {
     }
 
     private void modifyEvent() throws Exception{
+        // TODO:
+        // not sure if evet info is displayed correctly
         Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
@@ -572,7 +596,8 @@ public class EasyVENT {
     }
 
     private void eventDetails() throws Exception{
-        // TODO: actual ticket buying
+        // TODO:
+        // actual ticket buying
         Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
