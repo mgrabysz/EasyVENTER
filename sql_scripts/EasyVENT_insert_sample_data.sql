@@ -48,7 +48,6 @@ INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', 'password');
 INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'sjones');
 INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', 'admin');
 INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'pzpn');
-INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', 'root');
 
 INSERT INTO z01.events VALUES (101, 101, 'Festiwal kawy');
 INSERT INTO z01.events VALUES (102, 101, 'Festiwal morza');
