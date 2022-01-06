@@ -34,7 +34,7 @@ public class EventDetailsFrame extends BasicTableFrame {
 
 
     public EventDetailsFrame(HashMap<String, String> eventDetails, String[][] ticketsData) {
-        super(ticketsData, new String[]{"Sector", "Number of seats", "Adult ticket price"} , "Confirm", false);
+        super(ticketsData, new String[]{"Sector", "Number of seats", "Adult ticket price"} , "Buy", false);
         isReady = isCancelled = false;
 
         name = eventDetails.get("name");
