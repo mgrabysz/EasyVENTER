@@ -11,7 +11,7 @@ import java.awt.Font;
 import java.util.HashMap;
 
 
-public class EventDetailsFrameAfterBuying extends BasicTableFrame {
+public class EventDetailsAfterBuyingFrame extends BasicTableFrame {
     /*
     Frame to check event details from client's perspective
     for an event to which client already has bought tickets.
@@ -35,7 +35,7 @@ public class EventDetailsFrameAfterBuying extends BasicTableFrame {
     private boolean isReady, isCancelled;
 
 
-    public EventDetailsFrameAfterBuying(HashMap<String, String> eventDetails, String[][] ticketsData, String sectorName) {
+    public EventDetailsAfterBuyingFrame(HashMap<String, String> eventDetails, String[][] ticketsData, String sectorName) {
         super(ticketsData, new String[]{"Category", "Number of seats"} , "Remove", false);
         isReady = isCancelled = false;
 
