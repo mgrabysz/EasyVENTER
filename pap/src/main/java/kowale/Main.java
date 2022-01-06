@@ -8,7 +8,7 @@ import java.util.Vector;
 
 
 public class Main {
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) throws Exception {
 
         // String[][] data = {
         //     { "Meczyk jakiś", "Bydgoszcz", "35.19.2022 25:72", "120" },
@@ -26,6 +26,7 @@ public class Main {
         // new InputSectorDataFrame(sectors);
         // new EventDetailsFrame(sectors);
         // new RegisterClientFrame();
+        // new RegisterOrganizerFrame();
         // new CreateEventFrame();
         // Create EasyVENT object
         EasyVENT easyVENT = new EasyVENT();

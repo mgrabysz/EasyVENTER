@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 public class RegisterOrganizerFrame extends RegisterFrame {
 
     private String email, telephone, company;
+    private boolean isReady = false;
 
     public RegisterOrganizerFrame() {
         super();
@@ -32,6 +33,8 @@ public class RegisterOrganizerFrame extends RegisterFrame {
             email = nameTextField.getText();
             telephone = loginTextField.getText();
             company = surnameTextField.getText();
+        
+            isReady = true;
         }
     }
 
@@ -43,5 +46,9 @@ public class RegisterOrganizerFrame extends RegisterFrame {
     }
     public String getCompany() {
         return company;
+    }
+
+    public boolean getIsReady() {
+        return isReady;
     }
 }
