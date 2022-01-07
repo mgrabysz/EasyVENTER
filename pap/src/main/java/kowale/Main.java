@@ -1,4 +1,5 @@
 package kowale;
+import kowale.database.Database;
 import kowale.database.EasyVENT;
 import kowale.event.Event;
 import kowale.userInterface.*;
@@ -22,7 +23,6 @@ public class Main {
         //     String[] sector = {iStr, "1", "1", "1"};
         //     sectors[i] = sector;
         // }
-
         // new InputSectorDataFrame(sectors);
         // new EventDetailsFrame(sectors);
         // new RegisterClientFrame();

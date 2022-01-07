@@ -79,10 +79,13 @@ public class Database {
         password password = new password();
         String pass = password.password;
         try {
-            String url = String.format("jdbc:oracle:thin:z01/%s@//ora4.ii.pw.edu.pl:1521/pdb1.ii.pw.edu.pl", pass);
-            connection = DriverManager.getConnection(url);
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            String url = "jdbc:oracle:thin:@//ora4.ii.pw.edu.pl:1521/pdb1.ii.pw.edu.pl";
+            connection = DriverManager.getConnection(url, "z01", pass);
         } catch (SQLException ex) {
             System.out.println(ex);
+        } catch (ClassNotFoundException cnf){
+            System.out.println(cnf);
         }
     }
 
@@ -210,13 +213,13 @@ public class Database {
         return events;
     }
 //todo//todo==============================
-    public boolean insertEvent(Event event) {
-        return false;
-    }
-
     public LinkedList<Ticket> getTicketsOfUser(User user){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
         return tickets;
+    }
+
+    public boolean insertEvent(Event event) {
+        return false;
     }
 
     public boolean editEvent(Event event){

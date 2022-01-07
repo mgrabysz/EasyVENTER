@@ -62,18 +62,19 @@ INSERT INTO z01.expected_income VALUES (103, 103, NULL);
 INSERT INTO z01.expected_income VALUES (104, 104, NULL);
 INSERT INTO z01.expected_income VALUES (105, 105, NULL);
 
-INSERT INTO z01.event_details VALUES (101, 'Festiwal kawy', TO_DATE('20/01/2022', 'DD/MM/YYYY'), 101, 101);
-INSERT INTO z01.event_details VALUES (102, 'Festiwal morza', TO_DATE('24/01/2022', 'DD/MM/YYYY'), 103, 102);
-INSERT INTO z01.event_details VALUES (103, 'Mecz', TO_DATE('04/02/2022', 'DD/MM/YYYY'), 104, 103);
-INSERT INTO z01.event_details VALUES (104, 'Konferencja NASA', TO_DATE('04/03/2022', 'DD/MM/YYYY'), 105, 104);
-INSERT INTO z01.event_details VALUES (105, 'Pokazy lotnicze', TO_DATE('04/04/2022', 'DD/MM/YYYY'), 106, 105);
+INSERT INTO z01.event_details VALUES (101, TO_DATE('20/01/2022', 'DD/MM/YYYY'), 101, 101);
+INSERT INTO z01.event_details VALUES (102, TO_DATE('24/01/2022', 'DD/MM/YYYY'), 103, 102);
+INSERT INTO z01.event_details VALUES (103, TO_DATE('04/02/2022', 'DD/MM/YYYY'), 104, 103);
+INSERT INTO z01.event_details VALUES (104, TO_DATE('04/03/2022', 'DD/MM/YYYY'), 105, 104);
+INSERT INTO z01.event_details VALUES (105, TO_DATE('04/04/2022', 'DD/MM/YYYY'), 106, 105);
 
-INSERT INTO z01.ticket_quantities VALUES (101, 'A', 1000, 101);
-INSERT INTO z01.ticket_quantities VALUES (102, 'A', 500, 102);
-INSERT INTO z01.ticket_quantities VALUES (103, 'B', 1000, 102);
-INSERT INTO z01.ticket_quantities VALUES (104, 'A', 300, 103);
-INSERT INTO z01.ticket_quantities VALUES (105, 'A', 200, 104);
-INSERT INTO z01.ticket_quantities VALUES (106, 'A', 200, 105);
+INSERT INTO z01.ticket_quantities VALUES (101, 'A', 1000, 101, 100);
+INSERT INTO z01.ticket_quantities VALUES (102, 'A', 500, 102, 50);
+INSERT INTO z01.ticket_quantities VALUES (103, 'B', 1000, 102, 50);
+INSERT INTO z01.ticket_quantities VALUES (104, 'A', 300, 103, 150);
+INSERT INTO z01.ticket_quantities VALUES (105, 'A', 200, 104, 200);
+INSERT INTO z01.ticket_quantities VALUES (106, 'A', 200, 105, 400);
+
 
 INSERT INTO z01.ticket_categories VALUES (101, 'ADULT');
 INSERT INTO z01.ticket_categories VALUES (102, 'CHILD');
