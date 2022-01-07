@@ -171,6 +171,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         cancelButton.addActionListener(this);
         this.add(cancelButton);
 
+        this.getRootPane().setDefaultButton(createButton);
         this.setVisible(true);
 
     }

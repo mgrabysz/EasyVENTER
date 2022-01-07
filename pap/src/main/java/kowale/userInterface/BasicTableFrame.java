@@ -67,6 +67,7 @@ public class BasicTableFrame extends JFrame implements ActionListener {
         sp.setBounds(30, 30, 800, 500);
         this.add(sp);
 
+        this.getRootPane().setDefaultButton(actionButton);
         this.setVisible(true);
 
     }

@@ -79,6 +79,7 @@ public class LoginFrame extends JFrame implements ActionListener {
         this.add(passwordLabel);
         this.add(passwordTextField);
         this.add(logButton);
+        this.getRootPane().setDefaultButton(logButton);
         this.setVisible(true);
 
     }
@@ -90,9 +91,8 @@ public class LoginFrame extends JFrame implements ActionListener {
             userLogin = loginTextField.getText();
             userPassword = new String(passwordTextField.getPassword());
 
-            // mało elegancki sposób na wyczyszczenie textfielda
-            // loginTextField.setText(null);
-            // passwordTextField.setText(null);
+            loginTextField.setText(null);
+            passwordTextField.setText(null);
 
             isReady = true;
         }

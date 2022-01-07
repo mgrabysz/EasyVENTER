@@ -123,6 +123,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
         this.add(organizerButton);
         this.add(confirmButton);
         this.setVisible(true);
+        this.getRootPane().setDefaultButton(confirmButton);
+
     }
 
     @Override

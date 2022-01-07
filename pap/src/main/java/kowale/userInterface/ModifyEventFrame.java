@@ -1,6 +1,7 @@
 package kowale.userInterface;
 
 import java.util.HashMap;
+import java.awt.event.ActionEvent;
 
 public class ModifyEventFrame extends CreateEventFrame {
 
@@ -34,5 +35,18 @@ public class ModifyEventFrame extends CreateEventFrame {
         minuteCombo.setSelectedItem(minute);
 
         createButton.setText("Confirm changes");
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if (e.getSource()==createButton){
+
+            // something to do when clicked
+
+        }
+        else if (e.getSource()==cancelButton) {
+
+            // something to do when cancelled
+        }
     }
 }
