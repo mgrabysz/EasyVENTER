@@ -32,5 +32,7 @@ public class ModifyEventFrame extends CreateEventFrame {
         dayCombo.setSelectedItem(day);
         hourCombo.setSelectedItem(hour);
         minuteCombo.setSelectedItem(minute);
+
+        createButton.setText("Confirm changes");
     }
 }
