@@ -115,7 +115,7 @@ public class Event {
 
     public HashMap<String, String> getExtendedDetails() {
         HashMap<String, String> details = new HashMap<String, String>();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         details.put("name", name);
         details.put("organizer", organizer);

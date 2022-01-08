@@ -7,16 +7,16 @@ import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
-import javax.print.event.PrintJobAdapter;
-import javax.sound.midi.Track;
+// import javax.print.event.PrintJobAdapter;
+// import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
 
 import java.util.HashMap;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+// import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.WatchService;
+// import java.nio.file.WatchService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 // import java.util.Objects;
 
-import kowale.database.password;
+// import kowale.database.password;
 
 public class Database {
     /*
