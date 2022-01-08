@@ -218,8 +218,48 @@ public class Database {
         return tickets;
     }
 
-    public boolean insertEvent(Event event) {
-        return false;
+    public boolean insertEvent(Event event, Ticket[] tickets) {
+        /*
+        Pass Event object and Ticket array
+        */
+        
+
+
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                String eventName = event.getName();
+                String eventOrganizer = event.getOrganizer();
+                String eventCountry = event.getCountry();
+                String eventCity = event.getCity();
+                String eventAddress = event.getAddress();
+                LocalDateTime eventDate = event.getDateTime();
+                
+                for (Ticket ticket : tickets){
+                    cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?)}");
+                    cs.setString(1, eventName);
+                    cs.setInt(2, 102);
+                    cs.setString(3, eventCountry);
+                    cs.setString(4, eventCity);
+                    cs.setString(5, eventAddress);
+                    cs.setDate(6, java.sql.Date.valueOf("2013-09-04"));
+                    cs.executeQuery();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                System.out.println("Done");
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public boolean editEvent(Event event){
