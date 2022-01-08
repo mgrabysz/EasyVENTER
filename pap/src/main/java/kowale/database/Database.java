@@ -118,7 +118,7 @@ public class Database {
                 System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
-                // TODO: moze numeracaj od "1" nie od "0"?
+                // TODO: moze numeracja od "1" nie od "0"?
                 pstmt.setString(0, cuser.getLogin());
                 pstmt.setString(1, cuser.getPassword());
                 pstmt.setString(2, cuser.getName());
