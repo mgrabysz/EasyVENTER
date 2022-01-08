@@ -44,11 +44,16 @@ INSERT INTO z01.organizer_data VALUES (103, 'Haker', 'Bonzo', 'hackyou@gmail.com
 INSERT INTO z01.client_data VALUES (101, 'Marcin', 'Szarejko', 'szary@wp.pl', TO_DATE('04/01/2001', 'DD/MM/YYYY'), 'M', 698011215);
 INSERT INTO z01.client_data VALUES (102, 'Stachu', 'Jones', 'sjones@gmail.com', TO_DATE('04/01/1956', 'DD/MM/YYYY'), 'M', 777777777);
 
-INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', 'password');
-INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'sjones');
-INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', 'admin');
-INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'pzpn');
-INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', 'root');
+-- password = password
+INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', '5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8');
+-- password = sjones
+INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'fbc0f604e211197a4de445a744bbc096109227d70a8c6f1c43e8e2d6e0ff2a77');
+-- password = admin
+INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
+-- password = pzpn
+INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'a66a7108661530fa681f08c889876b5747783b8b69852c510e42cc8df906d274');
+-- password = root
+INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
 
 INSERT INTO z01.events VALUES (101, 101, 'Festiwal kawy');
 INSERT INTO z01.events VALUES (102, 101, 'Festiwal morza');
