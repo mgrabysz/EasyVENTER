@@ -4,7 +4,8 @@ e_organizer NUMBER,
 e_country VARCHAR2,
 e_city VARCHAR2,
 e_address VARCHAR2,
-e_date_time DATE)
+e_date_time DATE,
+e_event_id_return OUT NUMERIC)
 AS
 e_country_id NUMBER;
 e_city_id NUMBER;
@@ -14,8 +15,6 @@ organizer_exists NUMBER;
 event_exists NUMBER;
 event_id NUMBER;
 e_detail_id NUMBER;
-e_ticket ticket_obj;
-
 BEGIN
     -- insert country
     -- check if country doesn't yet exist in table
@@ -25,7 +24,6 @@ BEGIN
     WHERE NOT EXISTS (SELECT * FROM COUNTRIES WHERE COUNTRY_NAME = e_country);
     
     SELECT COUNTRY_ID INTO e_country_id FROM COUNTRIES WHERE COUNTRY_NAME = e_country;
-    
     
     INSERT INTO CITIES(NAME, COUNTRY_ID)
     SELECT e_city, e_country_id
@@ -67,5 +65,6 @@ BEGIN
     INSERT INTO EVENT_DETAILS(START_TIME, ADDRESS_ID, EVENT_ID)
     VALUES (SYSDATE, e_address_id, event_id)
     RETURNING EVENT_DETAIL_ID INTO e_detail_id;
-END add_event;
     
+    e_event_id_return:=event_id;
+END add_event;
