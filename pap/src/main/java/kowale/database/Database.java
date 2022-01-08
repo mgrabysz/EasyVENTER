@@ -226,10 +226,6 @@ public class Database {
         return false;
     }
 
-    public boolean dropEvent(Event event){
-        return false;
-    }
-
     public boolean buyTicket(User user, Event event){
         return false;
     }
