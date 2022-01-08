@@ -6,6 +6,7 @@ import kowale.event.Event;
 import kowale.ticket.Ticket;
 
 import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,8 +14,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDateTime;
-
 // import java.time.LocalDateTime;
 
 import java.util.ArrayList;
@@ -288,14 +289,57 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
-                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?)}");
+                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?)}");
                 cs.setString(1, eventName);
                 cs.setInt(2, Integer.parseInt(eventOrganizer));
                 cs.setString(3, eventCountry);
                 cs.setString(4, eventCity);
                 cs.setString(5, eventAddress);
                 cs.setDate(6, java.sql.Date.valueOf("2022-01-10"));
-                cs.executeQuery();
+                cs.registerOutParameter(7, Types.NUMERIC);
+                cs.execute();
+                int eventID = cs.getInt(7);
+                System.out.println(eventID);
+
+                /* INSERT TICKETS */
+                
+                this.insertTickets(eventID, tickets);
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                System.out.println("Done");
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean insertTickets(int eventID, Ticket[] tickets){
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                for (Ticket ticket : tickets){
+                    String tCategory = ticket.getCategory();
+                    int tSeat = ticket.getSeat();
+                    String tSector = ticket.getSector();
+                    int tPrice = ticket.getPrice();
+
+                    cs = connection.prepareCall("{call ADD_TICKET(?,?,?,?,?)}");
+                    cs.setInt(1, eventID);
+                    cs.setString(2, tCategory);
+                    cs.setString(3, String.valueOf(tSeat));
+                    cs.setString(4, String.valueOf(tSector)); // convert to DB char type
+                    cs.setInt(5, tPrice);
+
+                    cs.executeQuery();
+                }
             } catch (SQLException ex) {
                 System.out.println(ex);
             } finally {
