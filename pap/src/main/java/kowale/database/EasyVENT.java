@@ -142,6 +142,7 @@ public class EasyVENT {
         // );
         // event.setTickets(tickets);
         // EasyVENT.database.createEvent(event);
+        // System.out.println(isNumeric("12a"));
 
         mainLoop();
     }
@@ -152,6 +153,19 @@ public class EasyVENT {
         }
         catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+    public static boolean isNumeric(String string) {
+        // System.out.println(string);
+        if (string == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(string);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -307,42 +321,79 @@ public class EasyVENT {
         // TODO: input checking
         registerClientFrame = new RegisterClientFrame();
     
-        while(registerClientFrame.getIsReady() == false) {
-            waiting();
+        while (true) {
+            while(registerClientFrame.getIsReady() == false) {
+                waiting();
+            }
+            
+            String telephone = registerClientFrame.getTelephone();
+            if (
+                registerClientFrame.getEmail().trim().length() > 0 &&
+                registerClientFrame.getTelephone().trim().length() > 0 &&
+                telephone.length() == 9 &&
+                isNumeric(telephone)
+            ) {
+                HashMap<String, String> map = new HashMap<String, String>();
+                map.put("email", registerClientFrame.getEmail());
+                map.put("telephone", registerClientFrame.getTelephone());
+                map.put("gender", registerClientFrame.getGender());
+                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+                map.put("date", registerClientFrame.getDate().format(formatter));
+        
+                registerClientFrame.dispose();
+                registerClientFrame = null;
+        
+                return map;
+            } else {
+                registerClientFrame.setIsReady(false);
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid value in one or more fields.",
+                    "Invalid user input",
+                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                );
+            }
         }
-
-        HashMap<String, String> map = new HashMap<String, String>();
-
-        map.put("email", registerClientFrame.getEmail());
-        map.put("telephone", registerClientFrame.getTelephone());
-        map.put("gender", registerClientFrame.getGender());
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-        map.put("date", registerClientFrame.getDate().format(formatter));
-
-        registerClientFrame.dispose();
-        registerClientFrame = null;
-
-        return map;
     }
 
     private HashMap<String, String> registerOrganizer() throws Exception {
         // TODO: input checking
         registerOrganizerFrame = new RegisterOrganizerFrame();
     
-        while(registerOrganizerFrame.getIsReady() == false) {
-            waiting();
+        while(true) {
+            while(registerOrganizerFrame.getIsReady() == false) {
+                waiting();
+            }
+
+            String telephone = registerOrganizerFrame.getTelephone();
+            if (
+                registerOrganizerFrame.getEmail().trim().length() > 0 &&
+                registerOrganizerFrame.getCompany().trim().length() > 0 &&
+                telephone.length() == 9 &&
+                isNumeric(telephone)
+            ) {
+                HashMap<String, String> map = new HashMap<String, String>();
+        
+                map.put("email", registerOrganizerFrame.getEmail());
+                map.put("telephone", registerOrganizerFrame.getTelephone());
+                map.put("company", registerOrganizerFrame.getCompany());
+        
+                registerOrganizerFrame.dispose();
+                registerOrganizerFrame = null;
+        
+                return map;
+            } else {
+                registerOrganizerFrame.setIsReady(false);
+
+                JOptionPane.showMessageDialog(
+                    null,
+                    "Invalid value in one or more fields.",
+                    "Invalid user input",
+                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                );
+            }
         }
-
-        HashMap<String, String> map = new HashMap<String, String>();
-
-        map.put("email", registerOrganizerFrame.getEmail());
-        map.put("telephone", registerOrganizerFrame.getTelephone());
-        map.put("company", registerOrganizerFrame.getCompany());
-
-        registerOrganizerFrame.dispose();
-        registerOrganizerFrame = null;
-
-        return map;
     }
 
 
@@ -489,8 +540,6 @@ public class EasyVENT {
         switch (createEventFrame.getOption()) {
             case "cancel":
                 nextFrame = "mainMenu";
-                createEventFrame.dispose();
-                createEventFrame = null;
                 break;
             case "confirm":
                 Event event = new Event(
@@ -517,6 +566,9 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
         }
+
+        createEventFrame.dispose();
+        createEventFrame = null;
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
@@ -537,6 +589,8 @@ public class EasyVENT {
 
         switch (inputSectorDataFrame.getOption()) {
             case "cancel":
+                inputSectorDataFrame.dispose();
+                inputSectorDataFrame = null;
                 return null;
             case "confirm":
                 String[][] tableData = inputSectorDataFrame.getTableData();
@@ -611,16 +665,15 @@ public class EasyVENT {
         switch (eventDetailsFrame.getOption()) {
             case "cancel":
                 nextFrame = "mainMenu";
-                eventDetailsFrame.dispose();
-                eventDetailsFrame = null;
                 break;
             case "confirm":
                 // Database.buyTickets();
                 nextFrame = "mainMenu";
-                eventDetailsFrame.dispose();
-                eventDetailsFrame = null;
                 break;
         }
+
+        eventDetailsFrame.dispose();
+        eventDetailsFrame = null;
     }
 
     public void mainLoop() throws Exception {

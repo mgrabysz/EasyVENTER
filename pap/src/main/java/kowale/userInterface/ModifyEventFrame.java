@@ -40,13 +40,11 @@ public class ModifyEventFrame extends CreateEventFrame {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==createButton){
-
-            // something to do when clicked
+            option = "confirm";
 
         }
         else if (e.getSource()==cancelButton) {
-
-            // something to do when cancelled
+            option = "cancel";
         }
     }
 }

@@ -103,4 +103,8 @@ public class RegisterClientFrame extends RegisterOrganizerFrame {
     public boolean getIsReady() {
         return isReady;
     }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
 }

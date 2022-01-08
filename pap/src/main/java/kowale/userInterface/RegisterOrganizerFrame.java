@@ -51,4 +51,8 @@ public class RegisterOrganizerFrame extends RegisterFrame {
     public boolean getIsReady() {
         return isReady;
     }
+
+    public void setIsReady(boolean b) {
+        isReady = b;
+    }
 }
