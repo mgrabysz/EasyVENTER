@@ -22,6 +22,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 // import java.util.Objects;
 
+import javax.sound.midi.SysexMessage;
+
 // import kowale.database.password;
 
 public class Database {
@@ -276,8 +278,6 @@ public class Database {
         /*
         Pass Event object and Ticket array
         */
-        
-
 
         CallableStatement cs = null;
         if (connection != null) {
@@ -288,17 +288,14 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
-                
-                for (Ticket ticket : tickets){
-                    cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?)}");
-                    cs.setString(1, eventName);
-                    cs.setInt(2, 102);
-                    cs.setString(3, eventCountry);
-                    cs.setString(4, eventCity);
-                    cs.setString(5, eventAddress);
-                    cs.setDate(6, java.sql.Date.valueOf("2013-09-04"));
-                    cs.executeQuery();
-                }
+                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?)}");
+                cs.setString(1, eventName);
+                cs.setInt(2, Integer.parseInt(eventOrganizer));
+                cs.setString(3, eventCountry);
+                cs.setString(4, eventCity);
+                cs.setString(5, eventAddress);
+                cs.setDate(6, java.sql.Date.valueOf("2022-01-10"));
+                cs.executeQuery();
             } catch (SQLException ex) {
                 System.out.println(ex);
             } finally {
