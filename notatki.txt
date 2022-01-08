@@ -1,5 +1,4 @@
 TODO:
-ModifyEventFrame - usunąć button "remove"
 
 Procedura sql:
 params:

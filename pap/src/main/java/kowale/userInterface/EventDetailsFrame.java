@@ -7,6 +7,8 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import java.awt.event.ActionEvent;
 import java.awt.Dimension;
@@ -26,7 +28,6 @@ public class EventDetailsFrame extends BasicTableFrame {
     JPanel dateTimePanel, locationPanel, organizerPanel;
     Border border;
     JComboBox<Integer> childCombo, adultCombo, vipCombo;
-    JButton calculateButton;
 
     private String name, country, city, address, organizer, dateTime;
     private boolean isReady, isCancelled;
@@ -47,8 +48,14 @@ public class EventDetailsFrame extends BasicTableFrame {
         this.setTitle(name);
 
         sp.setBounds(30, 280, 800, 100);
-        table.changeSelection(0, 0, false, false);
+        table.changeSelection(0, 0, false, false); // provides that only one row can be selected
 
+        // providing an action listener for changing a selection
+        table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
+            public void valueChanged(ListSelectionEvent event) {
+               updatePrice();
+            }
+        });
 
         nameLabel = new JLabel(name);
         nameLabel.setBounds(45, 30, 800, 70);
@@ -137,20 +144,17 @@ public class EventDetailsFrame extends BasicTableFrame {
         childCombo = new JComboBox<Integer>(tickets);
         this.add(childCombo);
         childCombo.setBounds(30, 460, 220, 30);
+        childCombo.addActionListener(this);
 
         adultCombo = new JComboBox<Integer>(tickets);
         this.add(adultCombo);
         adultCombo.setBounds(290, 460, 220, 30);
+        adultCombo.addActionListener(this);
 
         vipCombo = new JComboBox<Integer>(tickets);
         this.add(vipCombo);
         vipCombo.setBounds(550, 460, 220, 30);
-
-        calculateButton = new JButton("Calculate");
-        calculateButton.setFocusable(false);
-        calculateButton.setBounds(850, 100, 120, 50);
-        calculateButton.addActionListener(this);
-        this.add(calculateButton);
+        vipCombo.addActionListener(this);
 
         totalPriceTitleLabel = new JLabel("Total price: ");
         this.add(totalPriceTitleLabel);
@@ -173,10 +177,8 @@ public class EventDetailsFrame extends BasicTableFrame {
             numberVips = (Integer)vipCombo.getSelectedItem();
             sector = table.getSelectedRow() + 1;   //  +1 because table is indexed from 0
             option = "confirm";
-        } else if (e.getSource()==calculateButton){
-            String to_print = formatDouble(calculateTotalPrice());
-            System.out.println(to_print);
-            totalPriceLabel.setText(to_print + " PLN");
+        } else if (e.getSource()==childCombo || e.getSource()==adultCombo || e.getSource()==vipCombo){
+            updatePrice();
         } else if (e.getSource()==cancelButton){
             isCancelled = true;
             option = "cancel";
@@ -201,6 +203,11 @@ public class EventDetailsFrame extends BasicTableFrame {
     public String formatDouble(double d) {
         DecimalFormat df = new DecimalFormat("###.##");
         return df.format(d);
+    }
+
+    public void updatePrice() {
+        String to_print = formatDouble(calculateTotalPrice());
+        totalPriceLabel.setText(to_print + " PLN");
     }
 
     public boolean getIsCancelled() {
