@@ -43,6 +43,7 @@ public class Database {
         // iterate through userlist
         LinkedList<User> users = getAllUsersCredentials();
         for(int i = 0, size = users.size(); i < size; i ++) {
+            // System.out.println(users.get(i).getType());
             if(users.get(i).getLogin().equals(_login)) {
                 // System.out.println(_password);
                 // System.out.println(users.get(i).getPassword());
@@ -50,6 +51,8 @@ public class Database {
                 if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_NAME = users.get(i).getName();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
+                    // System.out.println(users.get(i).getName());
+                    // System.out.println(users.get(i).getType());
                     return true;
                 }
             }
@@ -159,9 +162,10 @@ public class Database {
                 ResultSet rs = stmt.executeQuery("SELECT * FROM USER_CREDENTIALS");
                 while (rs.next()) {
                     String type = rs.getString("account_type");
+                    // System.out.println(type);
                     String login = rs.getString("login");
                     String pass = rs.getString("password");
-                    if (type == "C") {
+                    if (type.equals("C")) {
                         user = new Client(login, pass);
                     } else {
                         user = new EventOrganizer(login, pass);

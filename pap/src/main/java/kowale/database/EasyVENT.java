@@ -253,6 +253,8 @@ public class EasyVENT {
 
                 if (accountType == 0){
                     HashMap<String, String> additionalInfo = registerClient();
+
+                    // System.out.println(additionalInfo.get("date"));
                     LocalDate date = LocalDate.parse(
                         additionalInfo.get("date")
                     );
@@ -319,12 +321,14 @@ public class EasyVENT {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("email", registerClientFrame.getEmail());
                 map.put("telephone", registerClientFrame.getTelephone());
-                map.put("gender", registerClientFrame.getGender());
+                String gender = registerClientFrame.getGender().substring(0, 1);
+                map.put("gender", gender);
                 // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
                 map.put(
                     "date",
                     registerClientFrame.getDate().format(
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+                        // DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     )
                 );
         
