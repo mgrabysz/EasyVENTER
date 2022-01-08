@@ -185,25 +185,34 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                String query = "SELECT * FROM EVENTS "+
-                "JOIN EVENT_DETAILS USING(event_detail_id)"+
-                "JOIN TICKET_QUANTITY USING(ticket_quantity_id)";
+                //todo
+                String query = "";
+
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-                    // String organizer_id = rs.getInt("organizer_id");
-                    // String name = rs.getString("event_name");
-                    // String location_id = rs.getInt("country_id");
+                    String organizer = rs.getString("companies.name");
+                    String name = rs.getString("event_name");
+                    String country = rs.getString("country_name");
+                    String city = rs.getString("cities.name");
+                    String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
-                    // event = new Event(name, organizer, location, start_date);
-                    // events.add(event);
-                for (int i=0; i< events.size(); ++i){
-                    String query2 = "SELECT * FROM TICKETS";
-                    ResultSet rs2 = stmt.executeQuery(query);
-                    while (rs2.next()) {
-                        //
-                    }
+                    event = new Event(name, organizer, country, city, address, start_time);
+                    events.add(event);
                 }
+                for (int i=0; i< events.size(); ++i){
+                    ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+                    String ev_name = events.get(i).getName();
+                    String query2 = String.format("SELECT * FROM tickets JOIN events USING(event_id) WHERE event_name = %s", ev_name);
+                    ResultSet rs2 = stmt.executeQuery(query2);
+                    while (rs2.next()) {
+                        String sector = rs.getString("sector");
+                        int seat = Integer.parseInt(rs.getString("seat"));
+                        int price = rs.getInt("ticket_price");
+                        Ticket ticket = new Ticket(sector, seat, price);
+                        tickets.add(ticket);
+                    }
+                    events.get(i).setTickets(tickets);
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
