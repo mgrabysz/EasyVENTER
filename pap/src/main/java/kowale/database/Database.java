@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Objects;
+// import java.util.Objects;
 
 import kowale.database.password;
 
@@ -44,8 +44,8 @@ public class Database {
         LinkedList<User> users = getAllUsersCredentials();
         for(int i = 0, size = users.size(); i < size; i ++) {
             if(users.get(i).getLogin().equals(_login)) {
-                System.out.println(_password);
-                System.out.println(users.get(i).getPassword());
+                // System.out.println(_password);
+                // System.out.println(users.get(i).getPassword());
 
                 if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_NAME = users.get(i).getName();
@@ -55,16 +55,6 @@ public class Database {
             }
         }
         return false;
-    }
-
-    public boolean register_new_user(User new_user) {
-        /*
-        Adds new user to the database. Returns boolean true
-        if user has been added successfully.
-         */
-        // users.add(new_user);
-        // return true;
-        return registerUser(new_user);
     }
 
     public boolean createEvent(Event event) {
@@ -105,6 +95,10 @@ public class Database {
     }
 
     public boolean registerUser(User user) {
+        /*
+        Adds new user to the database. Returns boolean true
+        if user has been added successfully.
+         */
         String userType = user.getClass().getSimpleName().toString();
         // System.out.println(userType);
 
@@ -115,29 +109,28 @@ public class Database {
         CallableStatement pstmt = null;
         try {
             if (userType.equals("Client")){
-                System.out.println("IF Client");
+                // System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
-                // TODO: moze numeracja od "1" nie od "0"?
-                pstmt.setString(0, cuser.getLogin());
-                pstmt.setString(1, cuser.getPassword());
-                pstmt.setString(2, cuser.getName());
-                pstmt.setString(3, cuser.getSurname());
-                pstmt.setString(4, cuser.getEmail());
-                pstmt.setInt(5, cuser.getPhoneNumber());
-                pstmt.setString(6, cuser.getGender());
-                pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
-                System.out.println("IF Client END");
+                pstmt.setString(1, cuser.getLogin());
+                pstmt.setString(2, cuser.getPassword());
+                pstmt.setString(3, cuser.getName());
+                pstmt.setString(4, cuser.getSurname());
+                pstmt.setString(5, cuser.getEmail());
+                pstmt.setDate(6, Date.valueOf(cuser.getBirth()));
+                pstmt.setString(7, cuser.getGender());
+                pstmt.setInt(8, cuser.getPhoneNumber());
+                // System.out.println("IF Client END");
             } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
-                pstmt.setString(0, euser.getLogin());
-                pstmt.setString(1, euser.getPassword());
-                pstmt.setString(2, euser.getName());
-                pstmt.setString(3, euser.getSurname());
-                pstmt.setString(4, euser.getEmail());
-                pstmt.setInt(5, euser.getPhoneNumber());
-                pstmt.setString(6, euser.getCompanyName());
+                pstmt.setString(1, euser.getLogin());
+                pstmt.setString(2, euser.getPassword());
+                pstmt.setString(3, euser.getName());
+                pstmt.setString(4, euser.getSurname());
+                pstmt.setString(5, euser.getEmail());
+                pstmt.setInt(6, euser.getPhoneNumber());
+                pstmt.setString(7, euser.getCompanyName());
             }
             pstmt.execute();
             success = true;

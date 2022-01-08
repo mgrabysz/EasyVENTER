@@ -69,18 +69,18 @@ public class EasyVENT {
         database.registerUser(newClient);
 
         // create example organizers
-        // EventOrganizer newOrganizer = new EventOrganizer(
-        //     "s",
-        //     "s",
-        //     "s",
-        //     hash("s"),
-        //     "email",
-        //     -1,
-        //     "company"
-        // );
+        EventOrganizer newOrganizer = new EventOrganizer(
+            "s",
+            "s",
+            "s",
+            hash("s"),
+            "email",
+            123456789,
+            "company"
+        );
         
         // database.register_new_user(newOrganizer);
-        // database.registerUser(newOrganizer);
+        database.registerUser(newOrganizer);
 
         // create example events
         
@@ -268,7 +268,7 @@ public class EasyVENT {
                         date
                     );
 
-                    EasyVENT.database.register_new_user(new_user);
+                    EasyVENT.database.registerUser(new_user);
                 } else {
                     HashMap<String, String> additionalInfo = registerOrganizer();
 
@@ -281,7 +281,7 @@ public class EasyVENT {
                         Integer.parseInt(additionalInfo.get("telephone")),
                         additionalInfo.get("company")
                     );
-                    EasyVENT.database.register_new_user(new_user);
+                    EasyVENT.database.registerUser(new_user);
                 }
 
                 registerFrame = null;
