@@ -197,6 +197,13 @@ public class Database {
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
                     // event = new Event(name, organizer, location, start_date);
                     // events.add(event);
+                for (int i=0; i< events.size(); ++i){
+                    String query2 = "SELECT * FROM TICKETS";
+                    ResultSet rs2 = stmt.executeQuery(query);
+                    while (rs2.next()) {
+                        //
+                    }
+                }
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -212,9 +219,37 @@ public class Database {
         }
         return events;
     }
-//todo//todo==============================
+
     public LinkedList<Ticket> getTicketsOfUser(User user){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
+        Statement stmt = null;
+        String login = user.getLogin();
+        if (connection != null) {
+            try {
+                stmt = connection.createStatement();
+                String query = String.format("SELECT * FROM tickets JOIN ticket_orders USING(ticket_id)"+
+                    "JOIN client_orders USING(order_id) JOIN user_credentials ON (client_id = user_id)"+
+                    "WHERE login = %s", login);
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String sector = rs.getString("sector");
+                    int seat = Integer.parseInt(rs.getString("seat"));
+                    int price = rs.getInt("ticket_price");
+                    Ticket ticket = new Ticket(sector, seat, price);
+                    tickets.add(ticket);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
         return tickets;
     }
 
