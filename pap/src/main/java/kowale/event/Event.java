@@ -105,7 +105,8 @@ public class Event {
     }
 
     public String[] getInfo() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         String[] eventInfo = {name, organizer, address, dateTime.format(formatter)};
 
@@ -114,24 +115,38 @@ public class Event {
 
     public HashMap<String, String> getExtendedDetails() {
         HashMap<String, String> details = new HashMap<String, String>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         details.put("name", name);
         details.put("organizer", organizer);
         details.put("country", country);
         details.put("city", city);
         details.put("address", address);
-        // details.put("dateTime", dateTime.format(formatter));
         details.put("year", String.valueOf(dateTime.getYear()));
-        details.put("month", String.valueOf(dateTime.getMonth()));
-        details.put("day", String.valueOf(dateTime.getDayOfMonth()));
-        details.put("hour", String.valueOf(dateTime.getHour()));
-        details.put("minute", String.valueOf(dateTime.getMinute()));
+        String month = String.valueOf(dateTime.getMonth());
+        month = month.toLowerCase();
+        month = month.substring(0, 1).toUpperCase() + month.substring(1);
+        String day = String.valueOf(dateTime.getDayOfMonth());
+        String hour = String.valueOf(dateTime.getHour());
+        if (hour.length() == 1) {
+            hour = "0" + hour;
+        } 
+        String minute = String.valueOf(dateTime.getMinute());
+        if (minute.length() == 1) {
+            minute = "0" + minute;
+        } 
+        details.put("month", month);
+        details.put("day", day);
+        details.put("hour", hour);
+        details.put("minute", minute);
 
+        System.out.println(details);
         return details;
     }
 
     public HashMap<String, String> getDetails() {
-        DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         HashMap<String, String> details = new HashMap<String, String>();
         details.put("name", name);
@@ -140,6 +155,7 @@ public class Event {
         details.put("city", city);
         details.put("address", address);
         details.put("dateTime", dateTime.format(formatter));
+        System.out.println(dateTime.format(formatter));
 
         return details;
     }

@@ -44,6 +44,7 @@ public class EasyVENT {
     private String nextFrame = "welcome";
     // private String activeFrameType = "";
 
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private LocalDate date = LocalDate.now();
     private LocalDateTime dateTime = LocalDateTime.now();
     // private String user_type;
@@ -337,8 +338,13 @@ public class EasyVENT {
                 map.put("email", registerClientFrame.getEmail());
                 map.put("telephone", registerClientFrame.getTelephone());
                 map.put("gender", registerClientFrame.getGender());
-                DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
-                map.put("date", registerClientFrame.getDate().format(formatter));
+                // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
+                map.put(
+                    "date",
+                    registerClientFrame.getDate().format(
+                        DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+                    )
+                );
         
                 registerClientFrame.dispose();
                 registerClientFrame = null;
@@ -531,6 +537,7 @@ public class EasyVENT {
     }
 
     private void createEvent() throws Exception{
+        // TODO: input data check
         createEventFrame = new CreateEventFrame();
 
         while (createEventFrame.getOption() == "") {
@@ -539,6 +546,9 @@ public class EasyVENT {
 
         switch (createEventFrame.getOption()) {
             case "cancel":
+                createEventFrame.dispose();
+                createEventFrame = null;
+
                 nextFrame = "mainMenu";
                 break;
             case "confirm":
@@ -550,12 +560,14 @@ public class EasyVENT {
                     createEventFrame.getAddress(),
                     createEventFrame.getDateTime()
                 );
+
                 int sectorsNumber = createEventFrame.getNumOfSectors();
 
                 createEventFrame.dispose();
-                createEventFrame = null;
-        
+                createEventFrame = null;        
+
                 ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
+
                 if (tickets != null) {
                     event.setTickets(tickets);
                     EasyVENT.database.createEvent(event);
@@ -563,16 +575,15 @@ public class EasyVENT {
                     // nextFrame = "InputSectorDataFrame";
                     
                 }
+
                 nextFrame = "mainMenu";
                 break;
         }
 
-        createEventFrame.dispose();
-        createEventFrame = null;
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
-        // int sectorsNumber = GlobalVariables.SECTORS_NUMBER;
+        // TODO: input data check
         String[][] sectors = new String[sectorsNumber][3];
         for (int i=0; i<sectorsNumber; ++i) {
             String iStr = String.valueOf(i+1);
@@ -620,7 +631,7 @@ public class EasyVENT {
 
     private void modifyEvent() throws Exception{
         // TODO:
-        // not sure if evet info is displayed correctly
+        // ISSUE: event time and date is not displayed correctly
         Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
