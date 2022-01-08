@@ -1,3 +1,9 @@
 TODO:
-ModifyEventFrame - button na "confirm changes"
-EventDetailsFrame - buttno na "buy"
+ModifyEventFrame - usunąć button "remove"
+
+Procedura sql:
+params:
+    login
+    event name
+    sector
+    seat
