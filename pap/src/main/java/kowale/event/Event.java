@@ -108,7 +108,7 @@ public class Event {
         // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
-        String[] eventInfo = {name, organizer, address, dateTime.format(formatter)};
+        String[] eventInfo = {name, city, address, dateTime.format(formatter)};
 
         return eventInfo;
     }
