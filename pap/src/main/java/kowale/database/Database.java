@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Objects;
 
 import kowale.database.password;
 
@@ -33,16 +34,20 @@ public class Database {
     public Connection connection = null;
     public ArrayList<Event> events = new ArrayList<>();
 
-    public Database(){ // Constructor
+    public Database() throws SQLException { // Constructor
+        connectDatabase();
     }
 
-    public boolean logIntoDatabase(String _login, String _password){
+    public boolean logIntoDatabase(String _login, String _password) {
         // System.out.println("LOGINNG IN:");
         // iterate through userlist
-        for(int i = 0, size = users.size(); i < size; i ++)
-        {
-            if(users.get(i).getLogin().equals(_login)){
-                if(users.get(i).getPassword().equals(_password)){
+        LinkedList<User> users = getAllUsersCredentials();
+        for(int i = 0, size = users.size(); i < size; i ++) {
+            if(users.get(i).getLogin().equals(_login)) {
+                System.out.println(_password);
+                System.out.println(users.get(i).getPassword());
+
+                if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_NAME = users.get(i).getName();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
                     return true;
@@ -52,13 +57,14 @@ public class Database {
         return false;
     }
 
-    public boolean register_new_user(User new_user){
+    public boolean register_new_user(User new_user) {
         /*
         Adds new user to the database. Returns boolean true
         if user has been added successfully.
          */
-        users.add(new_user);
-        return true;
+        // users.add(new_user);
+        // return true;
+        return registerUser(new_user);
     }
 
     public boolean createEvent(Event event) {
@@ -98,14 +104,18 @@ public class Database {
         }
     }
 
-    public boolean registerUser(User user) throws SQLException{
+    public boolean registerUser(User user) {
+        String userType = user.getClass().getSimpleName().toString();
+        System.out.println(userType);
+
         if (connection == null){
             return false;
         }
-        boolean success;
+        boolean success = false;
         CallableStatement pstmt = null;
         try {
-            if (user.getClass().getSimpleName() == "Client"){
+            if (userType.equals("Client")){
+                // System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
                 pstmt.setString(0, cuser.getLogin());
@@ -116,7 +126,8 @@ public class Database {
                 pstmt.setInt(5, cuser.getPhoneNumber());
                 pstmt.setString(6, cuser.getGender());
                 pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
-            } else if (user.getClass().getSimpleName() == "Organizer") {
+                // System.out.println("IF Client END");
+            } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
                 pstmt.setString(0, euser.getLogin());
@@ -134,6 +145,7 @@ public class Database {
             return false;
         } finally {
             try {
+                // System.out.println(success);
                 pstmt.close();
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -150,7 +162,7 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM USERS_CREDENTIALS");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM USER_CREDENTIALS");
                 while (rs.next()) {
                     String type = rs.getString("account_type");
                     String login = rs.getString("login");

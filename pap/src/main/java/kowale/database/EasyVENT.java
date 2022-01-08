@@ -44,7 +44,7 @@ public class EasyVENT {
     private String nextFrame = "welcome";
     // private String activeFrameType = "";
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    // private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private LocalDate date = LocalDate.now();
     private LocalDateTime dateTime = LocalDateTime.now();
     // private String user_type;
@@ -55,17 +55,6 @@ public class EasyVENT {
 
         // create example clients
         Client newClient = new Client(
-            "Stachu",
-            "Jones",
-            "sjones",
-            hash("sjones"),
-            "email",
-            -1,
-            "gender",
-            date
-        );
-        EasyVENT.database.register_new_user(newClient);
-        newClient = new Client(
             "a",
             "a",
             "a",
@@ -76,20 +65,11 @@ public class EasyVENT {
             date
         );
 
-        EasyVENT.database.register_new_user(newClient);
+        // database.register_new_user(newClient);
+        database.registerUser(newClient);
 
         // create example organizers
         EventOrganizer newOrganizer = new EventOrganizer(
-            "Zbigniew",
-            "Boniek",
-            "pzpn",
-            hash("pzpn"),
-            "email",
-            -1,
-            "company"
-        );
-        EasyVENT.database.register_new_user(newOrganizer);
-        newOrganizer = new EventOrganizer(
             "s",
             "s",
             "s",
@@ -98,7 +78,9 @@ public class EasyVENT {
             -1,
             "company"
         );
-        EasyVENT.database.register_new_user(newOrganizer);
+        
+        // database.register_new_user(newOrganizer);
+        database.registerUser(newOrganizer);
 
         // create example events
         
@@ -170,7 +152,7 @@ public class EasyVENT {
         }
     }
 
-    private String hash(String string) throws Exception {
+    public static String hash(String string) throws Exception {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
         // string = new String(digest, StandardCharsets.UTF_8);
