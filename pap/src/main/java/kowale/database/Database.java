@@ -22,6 +22,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 // import java.util.Objects;
+import java.util.Map;
 
 import javax.sound.midi.SysexMessage;
 
@@ -289,7 +290,7 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
-                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?)}");
+                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?,?)}");
                 cs.setString(1, eventName);
                 cs.setInt(2, Integer.parseInt(eventOrganizer));
                 cs.setString(3, eventCountry);
@@ -297,17 +298,19 @@ public class Database {
                 cs.setString(5, eventAddress);
                 cs.setDate(6, java.sql.Date.valueOf("2022-01-10"));
                 cs.registerOutParameter(7, Types.NUMERIC);
+                cs.registerOutParameter(8, Types.NUMERIC);
                 cs.execute();
                 int eventID = cs.getInt(7);
-                System.out.println(eventID);
-
-                /* INSERT TICKETS */
+                int eventDetailID = cs.getInt(8);
                 
+                /* INSERT TICKET QUANTITIES */
+                this.insertTicketQuantities(eventDetailID, tickets);
+                
+                /* INSERT TICKETS */
                 this.insertTickets(eventID, tickets);
             } catch (SQLException ex) {
                 System.out.println(ex);
             } finally {
-                System.out.println("Done");
                 if (cs != null){
                     try {
                         cs.close();
@@ -317,6 +320,64 @@ public class Database {
                 }
             }
         }
+
+        return true;
+    }
+
+    public boolean insertTicketQuantities(int eventDetailID, Ticket[] tickets){
+        /* Count occurences of tickets in each sector */
+        Map<String,Integer> hm = new HashMap();
+        for(Ticket ticket: tickets){
+            if(!hm.containsKey(ticket.getSector())){
+                hm.put(ticket.getSector(),1);
+            }else{
+                hm.put(ticket.getSector(), hm.get(ticket.getSector())+1);
+            }
+        }
+        
+        int sectorPrice = 0;
+        int sectorOccurences;
+        // Iterate through keys = Sector values
+        for (String uniqueSector : hm.keySet()) {
+            sectorOccurences = hm.get(uniqueSector);
+            // Get price of ticket in that sector
+            // DOESNT WORK ON MY JAVA EDITION // Arrays.stream(tickets).map(r->r.getSector());
+            for (Ticket ticket : tickets) {
+                if(ticket.getSector() == uniqueSector){
+                    sectorPrice = ticket.getPrice();
+                    break;
+                }
+            }
+            if(sectorPrice != 0){  // Make sure that sector price has been assigned 
+                // DO SQL LOGIC
+                CallableStatement cs = null;
+             
+                if (connection != null) {
+                    try {
+                        cs = connection.prepareCall("{call ADD_TICKET_QUANTITY(?,?,?,?)}");
+                        cs.setInt(1, eventDetailID);
+                        cs.setString(2, uniqueSector);
+                        cs.setInt(3, sectorOccurences);
+                        cs.setInt(4, sectorPrice);
+                        cs.execute();
+                        
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    } finally {
+                        if (cs != null){
+                            try {
+                                cs.close();
+                            } catch (SQLException ex) {
+                                System.out.println(ex);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
 
         return true;
     }
@@ -343,7 +404,6 @@ public class Database {
             } catch (SQLException ex) {
                 System.out.println(ex);
             } finally {
-                System.out.println("Done");
                 if (cs != null){
                     try {
                         cs.close();
