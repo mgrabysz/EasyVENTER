@@ -60,8 +60,8 @@ public class EasyVENT {
             "a",
             hash("a"),
             "email",
-            -1,
-            "gender",
+            123456789,
+            "N",
             date
         );
 
@@ -69,18 +69,18 @@ public class EasyVENT {
         database.registerUser(newClient);
 
         // create example organizers
-        EventOrganizer newOrganizer = new EventOrganizer(
-            "s",
-            "s",
-            "s",
-            hash("s"),
-            "email",
-            -1,
-            "company"
-        );
+        // EventOrganizer newOrganizer = new EventOrganizer(
+        //     "s",
+        //     "s",
+        //     "s",
+        //     hash("s"),
+        //     "email",
+        //     -1,
+        //     "company"
+        // );
         
         // database.register_new_user(newOrganizer);
-        database.registerUser(newOrganizer);
+        // database.registerUser(newOrganizer);
 
         // create example events
         

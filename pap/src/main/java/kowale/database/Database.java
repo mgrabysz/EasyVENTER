@@ -106,7 +106,7 @@ public class Database {
 
     public boolean registerUser(User user) {
         String userType = user.getClass().getSimpleName().toString();
-        System.out.println(userType);
+        // System.out.println(userType);
 
         if (connection == null){
             return false;
@@ -115,7 +115,7 @@ public class Database {
         CallableStatement pstmt = null;
         try {
             if (userType.equals("Client")){
-                // System.out.println("IF Client");
+                System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
                 pstmt.setString(0, cuser.getLogin());
@@ -126,7 +126,7 @@ public class Database {
                 pstmt.setInt(5, cuser.getPhoneNumber());
                 pstmt.setString(6, cuser.getGender());
                 pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
-                // System.out.println("IF Client END");
+                System.out.println("IF Client END");
             } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
