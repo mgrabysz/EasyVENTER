@@ -7,16 +7,16 @@ import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
-import javax.print.event.PrintJobAdapter;
-import javax.sound.midi.Track;
+// import javax.print.event.PrintJobAdapter;
+// import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
 
 import java.util.HashMap;
 
 import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
+// import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.WatchService;
+// import java.nio.file.WatchService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -44,7 +44,7 @@ public class EasyVENT {
     private String nextFrame = "welcome";
     // private String activeFrameType = "";
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    // private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private LocalDate date = LocalDate.now();
     private LocalDateTime dateTime = LocalDateTime.now();
     // private String user_type;
@@ -55,50 +55,32 @@ public class EasyVENT {
 
         // create example clients
         Client newClient = new Client(
-            "Stachu",
-            "Jones",
-            "sjones",
-            hash("sjones"),
-            "email",
-            -1,
-            "gender",
-            date
-        );
-        EasyVENT.database.register_new_user(newClient);
-        newClient = new Client(
             "a",
             "a",
             "a",
             hash("a"),
             "email",
-            -1,
-            "gender",
+            123456789,
+            "N",
             date
         );
 
-        EasyVENT.database.register_new_user(newClient);
+        // database.register_new_user(newClient);
+        database.registerUser(newClient);
 
         // create example organizers
         EventOrganizer newOrganizer = new EventOrganizer(
-            "Zbigniew",
-            "Boniek",
-            "pzpn",
-            hash("pzpn"),
-            "email",
-            -1,
-            "company"
-        );
-        EasyVENT.database.register_new_user(newOrganizer);
-        newOrganizer = new EventOrganizer(
             "s",
             "s",
             "s",
             hash("s"),
             "email",
-            -1,
+            123456789,
             "company"
         );
-        EasyVENT.database.register_new_user(newOrganizer);
+        
+        // database.register_new_user(newOrganizer);
+        database.registerUser(newOrganizer);
 
         // create example events
         
@@ -170,7 +152,7 @@ public class EasyVENT {
         }
     }
 
-    private String hash(String string) throws Exception {
+    public static String hash(String string) throws Exception {
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
         // string = new String(digest, StandardCharsets.UTF_8);
@@ -271,6 +253,8 @@ public class EasyVENT {
 
                 if (accountType == 0){
                     HashMap<String, String> additionalInfo = registerClient();
+
+                    // System.out.println(additionalInfo.get("date"));
                     LocalDate date = LocalDate.parse(
                         additionalInfo.get("date")
                     );
@@ -286,7 +270,7 @@ public class EasyVENT {
                         date
                     );
 
-                    EasyVENT.database.register_new_user(new_user);
+                    EasyVENT.database.registerUser(new_user);
                 } else {
                     HashMap<String, String> additionalInfo = registerOrganizer();
 
@@ -299,7 +283,7 @@ public class EasyVENT {
                         Integer.parseInt(additionalInfo.get("telephone")),
                         additionalInfo.get("company")
                     );
-                    EasyVENT.database.register_new_user(new_user);
+                    EasyVENT.database.registerUser(new_user);
                 }
 
                 registerFrame = null;
@@ -337,12 +321,14 @@ public class EasyVENT {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("email", registerClientFrame.getEmail());
                 map.put("telephone", registerClientFrame.getTelephone());
-                map.put("gender", registerClientFrame.getGender());
+                String gender = registerClientFrame.getGender().substring(0, 1);
+                map.put("gender", gender);
                 // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
                 map.put(
                     "date",
                     registerClientFrame.getDate().format(
-                        DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm")
+                        // DateTimeFormatter.ofPattern("dd-MM-yyyy")
+                        DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     )
                 );
         

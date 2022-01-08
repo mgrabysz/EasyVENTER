@@ -20,8 +20,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+// import java.util.Objects;
 
-import kowale.database.password;
+// import kowale.database.password;
 
 public class Database {
     /*
@@ -33,32 +34,30 @@ public class Database {
     public Connection connection = null;
     public ArrayList<Event> events = new ArrayList<>();
 
-    public Database(){ // Constructor
+    public Database() throws SQLException { // Constructor
+        connectDatabase();
     }
 
-    public boolean logIntoDatabase(String _login, String _password){
+    public boolean logIntoDatabase(String _login, String _password) {
         // System.out.println("LOGINNG IN:");
         // iterate through userlist
-        for(int i = 0, size = users.size(); i < size; i ++)
-        {
-            if(users.get(i).getLogin().equals(_login)){
-                if(users.get(i).getPassword().equals(_password)){
+        LinkedList<User> users = getAllUsersCredentials();
+        for(int i = 0, size = users.size(); i < size; i ++) {
+            // System.out.println(users.get(i).getType());
+            if(users.get(i).getLogin().equals(_login)) {
+                // System.out.println(_password);
+                // System.out.println(users.get(i).getPassword());
+
+                if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_NAME = users.get(i).getName();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
+                    // System.out.println(users.get(i).getName());
+                    // System.out.println(users.get(i).getType());
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    public boolean register_new_user(User new_user){
-        /*
-        Adds new user to the database. Returns boolean true
-        if user has been added successfully.
-         */
-        users.add(new_user);
-        return true;
     }
 
     public boolean createEvent(Event event) {
@@ -98,34 +97,43 @@ public class Database {
         }
     }
 
-    public boolean registerUser(User user) throws SQLException{
+    public boolean registerUser(User user) {
+        /*
+        Adds new user to the database. Returns boolean true
+        if user has been added successfully.
+         */
+        String userType = user.getClass().getSimpleName().toString();
+        // System.out.println(userType);
+
         if (connection == null){
             return false;
         }
-        boolean success;
+        boolean success = false;
         CallableStatement pstmt = null;
         try {
-            if (user.getClass().getSimpleName() == "Client"){
+            if (userType.equals("Client")){
+                // System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
-                pstmt.setString(0, cuser.getLogin());
-                pstmt.setString(1, cuser.getPassword());
-                pstmt.setString(2, cuser.getName());
-                pstmt.setString(3, cuser.getSurname());
-                pstmt.setString(4, cuser.getEmail());
-                pstmt.setInt(5, cuser.getPhoneNumber());
-                pstmt.setString(6, cuser.getGender());
-                pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
-            } else if (user.getClass().getSimpleName() == "Organizer") {
+                pstmt.setString(1, cuser.getLogin());
+                pstmt.setString(2, cuser.getPassword());
+                pstmt.setString(3, cuser.getName());
+                pstmt.setString(4, cuser.getSurname());
+                pstmt.setString(5, cuser.getEmail());
+                pstmt.setDate(6, Date.valueOf(cuser.getBirth()));
+                pstmt.setString(7, cuser.getGender());
+                pstmt.setInt(8, cuser.getPhoneNumber());
+                // System.out.println("IF Client END");
+            } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
-                pstmt.setString(0, euser.getLogin());
-                pstmt.setString(1, euser.getPassword());
-                pstmt.setString(2, euser.getName());
-                pstmt.setString(3, euser.getSurname());
-                pstmt.setString(4, euser.getEmail());
-                pstmt.setInt(5, euser.getPhoneNumber());
-                pstmt.setString(6, euser.getCompanyName());
+                pstmt.setString(1, euser.getLogin());
+                pstmt.setString(2, euser.getPassword());
+                pstmt.setString(3, euser.getName());
+                pstmt.setString(4, euser.getSurname());
+                pstmt.setString(5, euser.getEmail());
+                pstmt.setInt(6, euser.getPhoneNumber());
+                pstmt.setString(7, euser.getCompanyName());
             }
             pstmt.execute();
             success = true;
@@ -134,6 +142,7 @@ public class Database {
             return false;
         } finally {
             try {
+                // System.out.println(success);
                 pstmt.close();
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -150,12 +159,13 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM USERS_CREDENTIALS");
+                ResultSet rs = stmt.executeQuery("SELECT * FROM USER_CREDENTIALS");
                 while (rs.next()) {
                     String type = rs.getString("account_type");
+                    // System.out.println(type);
                     String login = rs.getString("login");
                     String pass = rs.getString("password");
-                    if (type == "C") {
+                    if (type.equals("C")) {
                         user = new Client(login, pass);
                     } else {
                         user = new EventOrganizer(login, pass);
@@ -185,18 +195,34 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                String query = "SELECT * FROM EVENTS "+
-                "JOIN EVENT_DETAILS USING(event_detail_id)"+
-                "JOIN TICKET_QUANTITY USING(ticket_quantity_id)";
+                //todo
+                String query = "";
+
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-                    // String organizer_id = rs.getInt("organizer_id");
-                    // String name = rs.getString("event_name");
-                    // String location_id = rs.getInt("country_id");
+                    String organizer = rs.getString("companies.name");
+                    String name = rs.getString("event_name");
+                    String country = rs.getString("country_name");
+                    String city = rs.getString("cities.name");
+                    String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
-                    // event = new Event(name, organizer, location, start_date);
-                    // events.add(event);
+                    event = new Event(name, organizer, country, city, address, start_time);
+                    events.add(event);
+                }
+                for (int i=0; i< events.size(); ++i){
+                    ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+                    String ev_name = events.get(i).getName();
+                    String query2 = String.format("SELECT * FROM tickets JOIN events USING(event_id) WHERE event_name = %s", ev_name);
+                    ResultSet rs2 = stmt.executeQuery(query2);
+                    while (rs2.next()) {
+                        String sector = rs.getString("sector");
+                        int seat = Integer.parseInt(rs.getString("seat"));
+                        int price = rs.getInt("ticket_price");
+                        Ticket ticket = new Ticket(sector, seat, price);
+                        tickets.add(ticket);
+                    }
+                    events.get(i).setTickets(tickets);
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -212,9 +238,37 @@ public class Database {
         }
         return events;
     }
-//todo//todo==============================
+
     public LinkedList<Ticket> getTicketsOfUser(User user){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
+        Statement stmt = null;
+        String login = user.getLogin();
+        if (connection != null) {
+            try {
+                stmt = connection.createStatement();
+                String query = String.format("SELECT * FROM tickets JOIN ticket_orders USING(ticket_id)"+
+                    "JOIN client_orders USING(order_id) JOIN user_credentials ON (client_id = user_id)"+
+                    "WHERE login = %s", login);
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String sector = rs.getString("sector");
+                    int seat = Integer.parseInt(rs.getString("seat"));
+                    int price = rs.getInt("ticket_price");
+                    Ticket ticket = new Ticket(sector, seat, price);
+                    tickets.add(ticket);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
         return tickets;
     }
 

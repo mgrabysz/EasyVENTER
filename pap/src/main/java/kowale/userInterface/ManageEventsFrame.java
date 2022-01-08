@@ -2,8 +2,6 @@ package kowale.userInterface;
 
 import java.awt.event.ActionEvent;
 
-import javax.swing.JButton;
-
 public class ManageEventsFrame extends BasicTableFrame {
     /*
     Frame to browse events from organizer perspective.
@@ -13,17 +11,9 @@ public class ManageEventsFrame extends BasicTableFrame {
         table of data about events
     */
 
-    JButton removeButton;
-
     public ManageEventsFrame(String[][] data) {
         super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Modify", false);
         this.setTitle("Manage your events");
-
-        removeButton = new JButton("Remove");
-        removeButton.setFocusable(false);
-        removeButton.setBounds(850, 100, 120, 50);
-        removeButton.addActionListener(this);
-        this.add(removeButton);
     }
 
     @Override
@@ -40,13 +30,6 @@ public class ManageEventsFrame extends BasicTableFrame {
             // some code if cancel
             System.out.println("Cancel button clicked");
             option = "cancel";
-        } else if (event.getSource()==removeButton) {
-            // some code if remove
-            int index = table.getSelectedRow(); // returns index of selected row
-            selectedIndex = index;
-            option = "remove";
-            // System.out.println("Remove button clicked");
-            // System.out.println(index);
         }
     }
 
