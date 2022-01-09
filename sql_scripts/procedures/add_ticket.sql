@@ -29,8 +29,10 @@ BEGIN
             discount_value:=1;
         END IF;
         -- INSERT TICKET CATEGORY
-        INSERT INTO TICKET_CATEGORIES(CATEGORY_NAME, DISCOUNT)
-        VALUES (e_category, discount_value);
+        if category_exists < 0 THEN
+            INSERT INTO TICKET_CATEGORIES(CATEGORY_NAME, DISCOUNT)
+            VALUES (e_category, discount_value);
+        END IF;
     ELSE
         RAISE NO_DATA_FOUND;  -- EVENT was not found
     END IF;
