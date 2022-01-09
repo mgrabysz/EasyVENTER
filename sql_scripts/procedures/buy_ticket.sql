@@ -65,7 +65,13 @@ BEGIN
                     
                         -- Append new ticket to the same order
                         ADD_TICKET_TO_ORDER(desired_ticket_id, c_order_id, category_id);
+                        -- Może jeszcze po każdorazowym wywołaniu tej procedury
+                        -- pasowałoby zupdateować to pole TOTAL_PRICE
+                        -- można w sumie przekazać nowe wyliczone TOTAL_PRICE
+                        -- do tej procedury i tam zmodyfikować tą tabelę
                     ELSE
+                        -- TO DO UŻYCIA t_seat, t_sector, t_category_name
+                        
                         -- Create an order and return the order id
                         INSERT INTO CLIENT_ORDERS(ORDER_TIME, TOTAL_PRICE, CLIENT_ID)
                         VALUES (CURRENT_TIMESTAMP, 2000, c_client_id)  -- TODO: CHANGE TOTAL_PRICE
