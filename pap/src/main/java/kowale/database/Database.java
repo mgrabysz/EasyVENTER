@@ -11,6 +11,7 @@ import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -197,9 +198,9 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                String query = "SELECT companies.name as company_name, event_name, country_name, cities.name as city_name, street, start_time FROM events JOIN event_details USING (event_id)"+
-                    "JOIN addresses USING(address_id) JOIN cities USING(city_id)"+
-                    "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id)"+
+                String query = "SELECT companies.name as company_name, event_name, country_name, cities.name as city_name, street, start_time FROM events JOIN event_details USING (event_id) "+
+                    "JOIN addresses USING(address_id) JOIN cities USING(city_id) "+
+                    "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id) "+
                     "JOIN companies USING(company_id)";
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
@@ -216,12 +217,13 @@ public class Database {
                 for (int i=0; i< events.size(); ++i){
                     ArrayList<Ticket> tickets = new ArrayList<Ticket>();
                     String ev_name = events.get(i).getName();
-                    String query2 = String.format("SELECT * FROM tickets JOIN events USING(event_id) WHERE event_name = %s", ev_name);
-                    ResultSet rs2 = stmt.executeQuery(query2);
+                    PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM tickets JOIN events USING(event_id) WHERE event_name = ?");
+                    pstmt.setString(1, ev_name);
+                    ResultSet rs2 = pstmt.executeQuery();
                     while (rs2.next()) {
-                        String sector = rs.getString("sector");
-                        int seat = Integer.parseInt(rs.getString("seat"));
-                        int price = rs.getInt("ticket_price");
+                        String sector = rs2.getString("sector");
+                        int seat = Integer.parseInt(rs2.getString("seat"));
+                        int price = rs2.getInt("ticket_price");
                         Ticket ticket = new Ticket(sector, seat, price);
                         tickets.add(ticket);
                     }

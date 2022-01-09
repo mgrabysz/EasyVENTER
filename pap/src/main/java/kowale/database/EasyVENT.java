@@ -54,7 +54,7 @@ public class EasyVENT {
 
     public EasyVENT() throws Exception { // Constructor
         database = new Database(); // create database
-        database.getAllEvents();
+
         // create example clients
         Client newClient = new Client(
             "a",
