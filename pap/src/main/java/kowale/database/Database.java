@@ -277,6 +277,50 @@ public class Database {
         return tickets;
     }
 
+    public LinkedList<Ticket> getEventsOfUser(String login){
+        LinkedList<Event> events = new LinkedList<Event>();
+        Statement stmt = null;
+        if (connection != null) {
+            try {
+                stmt = connection.createStatement();
+                String query = String.format("SELECT * FROM user_credentials "+
+                    "JOIN client_data ON(user_id=client_id) "+
+                    "JOIN client_odrders USING(client_id) "+
+                    "JOIN ticket_orders USING(order_id) "+
+                    "JOIN ticket USING(ticket_id) "+
+                    "JOIN events ON(events.event_id=tickets.event_id) "+
+                    "JOIN event_details USING(event_id) "+
+                    "JOIN companies USING(company_id) "+
+                    "JOIN addresses USING(address_id) "+
+                    "JOIN cities USING(city_id) "+
+                    "JOIN countries USING(country_id) WHERE login = %s ", login);
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+                    String organizer = rs.getString("companies.name");
+                    String name = rs.getString("event_name");
+                    String country = rs.getString("country_name");
+                    String city = rs.getString("cities.name");
+                    String address = rs.getString("street");
+                    Date start_date = rs.getDate("start_time");
+                    LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
+                    Event event = new Event(name, organizer, country, city, address, start_time);
+                    events.add(event));
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+        return events;
+    }
+
     public boolean insertEvent(Event event, Ticket[] tickets) {
         /*
         Pass Event object and Ticket array
