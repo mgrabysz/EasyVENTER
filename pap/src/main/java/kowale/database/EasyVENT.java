@@ -596,14 +596,16 @@ public class EasyVENT {
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
-        // TODO: input data check
+        // TODO: input data check:
+        // przecinek/kropka
+        // dokladnosc do 0.01 PLN
         String[][] sectors = new String[sectorsNumber][3];
         for (int i=0; i<sectorsNumber; ++i) {
             String iStr = String.valueOf(i+1);
             String[] sector = {
                 iStr,
                 "1",
-                String.valueOf((sectorsNumber - i) * 100.00)// "100.00"
+                String.valueOf((sectorsNumber - i) * 100.0) + "0"// "100.00"
             };
             sectors[i] = sector;
         }
