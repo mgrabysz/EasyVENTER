@@ -199,7 +199,7 @@ public class Database {
                 stmt = connection.createStatement();
                 String query = "SELECT companies.name, event_name, country_name,"+
                     "cities.name, street, start_time FROM events JOIN event_details USING (event_id)"+
-                    "JOIN addressess USING(address_id) JOIN cities USING(city_id)"+
+                    "JOIN addresses USING(address_id) JOIN cities USING(city_id)"+
                     "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id)"+
                     "JOIN companies USING(company_id)";
                 ResultSet rs = stmt.executeQuery(query);
@@ -422,7 +422,7 @@ public class Database {
         Pass Event object and Ticket array
         To cancel an event, one need its name, since it is an unique field in the db.
         */
-    
+
         CallableStatement cs = null;
         if (connection != null) {
             try {
@@ -444,7 +444,7 @@ public class Database {
         }
         return true;
     }
-    
+
     public boolean editEvent(Event event){
         return false;
     }
@@ -456,7 +456,7 @@ public class Database {
         for(Ticket ticket: tickets){
             if (connection != null) {
                 try {
-    
+
                     String eventName = event.getName();
                     String ticketCategory = ticket.getCategory();
                     String ticketSector = ticket.getSector();
@@ -470,9 +470,9 @@ public class Database {
                     cs.setInt(6, orderID);
                     cs.registerOutParameter(7, Types.NUMERIC);
                     cs.execute();
-                    
+
                     orderID = cs.getInt(7);  // update value of orderID
-    
+
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 } finally {
@@ -484,7 +484,7 @@ public class Database {
                         }
                     }
                 }
-            }   
+            }
         }
         return true;
     }
