@@ -53,7 +53,7 @@ public class Database {
                 // System.out.println(users.get(i).getPassword());
 
                 if(users.get(i).getPassword().equals(_password)) {
-                    GlobalVariables.USER_NAME = users.get(i).getName();
+                    GlobalVariables.USER_LOGIN = users.get(i).getLogin();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
                     // System.out.println(users.get(i).getName());
                     // System.out.println(users.get(i).getType());

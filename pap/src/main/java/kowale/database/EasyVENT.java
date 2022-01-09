@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -436,8 +437,8 @@ public class EasyVENT {
 
         switch (mainMenuFrame.getOption()) {
             case "logout":
-                GlobalVariables.USER_NAME = null;
-                GlobalVariables.USER_ID = -1;
+                GlobalVariables.USER_LOGIN = null;
+                // GlobalVariables.USER_ID = -1;
                 GlobalVariables.USER_TYPE = null;
                 nextFrame = "welcome";
                 break;
@@ -492,8 +493,9 @@ public class EasyVENT {
         // TODO: get only events for which client has at least one ticket
 
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
-        ArrayList<Event> allEvents = database.getAllEvents();
-        String[][] data = eventsToData(allEvents);
+        ArrayList<Event> events = database.getAllEvents();
+        // ArrayList<Event> events = database.getEventsOfUser(user, event)
+        String[][] data = eventsToData(events);
         
         viewEventsFrame = new ViewEventsFrame(data);
 
@@ -574,7 +576,7 @@ public class EasyVENT {
             case "confirm":
                 Event event = new Event(
                     createEventFrame.getName(),
-                    GlobalVariables.USER_NAME,
+                    GlobalVariables.USER_LOGIN,
                     createEventFrame.getCountry(),
                     createEventFrame.getCity(),
                     createEventFrame.getAddress(),
@@ -723,6 +725,9 @@ public class EasyVENT {
 
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
+
+        LinkedList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
+        System.out.println(tickets);
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         String sectorName = "?";
@@ -753,8 +758,8 @@ public class EasyVENT {
     public void mainLoop() throws Exception {
         boolean runLoop = true;
         // nextFrame = "Welcome";
-        GlobalVariables.USER_NAME = null;
-        GlobalVariables.USER_ID = -1;
+        GlobalVariables.USER_LOGIN = null;
+        // GlobalVariables.USER_ID = -1;
         GlobalVariables.USER_TYPE = null;
 
         do {
