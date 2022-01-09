@@ -243,10 +243,9 @@ public class Database {
         return events;
     }
 
-    public LinkedList<Ticket> getTicketsOfUser(User user, Event event){
+    public LinkedList<Ticket> getTicketsOfUser(String login, Event event){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
         Statement stmt = null;
-        String login = user.getLogin();
         String ev_name = event.getName();
         if (connection != null) {
             try {
