@@ -490,9 +490,9 @@ public class EasyVENT {
 
     private void viewEventsBought() throws Exception{
         // TODO: get only events for which client has at least one ticket
-        ArrayList<Event> allEvents = database.getEvents();
-        // ArrayList<Event> clientEvents
-        // for e
+
+        // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
+        ArrayList<Event> allEvents = database.getAllEvents();
         String[][] data = eventsToData(allEvents);
         
         viewEventsFrame = new ViewEventsFrame(data);
