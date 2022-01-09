@@ -1,3 +1,11 @@
+/*
+
+    + ================= +
+    |   Created by PB   |
+    + ================= +
+
+*/
+
 CREATE OR REPLACE PROCEDURE add_event(
 e_name VARCHAR2, 
 e_organizer NUMBER,
@@ -5,7 +13,8 @@ e_country VARCHAR2,
 e_city VARCHAR2,
 e_address VARCHAR2,
 e_date_time DATE,
-e_event_id_return OUT NUMERIC)
+e_event_id_return OUT NUMERIC,
+e_event_detail_id_return OUT NUMERIC)
 AS
 e_country_id NUMBER;
 e_city_id NUMBER;
@@ -66,5 +75,7 @@ BEGIN
     VALUES (SYSDATE, e_address_id, event_id)
     RETURNING EVENT_DETAIL_ID INTO e_detail_id;
     
+    -- SET RETURNING VARIABLES
     e_event_id_return:=event_id;
+    e_event_detail_id_return:=e_detail_id;
 END add_event;
