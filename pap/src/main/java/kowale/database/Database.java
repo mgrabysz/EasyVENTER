@@ -116,7 +116,6 @@ public class Database {
         CallableStatement pstmt = null;
         try {
             if (userType.equals("Client")){
-                // System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
                 pstmt.setString(1, cuser.getLogin());
@@ -127,7 +126,6 @@ public class Database {
                 pstmt.setDate(6, Date.valueOf(cuser.getBirth()));
                 pstmt.setString(7, cuser.getGender());
                 pstmt.setInt(8, cuser.getPhoneNumber());
-                // System.out.println("IF Client END");
             } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
@@ -199,9 +197,11 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                //todo
-                String query = "";
-
+                String query = "SELECT companies.name, event_name, country_name,"+
+                    "cities.name, street, start_time FROM events JOIN event_details USING (event_id)"+
+                    "JOIN addressess USING(address_id) JOIN cities USING(city_id)"+
+                    "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id)"+
+                    "JOIN companies USING(company_id)";
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
                     String organizer = rs.getString("companies.name");
@@ -302,7 +302,7 @@ public class Database {
                 cs.execute();
                 int eventID = cs.getInt(7);
                 int eventDetailID = cs.getInt(8);
-                
+
                 /* INSERT TICKET QUANTITIES */
                 if(this.insertTicketQuantities(eventDetailID, tickets)){
                     /* INSERT TICKETS */
@@ -334,7 +334,7 @@ public class Database {
                 hm.put(ticket.getSector(), hm.get(ticket.getSector())+1);
             }
         }
-        
+
         int sectorPrice = 0;
         int sectorOccurences;
         // Iterate through keys = Sector values
@@ -348,10 +348,10 @@ public class Database {
                     break;
                 }
             }
-            if(sectorPrice != 0){  // Make sure that sector price has been assigned 
+            if(sectorPrice != 0){  // Make sure that sector price has been assigned
                 // DO SQL LOGIC
                 CallableStatement cs = null;
-             
+
                 if (connection != null) {
                     try {
                         cs = connection.prepareCall("{call ADD_TICKET_QUANTITY(?,?,?,?)}");
@@ -360,7 +360,7 @@ public class Database {
                         cs.setInt(3, sectorOccurences);
                         cs.setInt(4, sectorPrice);
                         cs.execute();
-                        
+
                     } catch (SQLException ex) {
                         System.out.println(ex);
                     } finally {
@@ -377,7 +377,7 @@ public class Database {
         }
 
 
-        
+
 
         return true;
     }
