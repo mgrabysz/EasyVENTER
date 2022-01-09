@@ -467,7 +467,7 @@ public class EasyVENT {
     }
 
     private void viewEvents() throws Exception{
-        String[][] data = eventsToData(database.getEvents());
+        String[][] data = eventsToData(database.getAllEvents());
         viewEventsFrame = new ViewEventsFrame(data);
 
         while (viewEventsFrame.getOption() == "") {
@@ -522,7 +522,7 @@ public class EasyVENT {
         // show only events connected to logged organizer
         // remove events
         // modify events
-        String[][] data = eventsToData(database.getEvents());
+        String[][] data = eventsToData(database.getAllEvents());
         manageEventsFrame = new ManageEventsFrame(data);
 
         while (manageEventsFrame.getOption() == "") {
@@ -658,7 +658,7 @@ public class EasyVENT {
     private void modifyEvent() throws Exception{
         // TODO:
         // ISSUE: event time and date is not displayed correctly
-        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
 
@@ -692,7 +692,7 @@ public class EasyVENT {
         
         // System.out.println("details");
         
-        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
@@ -721,7 +721,7 @@ public class EasyVENT {
         // actual ticket removing
         // System.out.println("event details open");
 
-        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
