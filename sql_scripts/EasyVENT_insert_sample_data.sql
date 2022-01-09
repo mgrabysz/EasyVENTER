@@ -50,8 +50,8 @@ INSERT INTO z01.user_credentials VALUES (101, 101, 'C', 'login', '5e884898da2804
 INSERT INTO z01.user_credentials VALUES (102, 102, 'C', 'stachu', 'fbc0f604e211197a4de445a744bbc096109227d70a8c6f1c43e8e2d6e0ff2a77');
 -- password = admin
 INSERT INTO z01.user_credentials VALUES (103, 101, 'O', 'admin', '8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918');
--- password = pzpn
-INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'pzpn', 'a66a7108661530fa681f08c889876b5747783b8b69852c510e42cc8df906d274');
+-- password = PZPN
+INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'PZPN', '4ced129f142910970ad37bfdef0d6ed40d4c1ae38179a2892cc3394c50955033');
 -- password = root
 INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
 
