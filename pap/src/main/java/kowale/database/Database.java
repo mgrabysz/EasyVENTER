@@ -490,7 +490,30 @@ public class Database {
         return true;
     }
 
-    public boolean cancelTicket(User user, Ticket ticket){
-        return false;
+    public boolean cancelTicket(String event_name, Ticket ticket){
+        CallableStatement stmt = null;
+        Boolean succes = false;
+        if (connection != null) {
+            try {
+                stmt = connection.prepareCall("{call REMOVE_TICKET(?,?,?)}");
+                stmt.setString(1, event_name);
+                stmt.setString(2, ticket.getSector());
+                stmt.setInt(3, ticket.getSeat());
+                stmt.execute();
+                succes = true;
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                        return false;
+                    }
+                }
+            }
+        }
+        return succes;
     }
 }
