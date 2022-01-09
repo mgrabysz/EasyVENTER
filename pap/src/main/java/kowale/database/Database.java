@@ -243,16 +243,17 @@ public class Database {
         return events;
     }
 
-    public LinkedList<Ticket> getTicketsOfUser(User user){
+    public LinkedList<Ticket> getTicketsOfUser(User user, Event event){
         LinkedList<Ticket> tickets = new LinkedList<Ticket>();
         Statement stmt = null;
         String login = user.getLogin();
+        String ev_name = event.getName();
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
                 String query = String.format("SELECT * FROM tickets JOIN ticket_orders USING(ticket_id)"+
                     "JOIN client_orders USING(order_id) JOIN user_credentials ON (client_id = user_id)"+
-                    "WHERE login = %s", login);
+                    "JOIN events USING(event_id) WHERE login = %s AND event_name = %s", login, ev_name);
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
                     String sector = rs.getString("sector");
