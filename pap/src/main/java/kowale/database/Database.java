@@ -417,6 +417,34 @@ public class Database {
         return true;
     }
 
+    public boolean cancelEvent(Event event){
+        /*
+        Pass Event object and Ticket array
+        To cancel an event, one need its name, since it is an unique field in the db.
+        */
+    
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                String eventName = event.getName();
+                cs = connection.prepareCall("{call CANCEL_EVENT(?)}");
+                cs.setString(1, eventName);
+                cs.execute();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    
     public boolean editEvent(Event event){
         return false;
     }
