@@ -125,6 +125,7 @@ public class EventDetailsAfterBuyingFrame extends BasicTableFrame {
         if (e.getSource()==actionButton){
 
             // remove this ticket from user's tickets
+            option = "remove";
 
         } else if (e.getSource()==cancelButton){
             isCancelled = true;

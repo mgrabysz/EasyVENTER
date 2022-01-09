@@ -30,7 +30,7 @@ public class MainMenuFrame extends JFrame implements ActionListener{
         viewEvents = new JButton("View Events");
         createEvent = new JButton("Create Event");
         manageEvents = new JButton("Manage Events");
-        manageTickets = new JButton("Manage Tickets (TODO)");
+        manageTickets = new JButton("Manage Tickets");
         logout = new JButton("Logout");
 
         if (this.userType == "client"){

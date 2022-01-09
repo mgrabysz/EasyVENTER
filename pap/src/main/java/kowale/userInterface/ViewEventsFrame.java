@@ -22,6 +22,13 @@ public class ViewEventsFrame extends BasicTableFrame {
         if (event.getSource()==actionButton){
             selectedIndex = table.getSelectedRow(); // returns index of selected row
 
+            if (selectedIndex < 0)
+            {
+                selectedIndex = 0;
+            }
+
+            // System.out.println(selectedIndex);
+
             // ============ for testing ==================
             System.out.println("Details button clicked. Index of selected row:");
             System.out.println(selectedIndex);

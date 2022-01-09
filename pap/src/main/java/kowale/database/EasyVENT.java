@@ -39,6 +39,7 @@ public class EasyVENT {
     private ViewEventsFrame viewEventsFrame;
     private InputSectorDataFrame inputSectorDataFrame;
     private EventDetailsFrame eventDetailsFrame;
+    private EventDetailsAfterBuyingFrame eventDetailsAfterBuyingFrame;
     private ModifyEventFrame modifyEventFrame;
 
     private String nextFrame = "welcome";
@@ -445,14 +446,14 @@ public class EasyVENT {
                 nextFrame = "createEvent";
                 break;
             case "manageTickets":
-                // nextFrame = "manageTickets";
-                JOptionPane.showMessageDialog(
-                    null,
-                    "TODO",
-                    "TODO",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                );
-                nextFrame = "mainMenu";
+                nextFrame = "viewEventsBought";
+                // JOptionPane.showMessageDialog(
+                //     null,
+                //     "TODO",
+                //     "TODO",
+                //     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                // );
+                // nextFrame = "mainMenu";
                 break;
         }
 
@@ -463,7 +464,6 @@ public class EasyVENT {
     private void viewEvents() throws Exception{
         String[][] data = eventsToData(database.getEvents());
         viewEventsFrame = new ViewEventsFrame(data);
-        // activeFrameType = GlobalVariables.FRAME_TYPE;
 
         while (viewEventsFrame.getOption() == "") {
             waiting();
@@ -482,6 +482,35 @@ public class EasyVENT {
         viewEventsFrame.dispose();
         viewEventsFrame = null;
     }
+
+    private void viewEventsBought() throws Exception{
+        // TODO: get only events for which client has at least one ticket
+        ArrayList<Event> allEvents = database.getEvents();
+        // ArrayList<Event> clientEvents
+        // for e
+        String[][] data = eventsToData(allEvents);
+        
+        viewEventsFrame = new ViewEventsFrame(data);
+
+        while (viewEventsFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (viewEventsFrame.getOption()) {
+            case "cancel":
+                nextFrame = "mainMenu";
+                break;
+            case "details":
+                System.out.println("details");
+                nextFrame = "eventDetailsBought";
+                GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
+                break;
+        }
+
+        viewEventsFrame.dispose();
+        viewEventsFrame = null;
+    }
+
 
     private void manageEvents() throws Exception{
         // TODO:
@@ -673,6 +702,40 @@ public class EasyVENT {
         eventDetailsFrame = null;
     }
 
+    private void eventDetailsBought() throws Exception{
+        // TODO:
+        // actual ticket removing
+        System.out.println("event details open");
+
+        Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
+        HashMap<String, String> eventDetails = event.getDetails();
+        HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
+        String[][] ticketsData = ticketsMapToData(ticketsMap);
+        String sectorName = "?";
+        eventDetailsAfterBuyingFrame = new EventDetailsAfterBuyingFrame(
+            eventDetails,
+            ticketsData,
+            sectorName
+        );
+
+        while(eventDetailsAfterBuyingFrame.getOption() == "") {
+            waiting();
+        }
+
+        switch (eventDetailsAfterBuyingFrame.getOption()) {
+            case "cancel":
+                nextFrame = "viewEventsBought";
+                break;
+            case "confirm":
+                // Database.removeTicket();
+                nextFrame = "mainMenu";
+                break;
+        }
+
+        eventDetailsAfterBuyingFrame.dispose();
+        eventDetailsAfterBuyingFrame = null;
+    }
+
     public void mainLoop() throws Exception {
         boolean runLoop = true;
         // nextFrame = "Welcome";
@@ -684,6 +747,8 @@ public class EasyVENT {
             waiting();
 
             switch (nextFrame) {
+                case "":
+                    break;
                 case "welcome":
                     welcome();
                     break;
@@ -699,6 +764,12 @@ public class EasyVENT {
                 case "viewEvents":
                     viewEvents();
                     break;
+                case "viewEventsBought":
+                    viewEventsBought();
+                    break;
+                case "eventDetailsBought":
+                    eventDetailsBought();;
+                    break;
                 case "manageEvents":
                     manageEvents();
                     break;
@@ -711,6 +782,8 @@ public class EasyVENT {
                 case "eventDetails":
                     eventDetails();
                     break;
+                default:
+                    throw new Exception("not handled GUI option");
             }
         } while(runLoop);
     }
