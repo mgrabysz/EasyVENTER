@@ -54,7 +54,7 @@ public class EasyVENT {
 
     public EasyVENT() throws Exception { // Constructor
         database = new Database(); // create database
-
+        database.getAllEvents();
         // create example clients
         Client newClient = new Client(
             "a",
@@ -496,7 +496,7 @@ public class EasyVENT {
         ArrayList<Event> events = database.getAllEvents();
         // ArrayList<Event> events = database.getEventsOfUser(user, event)
         String[][] data = eventsToData(events);
-        
+
         viewEventsFrame = new ViewEventsFrame(data);
 
         while (viewEventsFrame.getOption() == "") {
@@ -691,9 +691,9 @@ public class EasyVENT {
     private void eventDetails() throws Exception{
         // TODO:
         // actual ticket buying
-        
+
         // System.out.println("details");
-        
+
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();

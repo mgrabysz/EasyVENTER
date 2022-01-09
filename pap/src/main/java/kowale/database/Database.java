@@ -197,16 +197,16 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                String query = "SELECT companies.name, event_name, country_name, cities.name, street, start_time FROM events JOIN event_details USING (event_id)"+
+                String query = "SELECT companies.name as company_name, event_name, country_name, cities.name as city_name, street, start_time FROM events JOIN event_details USING (event_id)"+
                     "JOIN addresses USING(address_id) JOIN cities USING(city_id)"+
                     "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id)"+
                     "JOIN companies USING(company_id)";
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-                    String organizer = rs.getString("companies.name");
+                    String organizer = rs.getString("company_name");
                     String name = rs.getString("event_name");
                     String country = rs.getString("country_name");
-                    String city = rs.getString("cities.name");
+                    String city = rs.getString("city_name");
                     String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
