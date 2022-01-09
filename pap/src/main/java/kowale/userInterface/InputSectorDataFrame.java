@@ -9,6 +9,8 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.table.TableModel;
 
+import oracle.net.aso.q;
+
 // Przykładowe parametry dla konstruktora:
 // int number = 10;   // dowolna liczba sektorów
 // String[][] sectors = new String[number][3];
@@ -40,6 +42,15 @@ public class InputSectorDataFrame extends BasicTableFrame {
     public InputSectorDataFrame(String[][] data) {
         super(data, new String[]{"Sector Name", "Number of seats", "Ticket price"} , "Confirm", true);
         this.setTitle("Enter number of seats and price of normal ticket");
+
+        // for (String[] row : data) 
+        // {
+        //     System.out.println(row[0]);
+        //     System.out.println(row[1]);
+        //     System.out.println(row[2]);
+        //     System.out.println("-");
+        // } 
+        
         // isReady = isCancelled = false;
         // numOfSectors = table.getRowCount();
     }

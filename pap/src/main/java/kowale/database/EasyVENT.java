@@ -87,8 +87,8 @@ public class EasyVENT {
 
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
         String[][] data = {
-            {"A", "100", "999999"},
-            {"B", "200", "888888"}
+            {"A", "100", "99999"},
+            {"B", "200", "12300"}
         };
         for (String[] row : data) {
             String sector = row[0];
@@ -191,17 +191,17 @@ public class EasyVENT {
         return data;
     }
 
-    private String[][] ticketsMapToData(HashMap<String, HashMap<String, Integer>> ticketsMap) {
+    private String[][] ticketsMapToData(HashMap<String, HashMap<String, String>> ticketsMap) {
         String[][]data = new String[ticketsMap.size()][3];
 
         if (ticketsMap.size() > 0) {
             // data = new String[events.size()][4];
             int i = 0;
             for (String sector : ticketsMap.keySet()) {
-                HashMap<String, Integer> numberPrice = ticketsMap.get(sector);
+                HashMap<String, String> numberPrice = ticketsMap.get(sector);
                 data[i][0] = sector;
-                data[i][1] = numberPrice.get("number").toString();
-                data[i][2] = numberPrice.get("price").toString();
+                data[i][1] = numberPrice.get("number");
+                data[i][2] = numberPrice.get("price");
                 i++;
             }
         }
@@ -501,7 +501,7 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "details":
-                System.out.println("details");
+                // System.out.println("details");
                 nextFrame = "eventDetailsBought";
                 GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
                 break;
@@ -588,13 +588,11 @@ public class EasyVENT {
                     EasyVENT.database.createEvent(event);
                     // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
                     // nextFrame = "InputSectorDataFrame";
-
                 }
 
                 nextFrame = "mainMenu";
                 break;
         }
-
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
@@ -602,9 +600,14 @@ public class EasyVENT {
         String[][] sectors = new String[sectorsNumber][3];
         for (int i=0; i<sectorsNumber; ++i) {
             String iStr = String.valueOf(i+1);
-            String[] sector = {iStr, "1", "1", "1"};
+            String[] sector = {
+                iStr,
+                "1",
+                String.valueOf((sectorsNumber - i) * 100.00)// "100.00"
+            };
             sectors[i] = sector;
         }
+
         inputSectorDataFrame = new InputSectorDataFrame(sectors);
 
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
@@ -624,7 +627,8 @@ public class EasyVENT {
                 for (String[] row : tableData) {
                     String sector = row[0];
                     int ticketsNumber = Integer.parseInt(row[1]);
-                    int basePrice = Integer.parseInt(row[2]);
+                    float basePriceInPLN = Float.valueOf(row[2]);
+                    int basePrice = Math.round(basePriceInPLN * 100);
 
                     for (int seat = 0; seat < ticketsNumber; seat++) {
                         Ticket ticket = new Ticket(
@@ -678,9 +682,12 @@ public class EasyVENT {
     private void eventDetails() throws Exception{
         // TODO:
         // actual ticket buying
+        
+        // System.out.println("details");
+        
         Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
-        HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
+        HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
 
@@ -705,11 +712,11 @@ public class EasyVENT {
     private void eventDetailsBought() throws Exception{
         // TODO:
         // actual ticket removing
-        System.out.println("event details open");
+        // System.out.println("event details open");
 
         Event event = database.getEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
-        HashMap<String, HashMap<String, Integer>> ticketsMap = event.getTicketsMap();
+        HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         String sectorName = "?";
         eventDetailsAfterBuyingFrame = new EventDetailsAfterBuyingFrame(

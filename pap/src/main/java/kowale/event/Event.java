@@ -160,9 +160,9 @@ public class Event {
         return details;
     }
 
-    public HashMap<String, HashMap<String, Integer>> getTicketsMap() {
+    public HashMap<String, HashMap<String, String>> getTicketsMap() {
         // {"Sector", "Number of seats", "Base ticket price"}
-        HashMap<String, HashMap<String, Integer>> sectors = new HashMap<String, HashMap<String, Integer>>(); 
+        HashMap<String, HashMap<String, String>> sectors = new HashMap<String, HashMap<String, String>>(); 
         
         if (tickets.size() > 0) {
             for (int i = 0; i < tickets.size(); i++) {
@@ -170,16 +170,16 @@ public class Event {
     
                 if (sectors.containsKey(ticket.getSector()) == false) {
                     // create new sector in sectors map
-                    HashMap<String, Integer> numberPrice = new HashMap<String, Integer>();
-                    numberPrice.put("number", 1);
-                    numberPrice.put("price", ticket.getPrice());
+                    HashMap<String, String> numberPrice = new HashMap<String, String>();
+                    numberPrice.put("number", String.valueOf(1));
+                    numberPrice.put("price", String.valueOf(ticket.getPriceInPLN()));
                     sectors.put(ticket.getSector(), numberPrice);
                 } else {
                     // increase number of tickets in sector
                     String sector = ticket.getSector();
-                    HashMap<String, Integer> numberPrice = sectors.get(sector);
-                    int number = numberPrice.get("number");
-                    sectors.get(sector).put("number", number+1);
+                    HashMap<String, String> numberPrice = sectors.get(sector);
+                    int number = Integer.valueOf(numberPrice.get("number"));
+                    sectors.get(sector).put("number", String.valueOf(number+1));
                 }
             }
         } else {
