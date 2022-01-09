@@ -6,6 +6,7 @@ import kowale.event.Event;
 import kowale.ticket.Ticket;
 
 import java.sql.Timestamp;
+import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -13,16 +14,19 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Types;
 import java.time.LocalDateTime;
-
 // import java.time.LocalDateTime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Objects;
+// import java.util.Objects;
+import java.util.Map;
 
-import kowale.database.password;
+import javax.sound.midi.SysexMessage;
+
+// import kowale.database.password;
 
 public class Database {
     /*
@@ -43,28 +47,21 @@ public class Database {
         // iterate through userlist
         LinkedList<User> users = getAllUsersCredentials();
         for(int i = 0, size = users.size(); i < size; i ++) {
+            // System.out.println(users.get(i).getType());
             if(users.get(i).getLogin().equals(_login)) {
-                System.out.println(_password);
-                System.out.println(users.get(i).getPassword());
+                // System.out.println(_password);
+                // System.out.println(users.get(i).getPassword());
 
                 if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_NAME = users.get(i).getName();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
+                    // System.out.println(users.get(i).getName());
+                    // System.out.println(users.get(i).getType());
                     return true;
                 }
             }
         }
         return false;
-    }
-
-    public boolean register_new_user(User new_user) {
-        /*
-        Adds new user to the database. Returns boolean true
-        if user has been added successfully.
-         */
-        // users.add(new_user);
-        // return true;
-        return registerUser(new_user);
     }
 
     public boolean createEvent(Event event) {
@@ -105,8 +102,12 @@ public class Database {
     }
 
     public boolean registerUser(User user) {
+        /*
+        Adds new user to the database. Returns boolean true
+        if user has been added successfully.
+         */
         String userType = user.getClass().getSimpleName().toString();
-        System.out.println(userType);
+        // System.out.println(userType);
 
         if (connection == null){
             return false;
@@ -118,25 +119,25 @@ public class Database {
                 // System.out.println("IF Client");
                 Client cuser = (Client)user;
                 pstmt = connection.prepareCall("{call register_client(?, ?, ?, ?, ?, ?, ?, ?)}");
-                pstmt.setString(0, cuser.getLogin());
-                pstmt.setString(1, cuser.getPassword());
-                pstmt.setString(2, cuser.getName());
-                pstmt.setString(3, cuser.getSurname());
-                pstmt.setString(4, cuser.getEmail());
-                pstmt.setInt(5, cuser.getPhoneNumber());
-                pstmt.setString(6, cuser.getGender());
-                pstmt.setDate(7, Date.valueOf(cuser.getBirth()));
+                pstmt.setString(1, cuser.getLogin());
+                pstmt.setString(2, cuser.getPassword());
+                pstmt.setString(3, cuser.getName());
+                pstmt.setString(4, cuser.getSurname());
+                pstmt.setString(5, cuser.getEmail());
+                pstmt.setDate(6, Date.valueOf(cuser.getBirth()));
+                pstmt.setString(7, cuser.getGender());
+                pstmt.setInt(8, cuser.getPhoneNumber());
                 // System.out.println("IF Client END");
             } else if (userType.equals("EventOrganizer")) {
                 EventOrganizer euser = (EventOrganizer)user;
                 pstmt = connection.prepareCall("{call register_organizer(?, ?, ?, ?, ?, ?, ?)}");
-                pstmt.setString(0, euser.getLogin());
-                pstmt.setString(1, euser.getPassword());
-                pstmt.setString(2, euser.getName());
-                pstmt.setString(3, euser.getSurname());
-                pstmt.setString(4, euser.getEmail());
-                pstmt.setInt(5, euser.getPhoneNumber());
-                pstmt.setString(6, euser.getCompanyName());
+                pstmt.setString(1, euser.getLogin());
+                pstmt.setString(2, euser.getPassword());
+                pstmt.setString(3, euser.getName());
+                pstmt.setString(4, euser.getSurname());
+                pstmt.setString(5, euser.getEmail());
+                pstmt.setInt(6, euser.getPhoneNumber());
+                pstmt.setString(7, euser.getCompanyName());
             }
             pstmt.execute();
             success = true;
@@ -165,9 +166,10 @@ public class Database {
                 ResultSet rs = stmt.executeQuery("SELECT * FROM USER_CREDENTIALS");
                 while (rs.next()) {
                     String type = rs.getString("account_type");
+                    // System.out.println(type);
                     String login = rs.getString("login");
                     String pass = rs.getString("password");
-                    if (type == "C") {
+                    if (type.equals("C")) {
                         user = new Client(login, pass);
                     } else {
                         user = new EventOrganizer(login, pass);
@@ -274,8 +276,145 @@ public class Database {
         return tickets;
     }
 
-    public boolean insertEvent(Event event) {
-        return false;
+    public boolean insertEvent(Event event, Ticket[] tickets) {
+        /*
+        Pass Event object and Ticket array
+        */
+
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                String eventName = event.getName();
+                String eventOrganizer = event.getOrganizer();
+                String eventCountry = event.getCountry();
+                String eventCity = event.getCity();
+                String eventAddress = event.getAddress();
+                LocalDateTime eventDate = event.getDateTime();
+                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?,?)}");
+                cs.setString(1, eventName);
+                cs.setInt(2, Integer.parseInt(eventOrganizer));
+                cs.setString(3, eventCountry);
+                cs.setString(4, eventCity);
+                cs.setString(5, eventAddress);
+                cs.setDate(6, java.sql.Date.valueOf("2022-01-10"));
+                cs.registerOutParameter(7, Types.NUMERIC);
+                cs.registerOutParameter(8, Types.NUMERIC);
+                cs.execute();
+                int eventID = cs.getInt(7);
+                int eventDetailID = cs.getInt(8);
+                
+                /* INSERT TICKET QUANTITIES */
+                if(this.insertTicketQuantities(eventDetailID, tickets)){
+                    /* INSERT TICKETS */
+                    this.insertTickets(eventID, tickets);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public boolean insertTicketQuantities(int eventDetailID, Ticket[] tickets){
+        /* Count occurences of tickets in each sector */
+        Map<String,Integer> hm = new HashMap();
+        for(Ticket ticket: tickets){
+            if(!hm.containsKey(ticket.getSector())){
+                hm.put(ticket.getSector(),1);
+            }else{
+                hm.put(ticket.getSector(), hm.get(ticket.getSector())+1);
+            }
+        }
+        
+        int sectorPrice = 0;
+        int sectorOccurences;
+        // Iterate through keys = Sector values
+        for (String uniqueSector : hm.keySet()) {
+            sectorOccurences = hm.get(uniqueSector);
+            // Get price of ticket in that sector
+            // DOESNT WORK ON MY JAVA EDITION // Arrays.stream(tickets).map(r->r.getSector());
+            for (Ticket ticket : tickets) {
+                if(ticket.getSector() == uniqueSector){
+                    sectorPrice = ticket.getPrice();
+                    break;
+                }
+            }
+            if(sectorPrice != 0){  // Make sure that sector price has been assigned 
+                // DO SQL LOGIC
+                CallableStatement cs = null;
+             
+                if (connection != null) {
+                    try {
+                        cs = connection.prepareCall("{call ADD_TICKET_QUANTITY(?,?,?,?)}");
+                        cs.setInt(1, eventDetailID);
+                        cs.setString(2, uniqueSector);
+                        cs.setInt(3, sectorOccurences);
+                        cs.setInt(4, sectorPrice);
+                        cs.execute();
+                        
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    } finally {
+                        if (cs != null){
+                            try {
+                                cs.close();
+                            } catch (SQLException ex) {
+                                System.out.println(ex);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        
+
+        return true;
+    }
+
+    public boolean insertTickets(int eventID, Ticket[] tickets){
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                for (Ticket ticket : tickets){
+                    String tCategory = ticket.getCategory();
+                    int tSeat = ticket.getSeat();
+                    String tSector = ticket.getSector();
+                    int tPrice = ticket.getPrice();
+
+                    cs = connection.prepareCall("{call ADD_TICKET(?,?,?,?,?)}");
+                    cs.setInt(1, eventID);
+                    cs.setString(2, tCategory);
+                    cs.setString(3, String.valueOf(tSeat));
+                    cs.setString(4, String.valueOf(tSector)); // convert to DB char type
+                    cs.setInt(5, tPrice);
+
+                    cs.executeQuery();
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public boolean editEvent(Event event){

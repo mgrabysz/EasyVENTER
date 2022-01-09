@@ -346,7 +346,7 @@ CREATE TABLE z01.ticket_orders (
     category_id NUMBER(*, 0) NOT NULL
 )
 PCTFREE 10 PCTUSED 40 TABLESPACE ii_data LOGGING
-    STORAGE ( PCTINCREASE 0 MINEXTENTS 1 MAXEXTENTS UNLIMITED FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT )
+    STORAGE ( INITIAL 16384 NEXT 16384 PCTINCREASE 0 MINEXTENTS 1 MAXEXTENTS 2147483645 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT )
 ROW STORE COMPRESS ADVANCED NO INMEMORY;
 
 CREATE TABLE z01.ticket_quantities (
@@ -371,9 +371,25 @@ CREATE UNIQUE INDEX z01.ticket_quantities_pk ON
             DEFAULT )
         LOGGING;
 
+CREATE UNIQUE INDEX z01.unique_sector_event_det_id ON
+    z01.ticket_quantities (
+        sector
+    ASC,
+        event_detail_id
+    ASC )
+        TABLESPACE ii_data PCTFREE 10
+            STORAGE ( INITIAL 16384 NEXT 16384 PCTINCREASE 0 MINEXTENTS 1 MAXEXTENTS 2147483645 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL
+            DEFAULT )
+        LOGGING;
+
 ALTER TABLE z01.ticket_quantities
     ADD CONSTRAINT ticket_quantities_pk PRIMARY KEY ( ticket_quantity_id )
         USING INDEX z01.ticket_quantities_pk;
+
+ALTER TABLE z01.ticket_quantities
+    ADD CONSTRAINT unique_sector_event_det_id UNIQUE ( sector,
+                                                       event_detail_id )
+        USING INDEX z01.unique_sector_event_det_id;
 
 CREATE TABLE z01.tickets (
     ticket_id     NUMBER(*, 0)
