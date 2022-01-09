@@ -304,10 +304,10 @@ public class Database {
                 int eventDetailID = cs.getInt(8);
                 
                 /* INSERT TICKET QUANTITIES */
-                this.insertTicketQuantities(eventDetailID, tickets);
-                
-                /* INSERT TICKETS */
-                this.insertTickets(eventID, tickets);
+                if(this.insertTicketQuantities(eventDetailID, tickets)){
+                    /* INSERT TICKETS */
+                    this.insertTickets(eventID, tickets);
+                }
             } catch (SQLException ex) {
                 System.out.println(ex);
             } finally {
