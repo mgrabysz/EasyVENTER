@@ -493,9 +493,13 @@ public class EasyVENT {
         // TODO: get only events for which client has at least one ticket
 
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
-        ArrayList<Event> events = database.getAllEvents();
+        ArrayList<Event> allEvents = database.getAllEvents();
+        // ArrayList<Event> clientEvents = new ArrayList<Event>();
+        // for (Event event: allEvents) {
+        //     if (event.get)
+        // }
         // ArrayList<Event> events = database.getEventsOfUser(user, event)
-        String[][] data = eventsToData(events);
+        String[][] data = eventsToData(allEvents);
 
         viewEventsFrame = new ViewEventsFrame(data);
 
@@ -521,10 +525,18 @@ public class EasyVENT {
 
     private void manageEvents() throws Exception{
         // TODO:
-        // show only events connected to logged organizer
         // remove events
         // modify events
-        String[][] data = eventsToData(database.getAllEvents());
+        ArrayList<Event> allEvents = database.getAllEvents();
+        ArrayList<Event> organizerEvents = new ArrayList<Event>();
+        for (Event event: allEvents) {
+            System.out.println(event.getOrganizer());
+            if (event.getOrganizer().equals(GlobalVariables.USER_LOGIN)) {
+                organizerEvents.add(event);
+                // System.out.println(GlobalVariables.USER_LOGIN);
+            }
+        }
+        String[][] data = eventsToData(organizerEvents);
         manageEventsFrame = new ManageEventsFrame(data);
 
         while (manageEventsFrame.getOption() == "") {
@@ -537,7 +549,8 @@ public class EasyVENT {
                 break;
             case "remove":
                 // TODO
-                GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
+                // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
                 //Database.removeEvent();
                 JOptionPane.showMessageDialog(
                     null,
@@ -548,7 +561,8 @@ public class EasyVENT {
                 nextFrame = "manageEvents";
                 break;
             case "modify":
-                GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+                GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
+                // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
                 //Database.modifyEvent();
                 nextFrame = "modifyEvent";
                 break;
@@ -660,7 +674,8 @@ public class EasyVENT {
     private void modifyEvent() throws Exception{
         // TODO:
         // ISSUE: event time and date is not displayed correctly
-        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
+
+        Event event = GlobalVariables.SELECTED_EVENT;
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
 
@@ -706,11 +721,11 @@ public class EasyVENT {
 
         switch (eventDetailsFrame.getOption()) {
             case "cancel":
-                nextFrame = "mainMenu";
+                nextFrame = "viewEvents";
                 break;
             case "confirm":
                 // Database.buyTickets();
-                nextFrame = "mainMenu";
+                nextFrame = "viewEvents";
                 break;
         }
 

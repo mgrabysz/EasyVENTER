@@ -1,6 +1,9 @@
 package kowale.database;
 
+import kowale.event.Event;
+
 public class GlobalVariables {
+    public static volatile Event SELECTED_EVENT; 
     public static volatile int SELECTED_INDEX = 0;
 
     // public static volatile int USER_ID;
