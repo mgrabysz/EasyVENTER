@@ -197,8 +197,7 @@ public class Database {
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
-                String query = "SELECT companies.name, event_name, country_name,"+
-                    "cities.name, street, start_time FROM events JOIN event_details USING (event_id)"+
+                String query = "SELECT companies.name, event_name, country_name, cities.name, street, start_time FROM events JOIN event_details USING (event_id)"+
                     "JOIN addresses USING(address_id) JOIN cities USING(city_id)"+
                     "JOIN countries USING(country_id) JOIN organizer_data USING(organizer_id)"+
                     "JOIN companies USING(company_id)";
