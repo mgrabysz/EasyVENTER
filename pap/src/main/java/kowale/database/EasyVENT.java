@@ -201,7 +201,12 @@ public class EasyVENT {
                 HashMap<String, String> numberPrice = ticketsMap.get(sector);
                 data[i][0] = sector;
                 data[i][1] = numberPrice.get("number");
-                data[i][2] = numberPrice.get("price");
+                String price = numberPrice.get("price");
+                System.out.println(price);
+                if (price.substring(price.length()-1).equals("0")) {
+                    price += "0";
+                }
+                data[i][2] = price;
                 i++;
             }
         }
