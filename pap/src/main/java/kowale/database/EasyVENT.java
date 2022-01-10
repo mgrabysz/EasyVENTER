@@ -571,19 +571,19 @@ public class EasyVENT {
             case "cancel":
                 nextFrame = "mainMenu";
                 break;
-            case "remove":
-                // TODO
-                GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
-                // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
-                //Database.removeEvent();
-                JOptionPane.showMessageDialog(
-                    null,
-                    "TODO",
-                    "TODO",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                );
-                nextFrame = "manageEvents";
-                break;
+            // case "remove":
+            //     // TODO
+            //     GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
+            //     // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
+            //     //Database.removeEvent();
+            //     JOptionPane.showMessageDialog(
+            //         null,
+            //         "TODO",
+            //         "TODO",
+            //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+            //     );
+            //     nextFrame = "manageEvents";
+            //     break;
             case "modify":
                 GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
                 // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
