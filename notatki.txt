@@ -1,8 +1,1 @@
 TODO:
-
-Procedura sql:
-params:
-    login
-    event name
-    sector
-    seat

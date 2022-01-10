@@ -47,7 +47,6 @@ public class EventDetailsFrame extends BasicTableFrame {
         this.setTitle(name);
 
         sp.setBounds(30, 280, 800, 100);
-        table.changeSelection(0, 0, false, false); // provides that only one row can be selected
 
         // providing an action listener for changing a selection
         table.getSelectionModel().addListSelectionListener(new ListSelectionListener(){
@@ -220,7 +219,7 @@ public class EventDetailsFrame extends BasicTableFrame {
     // public boolean getIsCancelled() {
     //     return isCancelled;
     // }
-    
+
     public int getNumberChildren() {
         return numberChildren;
     }
