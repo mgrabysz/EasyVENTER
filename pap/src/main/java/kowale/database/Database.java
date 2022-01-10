@@ -327,7 +327,7 @@ public class Database {
         return events;
     }
 
-    public boolean insertEvent(Event event, Ticket[] tickets) {
+    public boolean insertEvent(Event event) {
         /*
         Pass Event object and Ticket array
         */
@@ -355,9 +355,9 @@ public class Database {
                 int eventDetailID = cs.getInt(8);
 
                 /* INSERT TICKET QUANTITIES */
-                if(this.insertTicketQuantities(eventDetailID, tickets)){
+                if(this.insertTicketQuantities(eventDetailID, event.getTickets())){
                     /* INSERT TICKETS */
-                    this.insertTickets(eventID, tickets);
+                    this.insertTickets(eventID, event.getTickets());
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -375,7 +375,7 @@ public class Database {
         return true;
     }
 
-    public boolean insertTicketQuantities(int eventDetailID, Ticket[] tickets){
+    public boolean insertTicketQuantities(int eventDetailID, ArrayList<Ticket> tickets){
         /* Count occurences of tickets in each sector */
         Map<String,Integer> hm = new HashMap();
         for(Ticket ticket: tickets){
@@ -426,19 +426,15 @@ public class Database {
                 }
             }
         }
-
-
-
-
         return true;
     }
 
-    public boolean insertTickets(int eventID, Ticket[] tickets){
+    public boolean insertTickets(int eventID, ArrayList<Ticket> tickets){
         CallableStatement cs = null;
         if (connection != null) {
             try {
                 for (Ticket ticket : tickets){
-                    String tCategory = ticket.getCategory();
+                    String tCategory = "";
                     int tSeat = ticket.getSeat();
                     String tSector = ticket.getSector();
                     int tPrice = ticket.getPrice();
@@ -503,13 +499,13 @@ public class Database {
     public boolean buyTicket(Event event,  Ticket[] tickets){
         CallableStatement cs = null;
         int userID = 1;  // TODO: Change this to global variable
-        int orderID = -1;
+        int orderID = -1; // initialize variable with false value
         for(Ticket ticket: tickets){
             if (connection != null) {
                 try {
 
                     String eventName = event.getName();
-                    String ticketCategory = ticket.getCategory();
+                    String ticketCategory = "";
                     String ticketSector = ticket.getSector();
                     int ticketSeat = ticket.getSeat();
                     cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?,?)}");
