@@ -4,7 +4,6 @@ import kowale.user.EventOrganizer;
 import kowale.user.User;
 import kowale.event.Event;
 import kowale.ticket.Ticket;
-
 import java.sql.Timestamp;
 import java.math.BigDecimal;
 import java.sql.CallableStatement;
@@ -17,7 +16,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.time.LocalDateTime;
-// import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -341,13 +340,15 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
+                Date eventDateSQL = Date.valueOf(eventDate.toLocalDate());
+
                 cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?,?)}");
                 cs.setString(1, eventName);
                 cs.setInt(2, Integer.parseInt(eventOrganizer));
                 cs.setString(3, eventCountry);
                 cs.setString(4, eventCity);
                 cs.setString(5, eventAddress);
-                cs.setDate(6, java.sql.Date.valueOf("2022-01-10"));
+                cs.setDate(6, eventDateSQL);
                 cs.registerOutParameter(7, Types.NUMERIC);
                 cs.registerOutParameter(8, Types.NUMERIC);
                 cs.execute();
@@ -491,7 +492,41 @@ public class Database {
     }
 
     public boolean editEvent(Event event){
-        return false;
+        /*
+        Pass Event object and Ticket array
+        */
+
+        CallableStatement cs = null;
+        if (connection != null) {
+            try {
+                String eventName = event.getName();
+                String eventCountry = event.getCountry();
+                String eventCity = event.getCity();
+                String eventAddress = event.getAddress();
+                LocalDateTime eventDate = event.getDateTime();
+                Date eventDateSQL = Date.valueOf(eventDate.toLocalDate());
+
+                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?)}");
+                cs.setString(1, eventName);
+                cs.setString(2, eventCountry);
+                cs.setString(3, eventCity);
+                cs.setString(4, eventAddress);
+                cs.setDate(5, eventDateSQL);  // TODO: CHANGE THIS
+                cs.execute();
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (cs != null){
+                    try {
+                        cs.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public boolean buyTicket(Event event, String userLogin){
