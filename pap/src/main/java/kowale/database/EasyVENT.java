@@ -133,6 +133,7 @@ public class EasyVENT {
     }
 
     private void waiting() throws Exception {
+        // wait to save CPU time
         try {
             Thread.sleep(100);
         }
@@ -142,7 +143,7 @@ public class EasyVENT {
     }
 
     public static boolean isNumeric(String string) {
-        // System.out.println(string);
+        // check if string is convertable to Double
         if (string == null) {
             return false;
         }
@@ -155,10 +156,9 @@ public class EasyVENT {
     }
 
     public static String hash(String string) throws Exception {
+        /* hash a string using SHA256 */
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
-        // string = new String(digest, StandardCharsets.UTF_8);
-        // string = digest.toString(); // nondeterministic behaviour when using .toString()
 
         StringBuilder hexString = new StringBuilder(2 * hash.length);
         for (int i = 0; i < hash.length; i++) {
@@ -174,6 +174,7 @@ public class EasyVENT {
     }
 
     private String[][] eventsToData(ArrayList<Event> events) {
+        /* convert events list to data for GUI table */
         String[][] data = new String[events.size()][4];
 
         if (events.size() > 0) {
@@ -194,6 +195,7 @@ public class EasyVENT {
     }
 
     private String[][] ticketsMapToData(HashMap<String, HashMap<String, String>> ticketsMap) {
+        /* convert tickets map to data for GUI table */
         String[][]data = new String[ticketsMap.size()][3];
 
         if (ticketsMap.size() > 0) {
@@ -222,6 +224,7 @@ public class EasyVENT {
     }
 
     private void welcome() throws Exception {
+        // open WelcomeFrame
         welcomeFrame = new WelcomeFrame();
 
         while (welcomeFrame.getOption().equals("")) {
@@ -242,6 +245,7 @@ public class EasyVENT {
     }
 
     private void register() throws Exception {
+        // open RegiserFrame
         registerFrame = new RegisterFrame();
 
         while (true) {
@@ -311,6 +315,8 @@ public class EasyVENT {
     }
 
     private HashMap<String, String> registerClient() throws Exception {
+        // open registerClientFrame
+
         // TODO: input checking
         registerClientFrame = new RegisterClientFrame();
 
@@ -358,6 +364,8 @@ public class EasyVENT {
     }
 
     private HashMap<String, String> registerOrganizer() throws Exception {
+        // open RegisterOrganizerFrame
+
         // TODO: input checking
         registerOrganizerFrame = new RegisterOrganizerFrame();
 
@@ -398,6 +406,8 @@ public class EasyVENT {
 
 
     private void login() throws Exception {
+        // open LoginFrame
+        
         loginFrame = new LoginFrame();
 
         while (true) {
@@ -430,6 +440,8 @@ public class EasyVENT {
     }
 
     private void mainMenu() throws Exception{
+        // open MainMenuFrame
+
         mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
 
         while (mainMenuFrame.getOption().equals("")) {
@@ -469,6 +481,8 @@ public class EasyVENT {
     }
 
     private void viewEvents() throws Exception{
+        // open ViewEventsFrame
+
         String[][] data = eventsToData(database.getAllEvents());
         viewEventsFrame = new ViewEventsFrame(data);
 
@@ -490,7 +504,12 @@ public class EasyVENT {
         viewEventsFrame = null;
     }
 
-    private void viewEventsBought() throws Exception{
+    private void viewEventsBought() throws Exception {
+        /* 
+        open ViewEventsFrame to see only this events that currently logged user has at least ne ticket for
+        user can select event and open EventDetailsAfterBuyingFrame
+        */
+
         // TODO: get only events for which client has at least one ticket
 
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
@@ -526,7 +545,6 @@ public class EasyVENT {
 
     private void manageEvents() throws Exception{
         // TODO:
-        // remove events
         // modify events
         ArrayList<Event> allEvents = database.getAllEvents();
         ArrayList<Event> organizerEvents = new ArrayList<Event>();
@@ -784,6 +802,8 @@ public class EasyVENT {
                                 }
 
                                 boughtTickets.add(ticket);
+                                System.out.println(event.getName());
+                                System.out.println(boughtTickets.get(ticketsFound).getCategory());
                                 System.out.println(boughtTickets.get(ticketsFound).getSector());
                                 System.out.println(boughtTickets.get(ticketsFound).getSeat());
                                 ticketsFound += 1;
@@ -806,9 +826,13 @@ public class EasyVENT {
     }
 
     private void eventDetailsBought() throws Exception{
+        /*
+        open EventDetailsAfterBuyingFrame
+        user can cancel selected ticket
+        */
+        
         // TODO:
-        // actual ticket removing
-        // System.out.println("event details open");
+        // actual (database) ticket canceling
 
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
@@ -844,9 +868,7 @@ public class EasyVENT {
 
     public void mainLoop() throws Exception {
         boolean runLoop = true;
-        // nextFrame = "Welcome";
         GlobalVariables.USER_LOGIN = null;
-        // GlobalVariables.USER_ID = -1;
         GlobalVariables.USER_TYPE = null;
 
         do {
