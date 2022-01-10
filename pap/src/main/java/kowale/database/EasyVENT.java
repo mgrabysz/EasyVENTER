@@ -56,66 +56,66 @@ public class EasyVENT {
         database = new Database(); // create database
 
         // create example clients
-        Client newClient = new Client(
-            "a",
-            "a",
-            "a",
-            hash("a"),
-            "email",
-            123456789,
-            "N",
-            date
-        );
+        // Client newClient = new Client(
+        //     "a",
+        //     "a",
+        //     "a",
+        //     hash("a"),
+        //     "email",
+        //     123456789,
+        //     "N",
+        //     date
+        // );
 
         // database.register_new_user(newClient);
-        database.registerUser(newClient);
+        // database.registerUser(newClient);
 
         // create example organizers
-        EventOrganizer newOrganizer = new EventOrganizer(
-            "s",
-            "s",
-            "s",
-            hash("s"),
-            "email",
-            123456789,
-            "company"
-        );
+        // EventOrganizer newOrganizer = new EventOrganizer(
+        //     "s",
+        //     "s",
+        //     "s",
+        //     hash("s"),
+        //     "email",
+        //     123456789,
+        //     "company"
+        // );
 
         // database.register_new_user(newOrganizer);
-        database.registerUser(newOrganizer);
+        // database.registerUser(newOrganizer);
 
         // create example events
 
-        ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-        String[][] data = {
-            {"A", "100", "99999"},
-            {"B", "200", "12300"}
-        };
-        for (String[] row : data) {
-            String sector = row[0];
-            int ticketsNumber = Integer.parseInt(row[1]);
-            int basePrice = Integer.parseInt(row[2]);
+        // ArrayList<Ticket> tickets = new ArrayList<Ticket>();
+        // String[][] data = {
+        //     {"A", "100", "99999"},
+        //     {"B", "200", "12300"}
+        // };
+        // for (String[] row : data) {
+        //     String sector = row[0];
+        //     int ticketsNumber = Integer.parseInt(row[1]);
+        //     int basePrice = Integer.parseInt(row[2]);
 
-            for (int seat = 0; seat < ticketsNumber; seat++) {
-                Ticket ticket = new Ticket(
-                    sector,
-                    seat,
-                    basePrice
-                );
-                tickets.add(ticket);
-            }
-        }
+        //     for (int seat = 0; seat < ticketsNumber; seat++) {
+        //         Ticket ticket = new Ticket(
+        //             sector,
+        //             seat,
+        //             basePrice
+        //         );
+        //         tickets.add(ticket);
+        //     }
+        // }
 
-        Event event = new Event(
-            "Ludzie biegający w kółko",
-            "Google",
-            "Polska",
-            "Warszafka",
-            "Ulica",
-            dateTime
-        );
-        event.setTickets(tickets);
-        EasyVENT.database.createEvent(event);
+        // Event event = new Event(
+        //     "Ludzie biegający w kółko",
+        //     "Google",
+        //     "Polska",
+        //     "Warszafka",
+        //     "Ulica",
+        //     dateTime
+        // );
+        // event.setTickets(tickets);
+        // EasyVENT.database.createEvent(event);
 
         // event = new Event(
         //     "Meczyk jakiś",
@@ -709,7 +709,6 @@ public class EasyVENT {
         // TODO:
         // actual ticket buying
 
-
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
 
 
@@ -731,7 +730,7 @@ public class EasyVENT {
                     nextFrame = "viewEvents";
                     eventDetailsFrame.dispose();
                     eventDetailsFrame = null;
-                    break;
+                    return;
                 case "buy":
                     int sectorIndex = eventDetailsFrame.getSector() - 1;
 
@@ -743,15 +742,12 @@ public class EasyVENT {
                     int numberAdults = eventDetailsFrame.getNumberAdults();
                     int numberVips = eventDetailsFrame.getNumberVips();
 
-                    int numberTicketsSelected = numberChildren + numberAdults + numberVips;
+                    int numberOfSelectedTickets = numberChildren + numberAdults + numberVips;
 
-                    System.out.println(ticketsAvailableInSector);
-                    // System.out.println(ticketsMap.keySet().toArray()[0]);
-
-                    // HashMap<String,String> numberPrice = ticketsMap.get;
+                    // System.out.println(ticketsAvailableInSector);
 
                     if (
-                        numberTicketsSelected > ticketsAvailableInSector
+                        numberOfSelectedTickets > ticketsAvailableInSector
                     ) {
                         JOptionPane.showMessageDialog(
                             null,
@@ -760,7 +756,7 @@ public class EasyVENT {
                             JOptionPane.ERROR_MESSAGE    // ads red "x" picture
                         );
                         eventDetailsFrame.setOption("");
-                    } else if (numberTicketsSelected == 0) {
+                    } else if (numberOfSelectedTickets == 0) {
                         JOptionPane.showMessageDialog(
                             null,
                             "No tickets selcted.",
@@ -769,9 +765,35 @@ public class EasyVENT {
                         );
                         eventDetailsFrame.setOption("");
                     } else {
+                        ArrayList<Ticket> boughtTickets = new ArrayList<Ticket>();
                         
-                        // System.out.println(sector);
-                        // Database.buyTickets();
+                        ArrayList<Ticket> availableTickets = event.getTickets();
+
+                        int ticketsFound = 0;
+                        for (Ticket ticket: availableTickets) {
+                            if (ticket.getSector().equals(sectorName)) {
+                                if (numberAdults != 0) {
+                                    ticket.setCategory("ADULT");
+                                    numberAdults--;
+                                } else if (numberChildren != 0) {
+                                    ticket.setCategory("CHILD");
+                                    numberChildren--;
+                                } else if (numberVips != 0) {
+                                    ticket.setCategory("VIP");
+                                    numberVips--;
+                                }
+
+                                boughtTickets.add(ticket);
+                                System.out.println(boughtTickets.get(ticketsFound).getSector());
+                                System.out.println(boughtTickets.get(ticketsFound).getSeat());
+                                ticketsFound += 1;
+                                if (ticketsFound == numberOfSelectedTickets) {
+                                    break;
+                                }
+                            }
+                        }
+
+                        database.buyTickets(event, GlobalVariables.USER_LOGIN, boughtTickets);
                         nextFrame = "viewEvents";
                         eventDetailsFrame.dispose();
                         eventDetailsFrame = null;
