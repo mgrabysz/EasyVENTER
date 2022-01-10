@@ -220,7 +220,8 @@ public class Database {
                     String ev_name = events.get(i).getName();
                     String qu = "SELECT sector, seat, ticket_price FROM tickets "+
                         "JOIN events USING(event_id) "+
-                        "JOIN ticket_orders WHERE event_name = ? "+
+                        "JOIN ticket_orders ON(tickets.ticket_id=ticket_orders.ticket_id) "+
+                        "WHERE event_name = ? "+
                         "AND tickets.ticket_id NOT IN(SELECT ticket_id FROM ticket_orders)";
                     PreparedStatement pstmt = connection.prepareStatement(qu);
                     pstmt.setString(1, ev_name);
