@@ -277,7 +277,7 @@ public class Database {
         return tickets;
     }
 
-    public LinkedList<Ticket> getEventsOfUser(String login){
+    public LinkedList<Event> getEventsOfUser(String login){
         LinkedList<Event> events = new LinkedList<Event>();
         Statement stmt = null;
         if (connection != null) {
@@ -304,7 +304,7 @@ public class Database {
                     Date start_date = rs.getDate("start_time");
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
                     Event event = new Event(name, organizer, country, city, address, start_time);
-                    events.add(event));
+                    events.add(event);
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
