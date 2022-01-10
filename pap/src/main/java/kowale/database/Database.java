@@ -529,10 +529,10 @@ public class Database {
         return true;
     }
 
-    public boolean buyTicket(Event event, String userLogin){
+    public boolean buyTicket(Event event, String userLogin, ArrayList<Ticket> tickets){
         CallableStatement cs = null;
         int orderID = -1; // initialize variable with false value
-        for(Ticket ticket: event.getTickets()){
+        for(Ticket ticket: tickets){
             if (connection != null) {
                 try {
                     String eventName = event.getName();
