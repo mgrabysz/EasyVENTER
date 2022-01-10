@@ -544,10 +544,14 @@ public class EasyVENT {
 
 
     private void manageEvents() throws Exception{
+        /* open ManageEventsFrame to see events created by currently logged in user (organizer)*/
+
         // TODO:
-        // modify events
+        // actually modify events
+
         ArrayList<Event> allEvents = database.getAllEvents();
         ArrayList<Event> organizerEvents = new ArrayList<Event>();
+
         // get only events that are created by logged in organizer (event orgnizer == current user login)
         for (Event event: allEvents) {
             // System.out.println(event.getOrganizer());
