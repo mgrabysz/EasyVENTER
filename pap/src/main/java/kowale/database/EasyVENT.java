@@ -636,7 +636,7 @@ public class EasyVENT {
 
                     if (tickets != null) {
                         event.setTickets(tickets);
-                        EasyVENT.database.createEvent(event);
+                        database.insertEvent(event);
                         // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
                         // nextFrame = "InputSectorDataFrame";
                     }
