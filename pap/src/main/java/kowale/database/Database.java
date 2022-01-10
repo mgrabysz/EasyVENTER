@@ -494,26 +494,22 @@ public class Database {
         return false;
     }
 
-    public boolean buyTicket(Event event,  Ticket[] tickets){
+    public boolean buyTicket(Event event, String userLogin){
         CallableStatement cs = null;
-        int userID = 1;  // TODO: Change this to global variable
         int orderID = -1; // initialize variable with false value
-        for(Ticket ticket: tickets){
+        for(Ticket ticket: event.getTickets()){
             if (connection != null) {
                 try {
-
                     String eventName = event.getName();
-                    String ticketCategory = "";
                     String ticketSector = ticket.getSector();
                     int ticketSeat = ticket.getSeat();
-                    cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?,?)}");
+                    cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?)}");
                     cs.setString(1, eventName);
-                    cs.setInt(2, userID);
-                    cs.setString(3, ticketCategory);
-                    cs.setString(4, ticketSector);
-                    cs.setString(5, String.valueOf(ticketSeat));
-                    cs.setInt(6, orderID);
-                    cs.registerOutParameter(7, Types.NUMERIC);
+                    cs.setString(2, userLogin);
+                    cs.setString(3, ticketSector);
+                    cs.setString(4, String.valueOf(ticketSeat));
+                    cs.setInt(5, orderID);
+                    cs.registerOutParameter(6, Types.NUMERIC);
                     cs.execute();
 
                     orderID = cs.getInt(7);  // update value of orderID
