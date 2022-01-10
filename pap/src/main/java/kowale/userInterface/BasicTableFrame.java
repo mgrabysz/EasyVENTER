@@ -63,6 +63,9 @@ public class BasicTableFrame extends JFrame implements ActionListener {
         // prevents from column dragging
         table.getTableHeader().setReorderingAllowed(false);
 
+        // provides that only one row can be selected
+        table.changeSelection(0, 0, false, false);
+
         sp = new JScrollPane(table);
         sp.setBounds(30, 30, 800, 500);
         this.add(sp);
