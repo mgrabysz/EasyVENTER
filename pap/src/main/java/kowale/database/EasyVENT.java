@@ -22,6 +22,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
@@ -407,7 +408,7 @@ public class EasyVENT {
 
     private void login() throws Exception {
         // open LoginFrame
-        
+
         loginFrame = new LoginFrame();
 
         while (true) {
@@ -505,7 +506,7 @@ public class EasyVENT {
     }
 
     private void viewEventsBought() throws Exception {
-        /* 
+        /*
         open ViewEventsFrame to see only this events that currently logged user has at least ne ticket for
         user can select event and open EventDetailsAfterBuyingFrame
         */
@@ -600,8 +601,7 @@ public class EasyVENT {
         /* open CreateEventFrame*/
 
         /* TODO:
-        input data check
-        actual event creation (database)
+        input data check -- date check completed, anything else to check?
         */
         createEventFrame = new CreateEventFrame();
 
@@ -617,31 +617,37 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "confirm":
-                Event event = new Event(
-                    createEventFrame.getName(),
-                    GlobalVariables.USER_LOGIN,
-                    createEventFrame.getCountry(),
-                    createEventFrame.getCity(),
-                    createEventFrame.getAddress(),
-                    createEventFrame.getDateTime()
-                );
+                String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
+                if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0 ){
+                    Event event = new Event(
+                        createEventFrame.getName(),
+                        company,
+                        createEventFrame.getCountry(),
+                        createEventFrame.getCity(),
+                        createEventFrame.getAddress(),
+                        createEventFrame.getDateTime()
+                    );
 
-                int sectorsNumber = createEventFrame.getNumOfSectors();
+                    int sectorsNumber = createEventFrame.getNumOfSectors();
+                    createEventFrame.dispose();
+                    createEventFrame = null;
 
-                createEventFrame.dispose();
-                createEventFrame = null;
+                    ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
 
-                ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
+                    if (tickets != null) {
+                        event.setTickets(tickets);
+                        EasyVENT.database.createEvent(event);
+                        // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
+                        // nextFrame = "InputSectorDataFrame";
+                    }
 
-                if (tickets != null) {
-                    event.setTickets(tickets);
-                    EasyVENT.database.createEvent(event);
-                    // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
-                    // nextFrame = "InputSectorDataFrame";
+                    nextFrame = "mainMenu";
+                    break;
                 }
-
-                nextFrame = "mainMenu";
-                break;
+                else{
+                    createEventFrame.displayMessageDialog();
+                    createEventFrame.dispose();
+                }
         }
     }
 
@@ -803,7 +809,7 @@ public class EasyVENT {
                         eventDetailsFrame.setOption("");
                     } else {
                         ArrayList<Ticket> boughtTickets = new ArrayList<Ticket>();
-                        
+
                         ArrayList<Ticket> availableTickets = event.getTickets();
 
                         int ticketsFound = 0;
@@ -840,7 +846,7 @@ public class EasyVENT {
                     }
             }
 
-            
+
         }
     }
 
@@ -849,7 +855,7 @@ public class EasyVENT {
         open EventDetailsAfterBuyingFrame
         user can cancel selected ticket here
         */
-        
+
         // TODO:
         // actual ticket canceling
 

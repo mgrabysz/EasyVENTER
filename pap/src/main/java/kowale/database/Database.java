@@ -593,4 +593,29 @@ public class Database {
         }
         return succes;
     }
+
+    public String getCompanyName(String login){
+        CallableStatement stmt = null;
+        String company = "";
+        if (connection != null) {
+            try {
+                stmt = connection.prepareCall("{? = call get_company(?)}");
+                stmt.registerOutParameter(1, Types.VARCHAR);
+                stmt.setString(2, login);
+                stmt.execute();
+                company = stmt.getString(1);
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+        return company;
+    }
 }

@@ -312,19 +312,15 @@ public class CreateEventFrame extends JFrame implements ActionListener {
     public int getNumOfSectors() {
         return numOfSectors;
     }
-    // public void displayMessageDialog() {
 
-    //     secOneField.setText(null);
-    //     secTwoField.setText(null);
-    //     secThreeField.setText(null);
-
-    //     JOptionPane.showMessageDialog(
-    //         null,
-    //         "This data is not correct",
-    //         "Invalid user input",
-    //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-    //     );
-    // }
+    public void displayMessageDialog() {
+        JOptionPane.showMessageDialog(
+            null,
+            "This data is not correct",
+            "Invalid user input",
+            JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+        );
+    }
 
     // public boolean getIsReady() {
     //     return isReady;
