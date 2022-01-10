@@ -506,12 +506,12 @@ public class Database {
                 LocalDateTime eventDate = event.getDateTime();
                 Date eventDateSQL = Date.valueOf(eventDate.toLocalDate());
 
-                cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?)}");
+                cs = connection.prepareCall("{call EDIT_EVENT(?,?,?,?,?)}");
                 cs.setString(1, eventName);
                 cs.setString(2, eventCountry);
                 cs.setString(3, eventCity);
                 cs.setString(4, eventAddress);
-                cs.setDate(5, eventDateSQL);  // TODO: CHANGE THIS
+                cs.setDate(5, eventDateSQL);
                 cs.execute();
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -538,7 +538,7 @@ public class Database {
                     String eventName = event.getName();
                     String ticketSector = ticket.getSector();
                     int ticketSeat = ticket.getSeat();
-                    cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?)}");
+                    cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?,?)}");
                     cs.setString(1, eventName);
                     cs.setString(2, userLogin);
                     cs.setString(3, ticketSector);
