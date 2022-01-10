@@ -537,14 +537,16 @@ public class Database {
                 try {
                     String eventName = event.getName();
                     String ticketSector = ticket.getSector();
+                    String ticketCategory = ticket.getCategory();
                     int ticketSeat = ticket.getSeat();
                     cs = connection.prepareCall("{call BUY_TICKET(?,?,?,?,?,?,?)}");
                     cs.setString(1, eventName);
                     cs.setString(2, userLogin);
-                    cs.setString(3, ticketSector);
-                    cs.setString(4, String.valueOf(ticketSeat));
-                    cs.setInt(5, orderID);
-                    cs.registerOutParameter(6, Types.NUMERIC);
+                    cs.setString(3, ticketCategory);
+                    cs.setString(4, ticketSector);
+                    cs.setString(5, String.valueOf(ticketSeat));
+                    cs.setInt(6, orderID);
+                    cs.registerOutParameter(7, Types.NUMERIC);
                     cs.execute();
 
                     orderID = cs.getInt(7);  // update value of orderID
