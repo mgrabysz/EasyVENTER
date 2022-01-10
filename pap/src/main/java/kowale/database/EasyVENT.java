@@ -597,6 +597,8 @@ public class EasyVENT {
     }
 
     private void createEvent() throws Exception{
+        /* open CreateEventFrame*/
+
         // TODO: input data check
         createEventFrame = new CreateEventFrame();
 
@@ -641,6 +643,11 @@ public class EasyVENT {
     }
 
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
+        /*
+        open InputSectorDataFrame to let user (organizer) define tickets
+        after user confirmation program goes back to createEvent to create event
+        */
+
         // TODO: input data check:
         // przecinek/kropka
         // dokladnosc do 0.01 PLN
@@ -728,6 +735,10 @@ public class EasyVENT {
     }
 
     private void eventDetails() throws Exception{
+        /*
+        open EventDetailsFrame to let user see event details and buy tickets
+        */
+
         // TODO:
         // actual ticket buying
 
