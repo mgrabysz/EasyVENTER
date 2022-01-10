@@ -5,7 +5,7 @@ public class Ticket {
     Class that represents a ticket.
     */
 
-    private String category;
+    private String category; // ADULT/CHILD/VIP
     private String sector;
     private int seat;
     private int price;
@@ -30,16 +30,16 @@ public class Ticket {
         return price / 100f;
     }
 
-    public String getCategory() {
-        return category;
-    }
-
     public String getSector() {
         return sector;
     }
 
     public int getSeat() {
         return seat;
+    }
+
+    public String getCategory() {
+        return category;
     }
 
     public void setCategory(String category) {
