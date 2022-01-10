@@ -434,17 +434,15 @@ public class Database {
         if (connection != null) {
             try {
                 for (Ticket ticket : tickets){
-                    String tCategory = "";
                     int tSeat = ticket.getSeat();
                     String tSector = ticket.getSector();
                     int tPrice = ticket.getPrice();
 
-                    cs = connection.prepareCall("{call ADD_TICKET(?,?,?,?,?)}");
+                    cs = connection.prepareCall("{call ADD_TICKET(?,?,?,?)}");
                     cs.setInt(1, eventID);
-                    cs.setString(2, tCategory);
-                    cs.setString(3, String.valueOf(tSeat));
-                    cs.setString(4, String.valueOf(tSector)); // convert to DB char type
-                    cs.setInt(5, tPrice);
+                    cs.setString(2, String.valueOf(tSeat));
+                    cs.setString(3, String.valueOf(tSector)); // convert to DB char type
+                    cs.setInt(4, tPrice);
 
                     cs.executeQuery();
                 }
