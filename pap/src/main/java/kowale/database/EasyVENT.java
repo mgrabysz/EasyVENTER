@@ -599,7 +599,10 @@ public class EasyVENT {
     private void createEvent() throws Exception{
         /* open CreateEventFrame*/
 
-        // TODO: input data check
+        /* TODO:
+        input data check
+        actual event creation (database)
+        */
         createEventFrame = new CreateEventFrame();
 
         while (createEventFrame.getOption().equals("")) {
@@ -704,7 +707,8 @@ public class EasyVENT {
 
     private void modifyEvent() throws Exception{
         // TODO:
-        // ISSUE: event time and date is not displayed correctly
+        // actual event modifying (database)
+        // ISSUE: event time and date is not displayed correctly (maybe fixed, I don't know)
 
         Event event = GlobalVariables.SELECTED_EVENT;
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
@@ -843,11 +847,11 @@ public class EasyVENT {
     private void eventDetailsBought() throws Exception{
         /*
         open EventDetailsAfterBuyingFrame
-        user can cancel selected ticket
+        user can cancel selected ticket here
         */
         
         // TODO:
-        // actual (database) ticket canceling
+        // actual ticket canceling
 
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
         HashMap<String, String> eventDetails = event.getDetails();
