@@ -397,7 +397,7 @@ CREATE TABLE z01.tickets (
     NOT NULL,
     seat          VARCHAR2(10 BYTE) NOT NULL,
     event_id      NUMBER(*, 0) NOT NULL,
-    purchase_date DATE NOT NULL,
+    purchase_date DATE,
     sector        CHAR(2 BYTE) NOT NULL,
     ticket_price  NUMBER(6) NOT NULL
 )
