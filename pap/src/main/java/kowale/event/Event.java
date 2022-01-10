@@ -140,7 +140,7 @@ public class Event {
         details.put("hour", hour);
         details.put("minute", minute);
 
-        System.out.println(details);
+        // System.out.println(details);
         return details;
     }
 
@@ -155,7 +155,7 @@ public class Event {
         details.put("city", city);
         details.put("address", address);
         details.put("dateTime", dateTime.format(formatter));
-        System.out.println(dateTime.format(formatter));
+        // System.out.println(dateTime.format(formatter));
 
         return details;
     }
@@ -185,6 +185,8 @@ public class Event {
         } else {
             // TODO: no tickets available
         }
+
+        // System.out.println(sectors);
 
         return sectors;
     }

@@ -81,6 +81,10 @@ public class BasicTableFrame extends JFrame implements ActionListener {
         return option;
     }
 
+    public void setOption(String option) {
+        this.option = option;
+    }
+
     public int getSelectedIndex() {
         return selectedIndex;
     }
