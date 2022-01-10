@@ -181,6 +181,7 @@ public class EasyVENT {
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
                 data[i] = event.getInfo();
+                // System.out.println(event.getInfo());
             }
         }
 
@@ -203,7 +204,7 @@ public class EasyVENT {
                 data[i][0] = sector;
                 data[i][1] = numberPrice.get("number");
                 String price = numberPrice.get("price");
-                System.out.println(price);
+                // System.out.println(price);
                 if (price.substring(price.length()-1).equals("0")) {
                     price += "0";
                 }
@@ -223,7 +224,7 @@ public class EasyVENT {
     private void welcome() throws Exception {
         welcomeFrame = new WelcomeFrame();
 
-        while (welcomeFrame.getOption() == "") {
+        while (welcomeFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -431,7 +432,7 @@ public class EasyVENT {
     private void mainMenu() throws Exception{
         mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
 
-        while (mainMenuFrame.getOption() == "") {
+        while (mainMenuFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -471,7 +472,7 @@ public class EasyVENT {
         String[][] data = eventsToData(database.getAllEvents());
         viewEventsFrame = new ViewEventsFrame(data);
 
-        while (viewEventsFrame.getOption() == "") {
+        while (viewEventsFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -503,7 +504,7 @@ public class EasyVENT {
 
         viewEventsFrame = new ViewEventsFrame(data);
 
-        while (viewEventsFrame.getOption() == "") {
+        while (viewEventsFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -529,8 +530,9 @@ public class EasyVENT {
         // modify events
         ArrayList<Event> allEvents = database.getAllEvents();
         ArrayList<Event> organizerEvents = new ArrayList<Event>();
+        // get only events that are created by logged in organizer (event orgnizer == current user login)
         for (Event event: allEvents) {
-            System.out.println(event.getOrganizer());
+            // System.out.println(event.getOrganizer());
             if (event.getOrganizer().equals(GlobalVariables.USER_LOGIN)) {
                 organizerEvents.add(event);
                 // System.out.println(GlobalVariables.USER_LOGIN);
@@ -539,7 +541,7 @@ public class EasyVENT {
         String[][] data = eventsToData(organizerEvents);
         manageEventsFrame = new ManageEventsFrame(data);
 
-        while (manageEventsFrame.getOption() == "") {
+        while (manageEventsFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -576,7 +578,7 @@ public class EasyVENT {
         // TODO: input data check
         createEventFrame = new CreateEventFrame();
 
-        while (createEventFrame.getOption() == "") {
+        while (createEventFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -635,7 +637,7 @@ public class EasyVENT {
 
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
-        while (inputSectorDataFrame.getOption() == "") {
+        while (inputSectorDataFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -679,7 +681,7 @@ public class EasyVENT {
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
 
-        while (modifyEventFrame.getOption() == "") {
+        while (modifyEventFrame.getOption().equals("")) {
             waiting();
         }
 
@@ -707,30 +709,78 @@ public class EasyVENT {
         // TODO:
         // actual ticket buying
 
-        // System.out.println("details");
 
         Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
+
+
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
+
+        System.out.println(ticketsMap);
+
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
 
-        while(eventDetailsFrame.getOption() == "") {
-            waiting();
-        }
+        while (true) {
+            while(eventDetailsFrame.getOption().equals("")) {
+                waiting();
+            }
 
-        switch (eventDetailsFrame.getOption()) {
-            case "cancel":
-                nextFrame = "viewEvents";
-                break;
-            case "confirm":
-                // Database.buyTickets();
-                nextFrame = "viewEvents";
-                break;
-        }
+            switch (eventDetailsFrame.getOption()) {
+                case "cancel":
+                    nextFrame = "viewEvents";
+                    eventDetailsFrame.dispose();
+                    eventDetailsFrame = null;
+                    break;
+                case "buy":
+                    int sectorIndex = eventDetailsFrame.getSector() - 1;
 
-        eventDetailsFrame.dispose();
-        eventDetailsFrame = null;
+                    String sectorName = String.valueOf(ticketsMap.keySet().toArray()[sectorIndex]);
+
+                    int ticketsAvailableInSector = Integer.valueOf(ticketsMap.get(sectorName).get("number"));
+
+                    int numberChildren = eventDetailsFrame.getNumberChildren();
+                    int numberAdults = eventDetailsFrame.getNumberAdults();
+                    int numberVips = eventDetailsFrame.getNumberVips();
+
+                    int numberTicketsSelected = numberChildren + numberAdults + numberVips;
+
+                    System.out.println(ticketsAvailableInSector);
+                    // System.out.println(ticketsMap.keySet().toArray()[0]);
+
+                    // HashMap<String,String> numberPrice = ticketsMap.get;
+
+                    if (
+                        numberTicketsSelected > ticketsAvailableInSector
+                    ) {
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Some of selected tickets are unavailable.",
+                            "Invalid user input",
+                            JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                        );
+                        eventDetailsFrame.setOption("");
+                    } else if (numberTicketsSelected == 0) {
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "No tickets selcted.",
+                            "Invalid user input",
+                            JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                        );
+                        eventDetailsFrame.setOption("");
+                    } else {
+                        
+                        // System.out.println(sector);
+                        // Database.buyTickets();
+                        nextFrame = "viewEvents";
+                        eventDetailsFrame.dispose();
+                        eventDetailsFrame = null;
+                        return;
+                    }
+            }
+
+            
+        }
     }
 
     private void eventDetailsBought() throws Exception{
@@ -742,7 +792,7 @@ public class EasyVENT {
         HashMap<String, String> eventDetails = event.getDetails();
 
         LinkedList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
-        System.out.println(tickets);
+        // System.out.println(tickets);
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         String sectorName = "?";
@@ -752,7 +802,7 @@ public class EasyVENT {
             sectorName
         );
 
-        while(eventDetailsAfterBuyingFrame.getOption() == "") {
+        while(eventDetailsAfterBuyingFrame.getOption().equals("")) {
             waiting();
         }
 

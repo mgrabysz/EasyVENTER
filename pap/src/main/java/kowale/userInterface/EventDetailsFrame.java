@@ -175,7 +175,7 @@ public class EventDetailsFrame extends BasicTableFrame {
             numberAdults = (Integer)adultCombo.getSelectedItem();
             numberVips = (Integer)vipCombo.getSelectedItem();
             sector = table.getSelectedRow() + 1;   //  +1 because table is indexed from 0
-            option = "confirm";
+            option = "buy";
         } else if (e.getSource()==childCombo || e.getSource()==adultCombo || e.getSource()==vipCombo){
             updatePrice();
         } else if (e.getSource()==cancelButton){
@@ -209,9 +209,18 @@ public class EventDetailsFrame extends BasicTableFrame {
         totalPriceLabel.setText(to_print + " PLN");
     }
 
-    public boolean getIsCancelled() {
-        return isCancelled;
+    public String getOption() {
+        return option;
     }
+
+    public void setOption(String option) {
+        this.option = option;
+    }
+
+    // public boolean getIsCancelled() {
+    //     return isCancelled;
+    // }
+    
     public int getNumberChildren() {
         return numberChildren;
     }
