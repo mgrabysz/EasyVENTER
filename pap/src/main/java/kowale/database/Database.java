@@ -192,6 +192,7 @@ public class Database {
 
 
     public ArrayList<Event> getAllEvents() {
+        // returns events with tickets available for purchase
         ArrayList<Event> events = new ArrayList<Event>();
         Statement stmt = null;
         Event event = null;
@@ -217,7 +218,11 @@ public class Database {
                 for (int i=0; i< events.size(); ++i){
                     ArrayList<Ticket> tickets = new ArrayList<Ticket>();
                     String ev_name = events.get(i).getName();
-                    PreparedStatement pstmt = connection.prepareStatement("SELECT * FROM tickets JOIN events USING(event_id) WHERE event_name = ?");
+                    String qu = "SELECT sector, seat, ticket_price FROM tickets "+
+                        "JOIN events USING(event_id) "+
+                        "JOIN ticket_orders WHERE event_name = ? "+
+                        "AND tickets.ticket_id NOT IN(SELECT ticket_id FROM ticket_orders)";
+                    PreparedStatement pstmt = connection.prepareStatement(qu);
                     pstmt.setString(1, ev_name);
                     ResultSet rs2 = pstmt.executeQuery();
                     while (rs2.next()) {
