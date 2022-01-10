@@ -55,10 +55,10 @@ INSERT INTO z01.user_credentials VALUES (104, 102, 'O', 'PZPN', '4ced129f1429109
 -- password = root
 INSERT INTO z01.user_credentials VALUES (105, 103, 'O', 'root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2');
 
+INSERT INTO z01.events VALUES (104, 103, 'Konferencja NASA');
 INSERT INTO z01.events VALUES (101, 101, 'Festiwal kawy');
 INSERT INTO z01.events VALUES (102, 101, 'Festiwal morza');
 INSERT INTO z01.events VALUES (103, 102, 'Mecz');
-INSERT INTO z01.events VALUES (104, 103, 'Konferencja NASA');
 INSERT INTO z01.events VALUES (105, 103, 'Pokazy lotnicze');
 
 INSERT INTO z01.expected_income VALUES (101, 101, NULL);
