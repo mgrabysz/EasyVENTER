@@ -1,13 +1,14 @@
 create or replace PROCEDURE BUY_TICKET(
 e_name VARCHAR2,
-c_client_id NUMERIC,
+c_client_login VARCHAR2,
 t_category_name VARCHAR2,
 t_sector CHAR,
 t_seat VARCHAR2,
 c_order_id NUMERIC,
 c_order_id_return OUT NUMERIC)
 AS
-client_id_exists NUMBER;
+client_login_exists NUMBER;
+c_client_id NUMBER;
 order_exists NUMBER;
 
 event_exists NUMBER;
@@ -22,11 +23,11 @@ desired_ticket_id NUMERIC;
 calc_price NUMBER;
 BEGIN
 
-    -- Check if client_id exists
-    SELECT COUNT(1) INTO client_id_exists
-    FROM CLIENT_DATA WHERE CLIENT_ID = c_client_id;
+    -- Check if clien_login exists
+    SELECT COUNT(1), USER_ID INTO client_login_exists, c_client_id
+    FROM USER_CREDENTIALS WHERE LOGIN = c_client_login;
 
-    IF client_id_exists > 0 THEN
+    IF client_login_exists > 0 THEN
 
         -- Check if event exists
         SELECT 1, EVENT_ID INTO event_exists, desired_event_id
