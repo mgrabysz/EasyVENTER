@@ -1,8 +1,6 @@
 package kowale.userInterface;
 
-// import kowale.database.EasyVENT;
 import kowale.database.NewUserData;
-// import kowale.database.GlobalVariables;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
