@@ -1,5 +1,6 @@
 package kowale.userInterface;
 
+import kowale.database.GlobalVariables;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -132,11 +133,7 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         countryLabel.setHorizontalAlignment(JLabel.LEFT);
         this.add(countryLabel);
 
-        Vector<String> countries = new Vector<String>();
-        countries.add("Polska");
-        countries.add("Hiszpania");
-
-        countryCombo = new JComboBox<String>(countries);
+        countryCombo = new JComboBox<String>(GlobalVariables.COUNTRIES);
         countryCombo.setBounds(370, 160, 220, 30);
         this.add(countryCombo);
 
