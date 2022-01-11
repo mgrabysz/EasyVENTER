@@ -20,12 +20,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.lang.Boolean;
-// import java.util.Objects;
 import java.util.Map;
 
-import java.util.Map;
-
-// import kowale.database.password;
 
 public class Database {
     /*
@@ -463,7 +459,7 @@ public class Database {
 
     public boolean insertTicketQuantities(int eventDetailID, ArrayList<Ticket> tickets){
         /* Count occurences of tickets in each sector */
-        Map<String,Integer> hm = new HashMap();
+        Map<String,Integer> hm = new HashMap<String, Integer>();
         for(Ticket ticket: tickets){
             if(!hm.containsKey(ticket.getSector())){
                 hm.put(ticket.getSector(),1);

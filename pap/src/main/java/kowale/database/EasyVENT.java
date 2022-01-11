@@ -541,9 +541,6 @@ public class EasyVENT {
      * after user confirmation program goes back to createEvent to create event
      */
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
-        // TODO: input data check:
-        // przecinek/kropka
-        // dokladnosc do 0.01 PLN
         String[][] sectors = new String[sectorsNumber][3];
         for (int i=0; i<sectorsNumber; ++i) {
             String iStr = String.valueOf(i+1);
