@@ -745,12 +745,19 @@ public class EasyVENT {
                 break;
             case "confirm":
                 // TODO
-                JOptionPane.showMessageDialog(
-                    null,
-                    "TODO",
-                    "TODO",
-                    JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                );
+                // JOptionPane.showMessageDialog(
+                //     null,
+                //     "TODO",
+                //     "TODO",
+                //     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                // );
+                event.setAddress(modifyEventFrame.getAddress());
+                event.setDateTime(modifyEventFrame.getDateTime());
+                event.setCity(modifyEventFrame.getCity());
+                event.setCountry(modifyEventFrame.getCountry());
+
+                database.editEvent(event);
+
                 nextFrame = "modifyEvent";
                 break;
         }
