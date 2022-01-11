@@ -758,7 +758,7 @@ public class EasyVENT {
 
                 database.editEvent(event);
 
-                nextFrame = "modifyEvent";
+                nextFrame = "manageEvents";
                 break;
         }
 
