@@ -259,6 +259,7 @@ public class Database {
             try {
                 stmt = connection.createStatement();
                 String query = String.format("SELECT * FROM tickets JOIN ticket_orders USING(ticket_id)"+
+                    "JOIN ticket_categories USING(category_id)"+
                     "JOIN client_orders USING(order_id) JOIN user_credentials ON (client_id = user_id)"+
                     "JOIN events USING(event_id) WHERE login = '%s' AND event_name = '%s'", login, ev_name);
                 ResultSet rs = stmt.executeQuery(query);
@@ -266,7 +267,9 @@ public class Database {
                     String sector = rs.getString("sector");
                     int seat = Integer.parseInt(rs.getString("seat"));
                     int price = rs.getInt("ticket_price");
+                    String category = rs.getString("ategory_name");
                     Ticket ticket = new Ticket(sector, seat, price);
+                    ticket.setCategory(category);
                     tickets.add(ticket);
                 }
             } catch (SQLException ex) {
