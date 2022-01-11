@@ -810,9 +810,20 @@ public class EasyVENT {
             case "remove":
                 int maxTicketToRemove = Integer.valueOf(ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][1]);
                 String category = ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][0];
-                // SliderFrame slider = new SliderFrame(maxTicketToRemove)
-                // int toRemove = slider.getNumberofTickets();
-                // Database.removeTicket();
+                SliderFrame slider = new SliderFrame(maxTicketToRemove);
+                while(!slider.getReady()) {
+                    waiting();
+                }
+                int numberToRemove = slider.getNumberOfTickets();
+                slider.dispose();
+                for (Ticket ticket : tickets){
+                    if (numberToRemove == 0){break;}
+                    if (ticket.getCategory().equals(category)){
+                        database.cancelTicket(event.getName(), ticket);
+                        numberToRemove--;
+                    }
+                }
+
                 nextFrame = "viewEventsBought";
                 break;
         }

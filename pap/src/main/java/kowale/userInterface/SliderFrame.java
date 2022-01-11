@@ -14,6 +14,7 @@ public class SliderFrame extends JFrame implements ChangeListener, ActionListene
     JSlider slider;
     JLabel label;
     JButton confirmButton;
+    boolean isReady = false;
 
     private int numberOfTickets;
 
@@ -60,7 +61,7 @@ public class SliderFrame extends JFrame implements ChangeListener, ActionListene
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==confirmButton) {
-
+            isReady = true;
             // do something when confirmed
             numberOfTickets = slider.getValue();
         }
@@ -69,6 +70,10 @@ public class SliderFrame extends JFrame implements ChangeListener, ActionListene
 
     public int getNumberOfTickets() {
         return numberOfTickets;
+    }
+
+    public boolean getReady(){
+        return isReady;
     }
 
 }
