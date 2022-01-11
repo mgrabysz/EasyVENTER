@@ -533,6 +533,7 @@ public class EasyVENT {
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
 
         ArrayList<Event> userEvents = database.getEventsOfUser(GlobalVariables.USER_LOGIN);
+
         // ArrayList<Event> clientEvents = new ArrayList<Event>();
         // for (Event event: allEvents) {
         //     if (event.get)
@@ -877,7 +878,8 @@ public class EasyVENT {
         // TODO:
         // actual ticket canceling
 
-        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
+        Event event = database.getEventsOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
+
         HashMap<String, String> eventDetails = event.getDetails();
 
         LinkedList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
