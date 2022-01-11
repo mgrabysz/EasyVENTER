@@ -93,8 +93,6 @@ public class EasyVENT {
             }
             hexString.append(hex);
         }
-
-        // System.out.println(hexString.toString());
         return hexString.toString();
     }
 
@@ -105,19 +103,11 @@ public class EasyVENT {
         String[][] data = new String[events.size()][4];
 
         if (events.size() > 0) {
-            // data = new String[events.size()][4];
             for (int i = 0; i < events.size(); i++) {
                 Event event = events.get(i);
                 data[i] = event.getInfo();
-                // System.out.println(event.getInfo());
             }
         }
-
-        // System.out.println("events:");
-        // System.out.println(events);
-        // System.out.println("data:");
-        // System.out.println(data);
-
         return data;
     }
 
@@ -129,14 +119,12 @@ public class EasyVENT {
         String[][]data = new String[ticketsMap.size()][3];
 
         if (ticketsMap.size() > 0) {
-            // data = new String[events.size()][4];
             int i = 0;
             for (String sector : ticketsMap.keySet()) {
                 HashMap<String, String> numberPrice = ticketsMap.get(sector);
                 data[i][0] = sector;
                 data[i][1] = numberPrice.get("number");
                 String price = numberPrice.get("price");
-                // System.out.println(price);
                 if (price.substring(price.length()-1).equals("0")) {
                     price += "0";
                 }
@@ -144,11 +132,6 @@ public class EasyVENT {
                 i++;
             }
         }
-
-        // System.out.println("events:");
-        // System.out.println(events);
-        // System.out.println("data:");
-        // System.out.println(data);
 
         return data;
     }
@@ -281,11 +264,9 @@ public class EasyVENT {
                 map.put("telephone", registerClientFrame.getTelephone());
                 String gender = registerClientFrame.getGender().substring(0, 1);
                 map.put("gender", gender);
-                // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE;
                 map.put(
                     "date",
                     registerClientFrame.getDate().format(
-                        // DateTimeFormatter.ofPattern("dd-MM-yyyy")
                         DateTimeFormatter.ofPattern("yyyy-MM-dd")
                     )
                 );
@@ -319,8 +300,6 @@ public class EasyVENT {
             while(registerOrganizerFrame.getIsReady() == false) {
                 waiting();
             }
-
-
             // check if input data is correct
             if (
                 registerOrganizerFrame.getEmail().trim().length() > 0 &&
@@ -454,17 +433,8 @@ public class EasyVENT {
      * User can select event and open EventDetailsAfterBuyingFrame.
      */
     private void viewEventsBought() throws Exception {
-        // TODO: get only events for which client has at least one ticket
-
-        // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
-
         ArrayList<Event> userEvents = database.getEventsOfUser(GlobalVariables.USER_LOGIN);
 
-        // ArrayList<Event> clientEvents = new ArrayList<Event>();
-        // for (Event event: allEvents) {
-        //     if (event.get)
-        // }
-        // ArrayList<Event> events = database.getEventsOfUser(user, event)
         String[][] data = eventsToData(userEvents);
 
         viewEventsFrame = new ViewEventsFrame(data);
@@ -492,9 +462,6 @@ public class EasyVENT {
      * Opens ManageEventsFrame with events created by currently logged in organizer.
      */
     private void manageEvents() throws Exception{
-        // TODO:
-        // actually modify events
-
         ArrayList<Event> organizerEvents = database.getEventsOfOrganizer(GlobalVariables.USER_LOGIN);
 
         String[][] data = eventsToData(organizerEvents);
@@ -510,8 +477,6 @@ public class EasyVENT {
                 break;
             case "modify":
                 GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
-                // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
-                //Database.modifyEvent();
                 nextFrame = "modifyEvent";
                 break;
         }
