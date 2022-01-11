@@ -1,12 +1,4 @@
-/*
-
-    + ================= +
-    |   Created by PB   |
-    + ================= +
-
-*/
-
-CREATE OR REPLACE PROCEDURE add_ticket(
+create or replace PROCEDURE add_ticket(
 e_event_id NUMBER,
 e_seat VARCHAR,
 e_sector VARCHAR,
@@ -24,10 +16,9 @@ BEGIN
     -- INSERT TICKET
     IF event_exists > 0 THEN
         INSERT INTO TICKETS(SEAT, EVENT_ID, PURCHASE_DATE, SECTOR, TICKET_PRICE)
-        VALUES (e_seat, e_event_id, SYSDATE, e_sector, e_price);
+        VALUES (e_seat, e_event_id, NULL, e_sector, e_price);
     ELSE
         RAISE NO_DATA_FOUND;  -- EVENT was not found
     END IF;
-    
+
 END add_ticket;
-    

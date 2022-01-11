@@ -15,12 +15,13 @@ BEGIN
     SELECT order_id INTO to_order_id FROM z01.ticket_orders WHERE ticket_id = t_ticket_id;
     SELECT count(ticket_id) INTO tickets_in_order FROM z01.ticket_orders WHERE order_id = to_order_id;
 
+    DELETE FROM ticket_orders WHERE ticket_id = t_ticket_id;
+    
     IF tickets_in_order = 1 THEN -- we are about to delete last ticket in order
         DELETE FROM client_orders WHERE order_id = to_order_id;
         COMMIT;
     END IF;
-        DELETE FROM ticket_orders WHERE ticket_id = t_ticket_id;
-        DELETE FROM tickets WHERE ticket_id = t_ticket_id;
+        UPDATE tickets SET purchase_date=null WHERE ticket_id = t_ticket_id;
         COMMIT;
 
 END;

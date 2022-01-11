@@ -36,6 +36,9 @@ Testy jednostkowe każdy członek napisze indywidualnie do swoich klas.
 
 ![ERD_EasyVENT.png](./diagrams/ERD_EasyVENT.png)
 
+### Model Relacyjny bazy
+![EasyVEND_rel_model.png](./diagrams/EASYVENT_DATABASE_RELATIONAL_MODEL.png)
+
 ### Diagram funkcjonalności aplikacji
 
 ![EasyVENT_diagram_flow.png](./diagrams/EasyVENT_diagram_flow.png)

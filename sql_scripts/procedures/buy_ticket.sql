@@ -24,20 +24,21 @@ calc_price NUMBER;
 BEGIN
 
     -- Check if clien_login exists
-    SELECT COUNT(1), USER_ID INTO client_login_exists, c_client_id
+    SELECT 1, USER_ID INTO client_login_exists, c_client_id
     FROM USER_CREDENTIALS WHERE LOGIN = c_client_login;
 
     IF client_login_exists > 0 THEN
 
         -- Check if event exists
         SELECT 1, EVENT_ID INTO event_exists, desired_event_id
-        FROM EVENTS WHERE EVENT_NAME = e_name;
-
+        FROM EVENTS
+        WHERE EVENT_NAME = e_name;
+        
         IF event_exists > 0 THEN
 
             -- Check if ticket category exists
             -- and find its id
-            SELECT 1, CATEGORY_ID INTO event_exists, category_id
+            SELECT 1, CATEGORY_ID INTO category_exists, category_id
             FROM TICKET_CATEGORIES WHERE CATEGORY_NAME = t_category_name;
             IF category_exists > 0 THEN
 
@@ -54,18 +55,30 @@ BEGIN
                     -- Check if client order exists
                     SELECT COUNT(1) INTO order_exists
                     FROM CLIENT_ORDERS WHERE ORDER_ID = c_order_id;
-
+                    
+                    UPDATE TICKETS
+                    SET PURCHASE_DATE = SYSDATE
+                    WHERE TICKET_ID = desired_ticket_id;
+                    
                     if order_exists > 0 THEN
-
+                        calc_price:=calculate_total_price(desired_ticket_id, category_id, c_order_id);
                         -- Append new ticket to the same order
                         ADD_TICKET_TO_ORDER(desired_ticket_id, c_order_id, category_id);
+                        UPDATE CLIENT_ORDERS SET
+                        TOTAL_PRICE = calc_price
+                        WHERE ORDER_ID = c_order_id;
+                        
+                        -- Pass an order ID of existing order
+                        c_order_id_return:=c_order_id;
                     ELSE
                         -- Create an order and return the order id
-                        SELECT calculate_total_price(desired_ticket_id, category_id) INTO calc_price FROM dual;
                         INSERT INTO CLIENT_ORDERS(ORDER_TIME, TOTAL_PRICE, CLIENT_ID)
-                        VALUES (CURRENT_TIMESTAMP, calc_price, c_client_id)  -- TODO: CHANGE TOTAL_PRICE
+                        VALUES (CURRENT_TIMESTAMP, 0, c_client_id)  -- TODO: CHANGE TOTAL_PRICE
                         RETURNING ORDER_ID INTO c_order_id_return;
-
+                        
+                        calc_price:=calculate_total_price(desired_ticket_id, category_id, c_order_id_return);
+                        
+                        UPDATE CLIENT_ORDERS SET TOTAL_PRICE=calc_price;
                         -- Append new ticket to the same order
                         ADD_TICKET_TO_ORDER(desired_ticket_id, c_order_id_return, category_id);  
                     END IF;
