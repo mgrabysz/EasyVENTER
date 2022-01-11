@@ -758,10 +758,6 @@ public class EasyVENT {
         event.setTickets(tickets);
         String sectorName = tickets.get(0).getSector();
 
-        // tu jestesmy
-
-        // TODO: it should display number of seats bought by particular user, not in general
-
         HashMap<String, String> ticketHashMap = event.getTicketsMapSpecificUser();
         String[][] ticketsData = new String[ticketHashMap.size()][2];
 
@@ -786,9 +782,13 @@ public class EasyVENT {
             case "cancel":
                 nextFrame = "viewEventsBought";
                 break;
-            case "confirm":
+            case "remove":
+                // int maxTicketToRemove = eventDetailsAfterBuyingFrame. //jakas nazwa funkcji ktora zwroci co wybralismy
+                // info jaka to kategoria
+                // SliderFrame slider = new SliderFrame(maxTicketToRemove)
+                // int toRemove = slider.getNumberofTickets();
                 // Database.removeTicket();
-                nextFrame = "mainMenu";
+                nextFrame = "viewEventsBought";
                 break;
         }
 
