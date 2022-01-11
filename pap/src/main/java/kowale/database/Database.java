@@ -333,6 +333,31 @@ public class Database {
         return events;
     }
 
+    public ArrayList<Event> getEventsButNotOfUser(String login) {
+        /*
+         * Returns list of events available for this user
+         * (All events for which user does not have tickets yet)
+        */
+        ArrayList<Event> events = getAllEvents();
+        ArrayList<Event> userEvents = getEventsOfUser(login);
+
+        for (Event event : userEvents) {
+            String name = event.getName();
+
+            for (int i=0; i<events.size(); ++i) {
+
+                Event temp = events.get(i);
+
+                if (temp.getName().equals(name)) {
+                    events.remove(i);
+                    break;
+                }
+            }
+        }
+
+        return events;
+    }
+
     public boolean insertEvent(Event event, String organizerLogin) {
         /*
         Pass Event object and Ticket array

@@ -130,11 +130,11 @@ public class Event {
         String hour = String.valueOf(dateTime.getHour());
         if (hour.length() == 1) {
             hour = "0" + hour;
-        } 
+        }
         String minute = String.valueOf(dateTime.getMinute());
         if (minute.length() == 1) {
             minute = "0" + minute;
-        } 
+        }
         details.put("month", month);
         details.put("day", day);
         details.put("hour", hour);
@@ -162,12 +162,12 @@ public class Event {
 
     public HashMap<String, HashMap<String, String>> getTicketsMap() {
         // {"Sector", "Number of seats", "Base ticket price"}
-        HashMap<String, HashMap<String, String>> sectors = new HashMap<String, HashMap<String, String>>(); 
-        
+        HashMap<String, HashMap<String, String>> sectors = new HashMap<String, HashMap<String, String>>();
+
         if (tickets.size() > 0) {
             for (int i = 0; i < tickets.size(); i++) {
                 Ticket ticket = tickets.get(i);
-    
+
                 if (sectors.containsKey(ticket.getSector()) == false) {
                     // create new sector in sectors map
                     HashMap<String, String> numberPrice = new HashMap<String, String>();
@@ -189,6 +189,35 @@ public class Event {
         // System.out.println(sectors);
 
         return sectors;
+    }
+
+    public HashMap<String, String> getTicketsMapSpecificUser() {
+        // {Category : Number of seats (posessed by this user)}
+        // TODO: all
+        HashMap<String, String> table = new HashMap<String, String>();
+
+        if (tickets.size() > 0) {
+            for (int i = 0; i < tickets.size(); i++) {
+                Ticket ticket = tickets.get(i);
+                String category = ticket.getCategory();
+
+                if (!table.containsKey(category)) {
+
+                    table.put(category, String.valueOf(1));
+
+                } else {
+                    // increase number of tickets in category
+                    int number = Integer.valueOf(table.get(category));
+                    table.put("number", String.valueOf(number+1));
+                }
+            }
+        } else {
+            // TODO: no tickets available
+        }
+
+        // System.out.println(sectors);
+
+        return table;
     }
 
 }

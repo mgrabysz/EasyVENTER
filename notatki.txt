@@ -1,6 +1,6 @@
 TODO:
 
-1. W zarządzaniu kupionymi biletami pojawiają się wszystkie wydarzenia
+
 2. liczba siedzeń w EventDetailsAfterBuyingFrame powinna przedstawiać liczbę biletów,
    jaką posiada dany klient imo
 3. Zła kategoria się kupiła

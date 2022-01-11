@@ -482,26 +482,13 @@ public class EasyVENT {
     }
 
     private void viewEvents() throws Exception{
-        // open ViewEventsFrame
-        ArrayList<Event> allEvents = database.getAllEvents();
-        ArrayList<Event> userEvents = database.getEventsOfUser(GlobalVariables.USER_LOGIN);
+        /*
+         * displays viewEventsFrame
+        */
 
-        // loop provides that user will see only events on which he does not have bought tickets
-        for (Event event : userEvents) {
-            String name = event.getName();
+        ArrayList<Event> availablEvents = database.getEventsButNotOfUser(GlobalVariables.USER_LOGIN);
 
-            for (int i=0; i<allEvents.size(); ++i) {
-
-                Event temp = allEvents.get(i);
-
-                if (temp.getName().equals(name)) {
-                    allEvents.remove(i);
-                    break;
-                }
-            }
-        }
-
-        String[][] data = eventsToData(allEvents);
+        String[][] data = eventsToData(availablEvents);
         viewEventsFrame = new ViewEventsFrame(data);
 
         while (viewEventsFrame.getOption().equals("")) {
@@ -771,7 +758,7 @@ public class EasyVENT {
         // TODO:
         // actual ticket buying
 
-        Event event = database.getAllEvents().get(GlobalVariables.SELECTED_INDEX);
+        Event event = database.getEventsButNotOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
 
 
         HashMap<String, String> eventDetails = event.getDetails();
