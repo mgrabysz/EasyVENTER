@@ -5,7 +5,6 @@ import kowale.user.User;
 import kowale.event.Event;
 import kowale.ticket.Ticket;
 import java.sql.Timestamp;
-import java.math.BigDecimal;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
@@ -16,17 +15,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Types;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
 import java.util.Map;
-
-import javax.sound.midi.SysexMessage;
-import javax.swing.plaf.synth.SynthSliderUI;
-import javax.swing.text.DefaultEditorKit.CopyAction;
 
 // import kowale.database.password;
 
