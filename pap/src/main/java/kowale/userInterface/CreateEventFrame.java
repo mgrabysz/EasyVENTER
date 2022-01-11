@@ -73,13 +73,11 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         }
         dayCombo = new JComboBox<String>(days);
         dayCombo.setBounds(50, 240, 50, 30);
-        // daysCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(dayCombo);
 
         String months[] = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
         monthCombo = new JComboBox<String>(months);
         monthCombo.setBounds(100, 240, 110, 30);
-        // monthsCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(monthCombo);
 
         Vector<String> years = new Vector<String>();
@@ -88,7 +86,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         }
         yearCombo = new JComboBox<String>(years);
         yearCombo.setBounds(210, 240, 60, 30);
-        // yearsCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(yearCombo);
 
         timeLabel = new JLabel("Time:");
@@ -106,7 +103,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         }
         hourCombo = new JComboBox<String>(hours);
         hourCombo.setBounds(50, 320, 110, 30);
-        // monthsCombo.setHorizontalAlignment(JLabel.LEFT);
         this.add(hourCombo);
 
         Vector<String> minutes = new Vector<String>();
@@ -186,52 +182,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             country = (String) countryCombo.getSelectedItem();
             numOfSectors = (Integer) sectorCombo.getSelectedItem();
 
-            // prices = new float[3];
-
-            // // get prices in each sector
-            // String[] pricesStrings = new String[3];
-            // pricesStrings[0] = secOneField.getText();
-            // pricesStrings[1] = secTwoField.getText();
-            // pricesStrings[2] = secThreeField.getText();
-
-// SPRAWDZANIE CZY ZMIENNA JEST POPRAWNA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-            // // check if prices are numbers
-            // boolean pricesCorrect = true;
-            // for (String i : pricesStrings) {    // for each loop
-            //     if (!isNumeric(i)) {
-            //         pricesCorrect = false;
-            //         break;
-            //     }
-            // }
-
-            // if (!pricesCorrect) {
-            //     displayMessageDialog();
-            //     return;
-            // }
-
-            // // check if prices are positive
-            // for (int i=0; i<3; ++i) {
-
-            //     String numStr = pricesStrings[i];
-            //     float num = Float.parseFloat(numStr);
-            //     prices[i] = num;
-
-            //     if (num < 0) {
-            //         pricesCorrect = false;
-            //         break;
-            //     }
-            // }
-
-            // if (!pricesCorrect) {
-            //     displayMessageDialog();
-            //     return;
-            // }
-
-            // get datetime
             String day = dayCombo.getSelectedItem().toString();
             if (day.length() == 1) {
                 day = "0" + day;
@@ -255,18 +205,10 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             );
             dateTime = LocalDateTime.parse(dateTimeString, formatter);
 
-            // System.out.println(name);
-            // System.out.println(location);
-            // System.out.println(dateTimeString);
-            // System.out.println(numOfSectors);
-
-
-            // EasyVENT.database.createEvent(name, location, dateTime, numOfSectors);
-
             option = "confirm";
 
         } else if (e.getSource()==cancelButton) {
-            // something to do
+
             System.out.println("cancelled");
             option = "cancel";
         }
@@ -296,9 +238,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         return name;
     }
 
-    // getLocation gives error
-    // probably due to collison with Event.getLocation()
-    // it's strange
     public String getAddress() {
         return address;
     }

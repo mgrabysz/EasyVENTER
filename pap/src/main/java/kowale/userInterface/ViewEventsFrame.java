@@ -1,7 +1,5 @@
 package kowale.userInterface;
 
-// import kowale.database.GlobalVariables;
-
 import java.awt.event.ActionEvent;
 
 public class ViewEventsFrame extends BasicTableFrame {
@@ -27,14 +25,6 @@ public class ViewEventsFrame extends BasicTableFrame {
                 selectedIndex = 0;
             }
 
-            // System.out.println(selectedIndex);
-
-            // ============ for testing ==================
-            System.out.println("Details button clicked. Index of selected row:");
-            System.out.println(selectedIndex);
-            // ===========================================
-
-            // isReady = true;
             option = "details";
 
         } else if (event.getSource()==cancelButton) {

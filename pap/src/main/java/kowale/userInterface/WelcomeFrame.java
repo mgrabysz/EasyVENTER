@@ -1,7 +1,5 @@
 package kowale.userInterface;
 
-// import kowale.database.GlobalVariables;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;

@@ -22,18 +22,9 @@ public class ManageEventsFrame extends BasicTableFrame {
             int index = table.getSelectedRow(); // returns index of selected row
             selectedIndex = index;
 
-            if (selectedIndex < 0)
-            {
-                selectedIndex = 0;
-            }
-
             option = "modify";
-            // ============ for testing ==================
-            // System.out.println("Modify button clicked. Index of selected row:");
-            // System.out.println(index);
-            // ===========================================
+
         } else if (event.getSource()==cancelButton) {
-            // some code if cancel
             System.out.println("Cancel button clicked");
             option = "cancel";
         }
