@@ -169,7 +169,7 @@ public class Event {
                 }
             }
         } else {
-            // TODO: no tickets available
+            return sectors;
         }
         return sectors;
     }
@@ -197,7 +197,7 @@ public class Event {
                 }
             }
         } else {
-            // TODO: no tickets available
+            return table;
         }
         return table;
     }
