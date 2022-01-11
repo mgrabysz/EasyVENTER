@@ -569,7 +569,7 @@ public class EasyVENT {
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
         boolean isDataCorrect = false;
-        
+
         while(isDataCorrect == false) {
 
             while (inputSectorDataFrame.getOption().equals("")) {
@@ -776,13 +776,8 @@ public class EasyVENT {
      * Opens EventDetailsAfterBuyingFrame
      */
     private void eventDetailsBought() throws Exception{
-        // TODO:
-        // actual ticket canceling
-
         Event event = database.getEventsOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
-
         HashMap<String, String> eventDetails = event.getDetails();
-
         ArrayList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
 
         event.setTickets(tickets);
@@ -813,8 +808,8 @@ public class EasyVENT {
                 nextFrame = "viewEventsBought";
                 break;
             case "remove":
-                // int maxTicketToRemove = eventDetailsAfterBuyingFrame. //jakas nazwa funkcji ktora zwroci co wybralismy
-                // info jaka to kategoria
+                int maxTicketToRemove = Integer.valueOf(ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][1]);
+                String category = ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][0];
                 // SliderFrame slider = new SliderFrame(maxTicketToRemove)
                 // int toRemove = slider.getNumberofTickets();
                 // Database.removeTicket();
