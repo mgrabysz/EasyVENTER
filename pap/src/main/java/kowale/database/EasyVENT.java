@@ -899,11 +899,7 @@ public class EasyVENT {
 
         Event event = database.getEventsOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
 
-
-
         HashMap<String, String> eventDetails = event.getDetails();
-
-
 
         ArrayList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
 
@@ -913,8 +909,17 @@ public class EasyVENT {
         // tu jesteśmy
 
         // TODO: it should display number of seats bought by particular user, not in general
-        HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
-        String[][] ticketsData = ticketsMapToData(ticketsMap);
+
+        HashMap<String, String> ticketHashMap = event.getTicketsMapSpecificUser();
+        String[][] ticketsData = new String[ticketHashMap.size()][2];
+
+        int i = 0;
+        for (String category : ticketHashMap.keySet()) {
+            ticketsData[i][0] = category;
+            ticketsData[i][1] = ticketHashMap.get("category");
+            ++i;
+        }
+
         eventDetailsAfterBuyingFrame = new EventDetailsAfterBuyingFrame(
             eventDetails,
             ticketsData,
