@@ -2,6 +2,8 @@ package kowale.userInterface;
 
 import java.util.HashMap;
 import java.awt.event.ActionEvent;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class ModifyEventFrame extends CreateEventFrame {
 
@@ -41,8 +43,33 @@ public class ModifyEventFrame extends CreateEventFrame {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==createButton){
-            option = "confirm";
+            address = addressTextField.getText();
+            city = cityTextField.getText();
+            country = (String) countryCombo.getSelectedItem();
 
+            String day = dayCombo.getSelectedItem().toString();
+            if (day.length() == 1) {
+                day = "0" + day;
+            }
+            String dateTimeString = day;
+            dateTimeString += ".";
+            String month = Integer.toString(monthCombo.getSelectedIndex() + 1);
+            if (month.length() == 1) {
+                month = "0" + month;
+            }
+            dateTimeString += month;
+            dateTimeString += ".";
+            dateTimeString += yearCombo.getSelectedItem().toString();
+            dateTimeString += " ";
+            dateTimeString += hourCombo.getSelectedItem().toString();
+            dateTimeString += ":";
+            dateTimeString += minuteCombo.getSelectedItem().toString();
+
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(
+                "dd.MM.yyyy HH:mm"
+            );
+            dateTime = LocalDateTime.parse(dateTimeString, formatter);
+            option = "confirm";
         }
         else if (e.getSource()==cancelButton) {
             option = "cancel";
