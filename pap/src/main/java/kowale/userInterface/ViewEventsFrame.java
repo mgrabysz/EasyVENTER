@@ -11,7 +11,7 @@ public class ViewEventsFrame extends BasicTableFrame {
     */
 
     public ViewEventsFrame(String[][] data) {
-        super(data, new String[]{"Name", "Oity", "Address", "Date and time"}, "Details", false);
+        super(data, new String[]{"Name", "City", "Address", "Date and time"}, "Details", false);
         this.setTitle("Browse events");
     }
 
