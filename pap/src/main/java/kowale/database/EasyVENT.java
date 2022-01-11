@@ -577,17 +577,8 @@ public class EasyVENT {
         // TODO:
         // actually modify events
 
-        ArrayList<Event> allEvents = database.getAllEvents();
-        ArrayList<Event> organizerEvents = new ArrayList<Event>();
+        ArrayList<Event> organizerEvents = database.getEventsOfOrganizer(GlobalVariables.USER_LOGIN);
 
-        // get only events that are created by logged in organizer (event orgnizer == current user login)
-        for (Event event: allEvents) {
-            // System.out.println(event.getOrganizer());
-            if (event.getOrganizer().equals(GlobalVariables.USER_LOGIN)) {
-                organizerEvents.add(event);
-                // System.out.println(GlobalVariables.USER_LOGIN);
-            }
-        }
         String[][] data = eventsToData(organizerEvents);
         manageEventsFrame = new ManageEventsFrame(data);
 
