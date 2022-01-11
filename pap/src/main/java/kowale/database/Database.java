@@ -19,12 +19,9 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
-<<<<<<< HEAD
 import java.lang.Boolean;
 // import java.util.Objects;
 import java.util.Map;
-=======
->>>>>>> aeea538deab6700f820e8db90a443ce5c6864304
 
 import java.util.Map;
 
@@ -310,13 +307,13 @@ public class Database {
                     String city = rs.getString("city_name");
                     String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
-                    
+
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
-                    
+
                     Event eventToAdd = new Event(name, organizer, country, city, address, start_time);
-                    
-                    // iterate through arraylist of unique events 
-                    for (Event event: events) { 
+
+                    // iterate through arraylist of unique events
+                    for (Event event: events) {
                         String singleEventName = event.getName();
                         if(singleEventName.equals(name)){ // event of such name already exists in the arraylist
                             eventNameExists = true;
@@ -369,7 +366,7 @@ public class Database {
                     String city = rs.getString("city_name");
                     String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
-                    
+
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
 
                     Event event = new Event(name, organizer, country, city, address, start_time);
@@ -640,7 +637,7 @@ public class Database {
                     cs.registerOutParameter(7, Types.NUMERIC);
                     cs.execute();
                     System.out.print("ORDER ID RETURNED FROM DB");
-                    
+
                     orderID = cs.getInt(7);  // update value of orderID
                     System.out.print(orderID);
                 } catch (SQLException ex) {

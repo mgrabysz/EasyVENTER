@@ -672,8 +672,6 @@ public class EasyVENT {
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
 
-        System.out.println(ticketsMap);
-
         String[][] ticketsData = ticketsMapToData(ticketsMap);
         eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
 
@@ -740,10 +738,6 @@ public class EasyVENT {
                                 }
 
                                 boughtTickets.add(ticket);
-                                System.out.println(event.getName());
-                                System.out.println(boughtTickets.get(ticketsFound).getCategory());
-                                System.out.println(boughtTickets.get(ticketsFound).getSector());
-                                System.out.println(boughtTickets.get(ticketsFound).getSeat());
                                 ticketsFound += 1;
                                 if (ticketsFound == numberOfSelectedTickets) {
                                     break;
