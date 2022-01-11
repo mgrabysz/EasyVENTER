@@ -192,8 +192,10 @@ public class Event {
     }
 
     public HashMap<String, String> getTicketsMapSpecificUser() {
-        // {Category : Number of seats (posessed by this user)}
-        // TODO: all
+        /*
+         * Returns HashMap of given scheme:
+         * {Category : Number of seats (posessed by this user)}
+        */
         HashMap<String, String> table = new HashMap<String, String>();
 
         if (tickets.size() > 0) {
@@ -208,15 +210,12 @@ public class Event {
                 } else {
                     // increase number of tickets in category
                     int number = Integer.valueOf(table.get(category));
-                    table.put("number", String.valueOf(number+1));
+                    table.put(category, String.valueOf(number+1));
                 }
             }
         } else {
             // TODO: no tickets available
         }
-
-        // System.out.println(sectors);
-
         return table;
     }
 
