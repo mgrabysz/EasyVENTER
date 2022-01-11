@@ -240,7 +240,6 @@ public class EasyVENT {
      * Opens registerClientFrame
      */
     private HashMap<String, String> registerClient() throws Exception {
-        // TODO: input checking
         registerClientFrame = new RegisterClientFrame();
         HashMap<String, String> map = new HashMap<String, String>();
         boolean isDataCorrect = false;
@@ -291,7 +290,6 @@ public class EasyVENT {
      * Opens RegisterOrganizerFrame
      */
     private HashMap<String, String> registerOrganizer() throws Exception {
-        // TODO: input checking
         registerOrganizerFrame = new RegisterOrganizerFrame();
         HashMap<String, String> map = new HashMap<String, String>();
         boolean isDataCorrect = false;
@@ -507,10 +505,10 @@ public class EasyVENT {
                 case "confirm":
                     String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
                     if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0
-                        && !createEventFrame.getName().equals("")
-                        && !createEventFrame.getAddress().equals("")
-                        && !createEventFrame.getCity().equals("")
-                        && !createEventFrame.getCountry().equals("")){
+                        && !createEventFrame.getName().trim().equals("")
+                        && !createEventFrame.getAddress().trim().equals("")
+                        && !createEventFrame.getCity().trim().equals("")
+                        && !createEventFrame.getCountry().trim().equals("")){
                         isDataCorrect = true;
 
                         Event event = new Event(
@@ -607,34 +605,39 @@ public class EasyVENT {
         Event event = GlobalVariables.SELECTED_EVENT;
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
+        Boolean correctData = false;
+        while (!correctData){
+            while (modifyEventFrame.getOption().equals("")) {
+                waiting();
+            }
 
-        while (modifyEventFrame.getOption().equals("")) {
-            waiting();
+            switch (modifyEventFrame.getOption()) {
+                case "cancel":
+                    nextFrame = "manageEvents";
+                    break;
+                case "confirm":
+                    if (!modifyEventFrame.getAddress().trim().equals("")
+                        && !modifyEventFrame.getCity().trim().equals("")){
+                        event.setAddress(modifyEventFrame.getAddress());
+                        event.setDateTime(modifyEventFrame.getDateTime());
+                        event.setCity(modifyEventFrame.getCity());
+                        event.setCountry(modifyEventFrame.getCountry());
+
+                        database.editEvent(event);
+
+                        nextFrame = "manageEvents";
+                        correctData = true;
+                    } else{
+                        modifyEventFrame.setOption("");
+                        JOptionPane.showMessageDialog(
+                        null,
+                        "Incorrect data",
+                        "Incorrect data",
+                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                        );
+                    }
+            }
         }
-
-        switch (modifyEventFrame.getOption()) {
-            case "cancel":
-                nextFrame = "manageEvents";
-                break;
-            case "confirm":
-                // TODO
-                // JOptionPane.showMessageDialog(
-                //     null,
-                //     "TODO",
-                //     "TODO",
-                //     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                // );
-                event.setAddress(modifyEventFrame.getAddress());
-                event.setDateTime(modifyEventFrame.getDateTime());
-                event.setCity(modifyEventFrame.getCity());
-                event.setCountry(modifyEventFrame.getCountry());
-
-                database.editEvent(event);
-
-                nextFrame = "manageEvents";
-                break;
-        }
-
         modifyEventFrame.dispose();
         modifyEventFrame = null;
     }
@@ -643,11 +646,7 @@ public class EasyVENT {
      * Opens EventDetailsFrame to let user see event details and buy tickets.
      */
     private void eventDetails() throws Exception{
-        // TODO:
-        // actual ticket buying
-
         Event event = database.getEventsButNotOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
-
 
         HashMap<String, String> eventDetails = event.getDetails();
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
@@ -681,7 +680,6 @@ public class EasyVENT {
 
                     int numberOfSelectedTickets = numberChildren + numberAdults + numberVips;
 
-                    // System.out.println(ticketsAvailableInSector);
 
                     if (
                         numberOfSelectedTickets > ticketsAvailableInSector
