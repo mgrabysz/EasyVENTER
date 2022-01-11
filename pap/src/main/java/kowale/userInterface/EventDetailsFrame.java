@@ -55,7 +55,7 @@ public class EventDetailsFrame extends BasicTableFrame {
 
         nameLabel = new JLabel(name);
         nameLabel.setBounds(45, 30, 800, 70);
-        nameLabel.setFont(new Font("MV Boli", Font.PLAIN, 50));
+        nameLabel.setFont(new Font("Serif", Font.PLAIN, 50));
         this.add(nameLabel);
 
         dateTimePanel = new JPanel();
