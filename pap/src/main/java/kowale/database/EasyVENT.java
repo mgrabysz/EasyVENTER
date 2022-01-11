@@ -133,8 +133,10 @@ public class EasyVENT {
         mainLoop();
     }
 
+    /**
+     * wait to save CPU time
+     */
     private void waiting() throws Exception {
-        // wait to save CPU time
         try {
             Thread.sleep(100);
         }
@@ -143,8 +145,10 @@ public class EasyVENT {
         }
     }
 
+    /**
+     * check if string is convertable to Double
+     */
     public static boolean isNumeric(String string) {
-        // check if string is convertable to Double
         if (string == null) {
             return false;
         }
@@ -156,8 +160,10 @@ public class EasyVENT {
         }
     }
 
+    /**
+     * hash given string using SHA256
+     */
     public static String hash(String string) throws Exception {
-        /* hash a string using SHA256 */
         MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
         byte[] hash = sha256.digest(string.getBytes(StandardCharsets.UTF_8));
 
@@ -174,8 +180,10 @@ public class EasyVENT {
         return hexString.toString();
     }
 
+    /**
+     * convert events list to data for GUI table
+     */
     private String[][] eventsToData(ArrayList<Event> events) {
-        /* convert events list to data for GUI table */
         String[][] data = new String[events.size()][4];
 
         if (events.size() > 0) {
@@ -194,9 +202,12 @@ public class EasyVENT {
 
         return data;
     }
-
+    
+    /**
+     * convert tickets map to data for GUI table
+     */
     private String[][] ticketsMapToData(HashMap<String, HashMap<String, String>> ticketsMap) {
-        /* convert tickets map to data for GUI table */
+        
         String[][]data = new String[ticketsMap.size()][3];
 
         if (ticketsMap.size() > 0) {
@@ -224,8 +235,11 @@ public class EasyVENT {
         return data;
     }
 
+
+    /**
+     * Opens WelcomeFrame
+     */
     private void welcome() throws Exception {
-        // open WelcomeFrame
         welcomeFrame = new WelcomeFrame();
 
         while (welcomeFrame.getOption().equals("")) {
@@ -245,16 +259,19 @@ public class EasyVENT {
         welcomeFrame = null;
     }
 
+    /**
+     * Opens RegiserFrame
+     */
     private void register() throws Exception {
-        // open RegiserFrame
         registerFrame = new RegisterFrame();
+        boolean isUserCreated = false;
 
-        while (true) {
+        while (isUserCreated == false) {
             while (registerFrame.getIsReady() == false) {
                 waiting();
             }
 
-            // check if user input is correct
+            // check if user input is correct (all are filled and not filled with spaces only)
             if (
                 registerFrame.getUserName().trim().length() > 0 &&
                 registerFrame.getUserSurname().trim().length() > 0 &&
@@ -264,15 +281,15 @@ public class EasyVENT {
                 int accountType = registerFrame.getAccountType();
                 registerFrame.dispose();
 
+                // call appropraite (depending on account type) function to get additional user info
                 if (accountType == 0){
                     HashMap<String, String> additionalInfo = registerClient();
 
-                    // System.out.println(additionalInfo.get("date"));
                     LocalDate date = LocalDate.parse(
                         additionalInfo.get("date")
                     );
 
-                    Client new_user = new Client(
+                    Client new_client = new Client(
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
@@ -283,11 +300,11 @@ public class EasyVENT {
                         date
                     );
 
-                    EasyVENT.database.registerUser(new_user);
+                    EasyVENT.database.registerUser(new_client);
                 } else {
                     HashMap<String, String> additionalInfo = registerOrganizer();
 
-                    EventOrganizer new_user = new EventOrganizer(
+                    EventOrganizer new_organizer = new EventOrganizer(
                         registerFrame.getUserName(),
                         registerFrame.getUserSurname(),
                         registerFrame.getUserLogin(),
@@ -296,13 +313,16 @@ public class EasyVENT {
                         Integer.parseInt(additionalInfo.get("telephone")),
                         additionalInfo.get("company")
                     );
-                    EasyVENT.database.registerUser(new_user);
+
+                    EasyVENT.database.registerUser(new_organizer);
                 }
+
+                isUserCreated = true;
 
                 registerFrame = null;
                 nextFrame = "welcome";
-                break;
             } else {
+                // wrong input
                 registerFrame.setIsReady(false);
 
                 JOptionPane.showMessageDialog(
@@ -315,13 +335,16 @@ public class EasyVENT {
         }
     }
 
+    /**
+     * Opens registerClientFrame
+     */
     private HashMap<String, String> registerClient() throws Exception {
-        // open registerClientFrame
-
         // TODO: input checking
         registerClientFrame = new RegisterClientFrame();
+        HashMap<String, String> map = new HashMap<String, String>();
+        boolean isDataCorrect = false;
 
-        while (true) {
+        while (isDataCorrect == false) {
             while(registerClientFrame.getIsReady() == false) {
                 waiting();
             }
@@ -333,7 +356,9 @@ public class EasyVENT {
                 telephone.length() == 9 &&
                 isNumeric(telephone)
             ) {
-                HashMap<String, String> map = new HashMap<String, String>();
+
+                isDataCorrect = true;
+
                 map.put("email", registerClientFrame.getEmail());
                 map.put("telephone", registerClientFrame.getTelephone());
                 String gender = registerClientFrame.getGender().substring(0, 1);
@@ -349,8 +374,6 @@ public class EasyVENT {
 
                 registerClientFrame.dispose();
                 registerClientFrame = null;
-
-                return map;
             } else {
                 registerClientFrame.setIsReady(false);
 
@@ -362,27 +385,32 @@ public class EasyVENT {
                 );
             }
         }
+        return map;
     }
 
+    /**
+     * Opens RegisterOrganizerFrame
+     */
     private HashMap<String, String> registerOrganizer() throws Exception {
-        // open RegisterOrganizerFrame
-
         // TODO: input checking
         registerOrganizerFrame = new RegisterOrganizerFrame();
+        HashMap<String, String> map = new HashMap<String, String>();
+        boolean isDataCorrect = false;
 
-        while(true) {
+        while(isDataCorrect == false) {
             while(registerOrganizerFrame.getIsReady() == false) {
                 waiting();
             }
 
-            String telephone = registerOrganizerFrame.getTelephone();
+            
+            // check if input data is correct
             if (
                 registerOrganizerFrame.getEmail().trim().length() > 0 &&
                 registerOrganizerFrame.getCompany().trim().length() > 0 &&
-                telephone.length() == 9 &&
-                isNumeric(telephone)
+                registerOrganizerFrame.getTelephone().length() == 9 &&
+                isNumeric(registerOrganizerFrame.getTelephone())
             ) {
-                HashMap<String, String> map = new HashMap<String, String>();
+                isDataCorrect = true;
 
                 map.put("email", registerOrganizerFrame.getEmail());
                 map.put("telephone", registerOrganizerFrame.getTelephone());
@@ -390,8 +418,6 @@ public class EasyVENT {
 
                 registerOrganizerFrame.dispose();
                 registerOrganizerFrame = null;
-
-                return map;
             } else {
                 registerOrganizerFrame.setIsReady(false);
 
@@ -403,15 +429,18 @@ public class EasyVENT {
                 );
             }
         }
+        return map;
     }
 
 
+    /**
+     * Opens LoginFrame
+     */
     private void login() throws Exception {
-        // open LoginFrame
-
         loginFrame = new LoginFrame();
+        boolean isLoginSuccessful = false;
 
-        while (true) {
+        while (isLoginSuccessful == false) {
             while (loginFrame.getIsReady() == false) {
                 waiting();
             }
@@ -423,10 +452,11 @@ public class EasyVENT {
                     hash(loginFrame.getUserPassword())
                 )
             ) {
+                isLoginSuccessful = true;
+
                 nextFrame = "mainMenu";
                 loginFrame.dispose();
                 loginFrame = null;
-                break;
             } else {
                 loginFrame.setIsReady(false);
 
@@ -440,9 +470,10 @@ public class EasyVENT {
         }
     }
 
+    /**
+     * Opens MainMenuFrame
+     */
     private void mainMenu() throws Exception{
-        // open MainMenuFrame
-
         mainMenuFrame = new MainMenuFrame(GlobalVariables.USER_TYPE);
 
         while (mainMenuFrame.getOption().equals("")) {
@@ -452,7 +483,6 @@ public class EasyVENT {
         switch (mainMenuFrame.getOption()) {
             case "logout":
                 GlobalVariables.USER_LOGIN = null;
-                // GlobalVariables.USER_ID = -1;
                 GlobalVariables.USER_TYPE = null;
                 nextFrame = "welcome";
                 break;
@@ -467,13 +497,6 @@ public class EasyVENT {
                 break;
             case "manageTickets":
                 nextFrame = "viewEventsBought";
-                // JOptionPane.showMessageDialog(
-                //     null,
-                //     "TODO",
-                //     "TODO",
-                //     JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-                // );
-                // nextFrame = "mainMenu";
                 break;
         }
 
@@ -481,11 +504,10 @@ public class EasyVENT {
         mainMenuFrame = null;
     }
 
+    /**
+     * Displays viewEventsFrame
+     */
     private void viewEvents() throws Exception{
-        /*
-         * displays viewEventsFrame
-        */
-
         ArrayList<Event> availablEvents = database.getEventsButNotOfUser(GlobalVariables.USER_LOGIN);
 
         String[][] data = eventsToData(availablEvents);
@@ -500,8 +522,8 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "details":
-                nextFrame = "eventDetails";
                 GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
+                nextFrame = "eventDetails";
                 break;
         }
 
@@ -509,12 +531,11 @@ public class EasyVENT {
         viewEventsFrame = null;
     }
 
+    /**
+     * Opens ViewEventsFrame with only this events that currently logged client has at least one ticket for.
+     * User can select event and open EventDetailsAfterBuyingFrame.
+     */
     private void viewEventsBought() throws Exception {
-        /*
-        open ViewEventsFrame to see only this events that currently logged user has at least ne ticket for
-        user can select event and open EventDetailsAfterBuyingFrame
-        */
-
         // TODO: get only events for which client has at least one ticket
 
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
@@ -550,9 +571,10 @@ public class EasyVENT {
     }
 
 
+    /**
+     * Opens ManageEventsFrame with events created by currently logged in organizer.
+     */
     private void manageEvents() throws Exception{
-        /* open ManageEventsFrame to see events created by currently logged in user (organizer)*/
-
         // TODO:
         // actually modify events
 
@@ -603,66 +625,76 @@ public class EasyVENT {
         manageEventsFrame = null;
     }
 
+    /**
+     * Opens CreateEventFrame.
+     */
     private void createEvent() throws Exception{
-        /* open CreateEventFrame*/
-
         /* TODO:
         input data check -- date check completed, anything else to check?
         */
         createEventFrame = new CreateEventFrame();
+        boolean isDataCorrect = false;
 
-        while (createEventFrame.getOption().equals("")) {
-            waiting();
-        }
+        while (isDataCorrect == false) {
+            while (createEventFrame.getOption().equals("")) {
+                waiting();
+            }
 
-        switch (createEventFrame.getOption()) {
-            case "cancel":
-                createEventFrame.dispose();
-                createEventFrame = null;
-
-                nextFrame = "mainMenu";
-                break;
-            case "confirm":
-                String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
-                if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0 ){
-                    Event event = new Event(
-                        createEventFrame.getName(),
-                        company,
-                        createEventFrame.getCountry(),
-                        createEventFrame.getCity(),
-                        createEventFrame.getAddress(),
-                        createEventFrame.getDateTime()
-                    );
-
-                    int sectorsNumber = createEventFrame.getNumOfSectors();
+            switch (createEventFrame.getOption()) {
+                case "cancel":
                     createEventFrame.dispose();
                     createEventFrame = null;
 
-                    ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
-
-                    if (tickets != null) {
-                        event.setTickets(tickets);
-                        database.insertEvent(event, GlobalVariables.USER_LOGIN);
-                        // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
-                        // nextFrame = "InputSectorDataFrame";
-                    }
-
                     nextFrame = "mainMenu";
                     break;
-                }
-                else{
-                    createEventFrame.displayMessageDialog();
-                    createEventFrame.dispose();
-                }
+                case "confirm":
+                    String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
+
+                    // check if input data si correct
+                    if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0 ){
+                        isDataCorrect = true;
+
+                        Event event = new Event(
+                            createEventFrame.getName(),
+                            company,
+                            createEventFrame.getCountry(),
+                            createEventFrame.getCity(),
+                            createEventFrame.getAddress(),
+                            createEventFrame.getDateTime()
+                        );
+
+                        int sectorsNumber = createEventFrame.getNumOfSectors();
+                        createEventFrame.dispose();
+                        createEventFrame = null;
+
+                        ArrayList<Ticket> tickets = inputSectorData(sectorsNumber);
+
+                        if (tickets != null) {
+                            event.setTickets(tickets);
+                            database.insertEvent(event, GlobalVariables.USER_LOGIN);
+                            // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
+                            // nextFrame = "InputSectorDataFrame";
+                        }
+
+                        nextFrame = "mainMenu";
+
+                        createEventFrame.dispose();
+                        createEventFrame = null;
+                    } else {
+                        createEventFrame.displayMessageDialog();
+                        createEventFrame.setOption("");
+                    }
+
+                    break;
+            }
         }
     }
 
+    /**
+     * Open InputSectorDataFrame to let user (organizer) define tickets
+     * after user confirmation program goes back to createEvent to create event
+     */
     private ArrayList<Ticket> inputSectorData(int sectorsNumber) throws Exception{
-        /*
-        open InputSectorDataFrame to let user (organizer) define tickets
-        after user confirmation program goes back to createEvent to create event
-        */
-
         // TODO: input data check:
         // przecinek/kropka
         // dokladnosc do 0.01 PLN
@@ -717,7 +749,7 @@ public class EasyVENT {
         return null;
     }
 
-    private void modifyEvent() throws Exception{
+    private void modifyEvent() throws Exception {
         // TODO:
         // actual event modifying (database)
         // ISSUE: event time and date is not displayed correctly (maybe fixed, I don't know)

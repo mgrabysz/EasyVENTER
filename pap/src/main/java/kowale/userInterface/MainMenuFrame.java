@@ -12,11 +12,6 @@ public class MainMenuFrame extends JFrame implements ActionListener{
 
     JButton viewEvents, createEvent, logout, manageEvents, manageTickets;
     private String userType;
-    // private boolean see = false;
-    // private boolean make = false;
-    // private boolean manageE = false;
-    // private boolean manageT = false;
-    // private boolean cancel = false;
     private String option = "";
 
     public MainMenuFrame(String userType){

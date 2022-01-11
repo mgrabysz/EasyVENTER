@@ -24,9 +24,6 @@ public class BasicTableFrame extends JFrame implements ActionListener {
     int selectedIndex = -1;
 
     public BasicTableFrame(String[][] data, String[] columnNames, String actionButtonText, boolean isTableEditable) {
-
-        // isReady = isCancelled = false;
-
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLayout(null);
         this.setResizable(false);
@@ -72,13 +69,11 @@ public class BasicTableFrame extends JFrame implements ActionListener {
 
         this.getRootPane().setDefaultButton(actionButton);
         this.setVisible(true);
-
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
     }
-
 
     public String getOption() {
         return option;
@@ -91,21 +86,5 @@ public class BasicTableFrame extends JFrame implements ActionListener {
     public int getSelectedIndex() {
         return selectedIndex;
     }
-
-    // public boolean getIsReady() {
-    //     return isReady;
-    // }
-
-    // public boolean getIsCancelled() {
-    //     return isCancelled;
-    // }
-
-    // public void setIsReady(boolean b) {
-    //     isReady = b;
-    // }
-
-    // public void setIsCancelled(boolean b) {
-    //     isCancelled = b;
-    // }
 }
 

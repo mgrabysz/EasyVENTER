@@ -288,6 +288,10 @@ public class CreateEventFrame extends JFrame implements ActionListener {
         return option;
     }
 
+    public void setOption(String option) {
+        this.option = option;
+    }
+
     public String getName() {
         return name;
     }
@@ -321,21 +325,5 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             JOptionPane.ERROR_MESSAGE    // ads red "x" picture
         );
     }
-
-    // public boolean getIsReady() {
-    //     return isReady;
-    // }
-
-    // public boolean getIsCancelled() {
-    //     return isCancelled;
-    // }
-
-    // public void setIsReady(boolean b) {
-    //     isReady = b;
-    // }
-
-    // public void setIsCancelled(boolean b) {
-    //     isCancelled = b;
-    // }
 }
 
