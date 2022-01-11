@@ -202,12 +202,12 @@ public class EasyVENT {
 
         return data;
     }
-    
+
     /**
      * convert tickets map to data for GUI table
      */
     private String[][] ticketsMapToData(HashMap<String, HashMap<String, String>> ticketsMap) {
-        
+
         String[][]data = new String[ticketsMap.size()][3];
 
         if (ticketsMap.size() > 0) {
@@ -402,7 +402,7 @@ public class EasyVENT {
                 waiting();
             }
 
-            
+
             // check if input data is correct
             if (
                 registerOrganizerFrame.getEmail().trim().length() > 0 &&
@@ -560,7 +560,6 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "details":
-                // System.out.println("details");
                 nextFrame = "eventDetailsBought";
                 GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
                 break;
@@ -600,19 +599,6 @@ public class EasyVENT {
             case "cancel":
                 nextFrame = "mainMenu";
                 break;
-            // case "remove":
-            //     // TODO
-            //     GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
-            //     // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
-            //     //Database.removeEvent();
-            //     JOptionPane.showMessageDialog(
-            //         null,
-            //         "TODO",
-            //         "TODO",
-            //         JOptionPane.ERROR_MESSAGE    // ads red "x" picture
-            //     );
-            //     nextFrame = "manageEvents";
-            //     break;
             case "modify":
                 GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
                 // GlobalVariables.SELECTED_INDEX = manageEventsFrame.getSelectedIndex();
