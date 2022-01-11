@@ -10,6 +10,7 @@ import java.lang.Thread;
 // import javax.print.event.PrintJobAdapter;
 // import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
+import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
 
 import java.util.HashMap;
 
@@ -24,6 +25,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
+
+import java.util.regex.Pattern;
 // import java.awt.Frame;
 // import javax.swing.JFrame;
 
@@ -565,40 +568,67 @@ public class EasyVENT {
 
         ArrayList<Ticket> tickets = new ArrayList<Ticket>();
 
-        while (inputSectorDataFrame.getOption().equals("")) {
-            waiting();
-        }
+        boolean isDataCorrect = false;
+        
+        while(isDataCorrect == false) {
 
-        switch (inputSectorDataFrame.getOption()) {
-            case "cancel":
-                inputSectorDataFrame.dispose();
-                inputSectorDataFrame = null;
-                return null;
-            case "confirm":
-                String[][] tableData = inputSectorDataFrame.getTableData();
+            while (inputSectorDataFrame.getOption().equals("")) {
+                waiting();
+            }
 
-                for (String[] row : tableData) {
-                    String sector = row[0];
-                    int ticketsNumber = Integer.parseInt(row[1]);
-                    float basePriceInPLN = Float.valueOf(row[2]);
-                    int basePrice = Math.round(basePriceInPLN * 100);
+            switch (inputSectorDataFrame.getOption()) {
+                case "cancel":
+                    inputSectorDataFrame.dispose();
+                    inputSectorDataFrame = null;
+                    return null;
+                case "confirm":
+                    String[][] tableData = inputSectorDataFrame.getTableData();
 
-                    for (int seat = 0; seat < ticketsNumber; seat++) {
-                        Ticket ticket = new Ticket(
-                            sector,
-                            seat,
-                            basePrice
-                        );
-                        tickets.add(ticket);
+                    isDataCorrect = true;
+
+                    // check if entered prices are valid
+                    for (String[] row : tableData) {
+                        if (Pattern.matches("\\d+[.]\\d{2}", row[2]) == false) {
+                            isDataCorrect = false;
+                            break;
+                        }
                     }
-                }
 
-                inputSectorDataFrame.dispose();
-                inputSectorDataFrame = null;
-                return tickets;
+                    if (isDataCorrect) {
+                        for (String[] row : tableData) {
+                            String sector = row[0];
+                            int ticketsNumber = Integer.parseInt(row[1]);
+                            float basePriceInPLN = Float.valueOf(row[2]);
+                            int basePrice = Math.round(basePriceInPLN * 100);
+
+                            for (int seat = 0; seat < ticketsNumber; seat++) {
+                                Ticket ticket = new Ticket(
+                                    sector,
+                                    seat,
+                                    basePrice
+                                );
+                                tickets.add(ticket);
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(
+                            null,
+                            "Ivalid price.",
+                            "Invalid user input",
+                            JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                        );
+                        inputSectorDataFrame.setOption("");
+                        break;
+                    }
+
+                    inputSectorDataFrame.dispose();
+                    inputSectorDataFrame = null;
+                    return tickets;
+            }
         }
 
-        return null;
+        // for compiler (this function always have to return something)
+        return tickets;
     }
 
     private void modifyEvent() throws Exception {
