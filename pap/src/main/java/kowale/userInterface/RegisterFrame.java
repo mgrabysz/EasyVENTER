@@ -141,11 +141,6 @@ public class RegisterFrame extends JFrame implements ActionListener {
                 accountType = 0;    // 0 for client account
             }
 
-            // loginTextField.setText(null);
-            // passwordTextField.setText(null);
-            // nameTextField.setText(null);
-            // surnameTextField.setText(null);
-
             isReady = true;
         }
     }

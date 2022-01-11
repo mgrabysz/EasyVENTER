@@ -1,14 +1,11 @@
 package kowale.userInterface;
 
-// import kowale.database.EasyVENT;
 import kowale.database.NewUserData;
-// import kowale.database.GlobalVariables;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-// import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.BorderFactory;
 import javax.swing.border.Border;

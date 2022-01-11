@@ -29,13 +29,11 @@ public class EventDetailsFrame extends BasicTableFrame {
     JComboBox<Integer> childCombo, adultCombo, vipCombo;
 
     private String name, country, city, address, organizer, dateTime;
-    private boolean isReady, isCancelled;
     private int numberAdults, numberChildren, numberVips, sector;
 
 
     public EventDetailsFrame(HashMap<String, String> eventDetails, String[][] ticketsData) {
         super(ticketsData, new String[]{"Sector", "Number of seats", "Adult ticket price"} , "Buy", false);
-        isReady = isCancelled = false;
 
         name = eventDetails.get("name");
         country = eventDetails.get("country");
@@ -178,7 +176,6 @@ public class EventDetailsFrame extends BasicTableFrame {
         } else if (e.getSource()==childCombo || e.getSource()==adultCombo || e.getSource()==vipCombo){
             updatePrice();
         } else if (e.getSource()==cancelButton){
-            isCancelled = true;
             option = "cancel";
         }
     }
@@ -216,18 +213,11 @@ public class EventDetailsFrame extends BasicTableFrame {
         this.option = option;
     }
 
-    // public boolean getIsCancelled() {
-    //     return isCancelled;
-    // }
-
     public int getNumberChildren() {
         return numberChildren;
     }
     public int getNumberAdults() {
         return numberAdults;
-    }
-    public boolean getIsReady() {
-        return isReady;
     }
     public int getNumberVips() {
         return numberVips;
