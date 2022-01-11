@@ -267,7 +267,7 @@ public class Database {
                     String sector = rs.getString("sector");
                     int seat = Integer.parseInt(rs.getString("seat"));
                     int price = rs.getInt("ticket_price");
-                    String category = rs.getString("ategory_name");
+                    String category = rs.getString("category_name");
                     Ticket ticket = new Ticket(sector, seat, price);
                     ticket.setCategory(category);
                     tickets.add(ticket);

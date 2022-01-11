@@ -24,6 +24,7 @@ public class ModifyEventFrame extends CreateEventFrame {
         minute = stringData.get("minute");
 
         nameTextField.setText(name);
+        nameTextField.setEditable(false);
         cityTextField.setText(city);
         addressTextField.setText(address);
 
