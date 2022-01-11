@@ -483,8 +483,25 @@ public class EasyVENT {
 
     private void viewEvents() throws Exception{
         // open ViewEventsFrame
+        ArrayList<Event> allEvents = database.getAllEvents();
+        ArrayList<Event> userEvents = database.getEventsOfUser(GlobalVariables.USER_LOGIN);
 
-        String[][] data = eventsToData(database.getAllEvents());
+        // loop provides that user will see only events on which he does not have bought tickets
+        for (Event event : userEvents) {
+            String name = event.getName();
+
+            for (int i=0; i<allEvents.size(); ++i) {
+
+                Event temp = allEvents.get(i);
+
+                if (temp.getName().equals(name)) {
+                    allEvents.remove(i);
+                    break;
+                }
+            }
+        }
+
+        String[][] data = eventsToData(allEvents);
         viewEventsFrame = new ViewEventsFrame(data);
 
         while (viewEventsFrame.getOption().equals("")) {
@@ -864,10 +881,11 @@ public class EasyVENT {
         HashMap<String, String> eventDetails = event.getDetails();
 
         LinkedList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
-        // System.out.println(tickets);
+        String sectorName = tickets.get(0).getSector();
+
+        // TODO: it should display number of seats bought by particular user, not in general
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
         String[][] ticketsData = ticketsMapToData(ticketsMap);
-        String sectorName = "?";
         eventDetailsAfterBuyingFrame = new EventDetailsAfterBuyingFrame(
             eventDetails,
             ticketsData,
