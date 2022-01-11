@@ -45,14 +45,4 @@ public class Ticket {
     public void setCategory(String category) {
         this.category = category;
     }
-
-    // public String toString() {
-    //     String ticketInfo = "ID: " + id;
-    //     ticketInfo += "\nPrice: " + String.format("%.2f", this.getPriceInPLN()) + " PLN";
-    //     ticketInfo += "\nSector " + sector;
-    //     ticketInfo += "\nSeat: " + seat;
-    //     ticketInfo += "\nOwner: " + owner;
-
-    //     return ticketInfo;
-    // }
 }

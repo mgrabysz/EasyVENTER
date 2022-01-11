@@ -7,17 +7,13 @@ import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
-// import javax.print.event.PrintJobAdapter;
-// import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
 
 import java.util.HashMap;
 
 import java.security.MessageDigest;
-// import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-// import java.nio.file.WatchService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -27,8 +23,6 @@ import java.util.Date;
 import java.util.LinkedList;
 
 import java.util.regex.Pattern;
-// import java.awt.Frame;
-// import javax.swing.JFrame;
 
 public class EasyVENT {
     private static Database database;

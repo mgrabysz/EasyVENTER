@@ -1,26 +1,20 @@
 package kowale.userInterface;
 
-// import kowale.database.EasyVENT;
-// import kowale.database.GlobalVariables;
-// import kowale.user.Client;
-// import kowale.user.EventOrganizer;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JTextField;
-// import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
-import javax.swing.BorderFactory;
-import javax.swing.border.Border;
 import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
-
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.Font;
-import java.awt.Color;
-import java.awt.Dimension;
+import javax.swing.JTextField;
+import javax.swing.border.Border;
 
 public class RegisterFrame extends JFrame implements ActionListener {
 
