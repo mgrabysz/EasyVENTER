@@ -45,91 +45,9 @@ public class EasyVENT {
     private ModifyEventFrame modifyEventFrame;
 
     private String nextFrame = "welcome";
-    // private String activeFrameType = "";
 
-    // private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-    private LocalDate date = LocalDate.now();
-    private LocalDateTime dateTime = LocalDateTime.now();
-    // private String user_type;
-    // private JFrame activeFrame;
-
-    public EasyVENT() throws Exception { // Constructor
-        database = new Database(); // create database
-
-        // create example clients
-        // Client newClient = new Client(
-        //     "a",
-        //     "a",
-        //     "a",
-        //     hash("a"),
-        //     "email",
-        //     123456789,
-        //     "N",
-        //     date
-        // );
-
-        // database.register_new_user(newClient);
-        // database.registerUser(newClient);
-
-        // create example organizers
-        // EventOrganizer newOrganizer = new EventOrganizer(
-        //     "s",
-        //     "s",
-        //     "s",
-        //     hash("s"),
-        //     "email",
-        //     123456789,
-        //     "company"
-        // );
-
-        // database.register_new_user(newOrganizer);
-        // database.registerUser(newOrganizer);
-
-        // create example events
-
-        // ArrayList<Ticket> tickets = new ArrayList<Ticket>();
-        // String[][] data = {
-        //     {"A", "100", "99999"},
-        //     {"B", "200", "12300"}
-        // };
-        // for (String[] row : data) {
-        //     String sector = row[0];
-        //     int ticketsNumber = Integer.parseInt(row[1]);
-        //     int basePrice = Integer.parseInt(row[2]);
-
-        //     for (int seat = 0; seat < ticketsNumber; seat++) {
-        //         Ticket ticket = new Ticket(
-        //             sector,
-        //             seat,
-        //             basePrice
-        //         );
-        //         tickets.add(ticket);
-        //     }
-        // }
-
-        // Event event = new Event(
-        //     "Ludzie biegający w kółko",
-        //     "Google",
-        //     "Polska",
-        //     "Warszafka",
-        //     "Ulica",
-        //     dateTime
-        // );
-        // event.setTickets(tickets);
-        // EasyVENT.database.createEvent(event);
-
-        // event = new Event(
-        //     "Meczyk jakiś",
-        //     "Firma Krzak",
-        //     "Polska",
-        //     "Bydgoszcz",
-        //     "Ulica",
-        //     dateTime
-        // );
-        // event.setTickets(tickets);
-        // EasyVENT.database.createEvent(event);
-        // System.out.println(isNumeric("12a"));
-
+    public EasyVENT() throws Exception {
+        database = new Database();
         mainLoop();
     }
 
@@ -721,10 +639,6 @@ public class EasyVENT {
     }
 
     private void modifyEvent() throws Exception {
-        // TODO:
-        // actual event modifying (database)
-        // ISSUE: event time and date is not displayed correctly (maybe fixed, I don't know)
-
         Event event = GlobalVariables.SELECTED_EVENT;
         HashMap<String, String> extendedDetails = event.getExtendedDetails();
         modifyEventFrame = new ModifyEventFrame(extendedDetails);
