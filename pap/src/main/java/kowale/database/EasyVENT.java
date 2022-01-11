@@ -782,11 +782,10 @@ public class EasyVENT {
         modifyEventFrame = null;
     }
 
+    /**
+     * Opens EventDetailsFrame to let user see event details and buy tickets.
+     */
     private void eventDetails() throws Exception{
-        /*
-        open EventDetailsFrame to let user see event details and buy tickets
-        */
-
         // TODO:
         // actual ticket buying
 
@@ -888,12 +887,10 @@ public class EasyVENT {
         }
     }
 
+    /**
+     * Opens EventDetailsAfterBuyingFrame
+     */
     private void eventDetailsBought() throws Exception{
-        /*
-        open EventDetailsAfterBuyingFrame
-        user can cancel selected ticket here
-        */
-
         // TODO:
         // actual ticket canceling
 
@@ -906,7 +903,7 @@ public class EasyVENT {
         event.setTickets(tickets);
         String sectorName = tickets.get(0).getSector();
 
-        // tu jesteśmy
+        // tu jestesmy
 
         // TODO: it should display number of seats bought by particular user, not in general
 
