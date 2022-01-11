@@ -11,4 +11,18 @@ public class GlobalVariables {
 
     public static volatile double CHILDREN_COEF = 0.7;
     public static volatile double VIP_COEF = 1.5;
+
+    public static String[] COUNTRIES = {
+        "Belgia",
+        "Czechy",
+        "Dania",
+        "Francja",
+        "Hiszpania",
+        "Niemcy",
+        "Polska",
+        "Rosja",
+        "Sosnowiec",
+        "Szwecja",
+        "Wielka Brytania"
+    };
 }
