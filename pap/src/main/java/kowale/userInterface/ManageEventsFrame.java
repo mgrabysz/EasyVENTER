@@ -19,9 +19,8 @@ public class ManageEventsFrame extends BasicTableFrame {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource()==actionButton){
-            int index = table.getSelectedRow(); // returns index of selected row
-            selectedIndex = index;
-
+            // returns index of selected row
+            selectedIndex = table.getSelectedRow();
             option = "modify";
 
         } else if (event.getSource()==cancelButton) {

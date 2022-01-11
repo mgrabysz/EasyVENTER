@@ -468,9 +468,20 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "modify":
-                GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
-                nextFrame = "modifyEvent";
-                break;
+                if (organizerEvents.size()==0){
+                    JOptionPane.showMessageDialog(
+                            null,
+                            "No data to modify.",
+                            "No data to modify",
+                            JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                        );
+                    nextFrame = "mainMenu";
+                    break;
+                } else {
+                    GlobalVariables.SELECTED_EVENT = organizerEvents.get(manageEventsFrame.getSelectedIndex());
+                    nextFrame = "modifyEvent";
+                    break;
+                }
         }
 
         manageEventsFrame.dispose();
@@ -483,6 +494,7 @@ public class EasyVENT {
     private void createEvent() throws Exception{
         createEventFrame = new CreateEventFrame();
         boolean isDataCorrect = false;
+        boolean isNameUnique = true;
 
         while (isDataCorrect == false) {
             while (createEventFrame.getOption().equals("")) {
@@ -495,14 +507,22 @@ public class EasyVENT {
                     createEventFrame = null;
 
                     nextFrame = "mainMenu";
-                    break;
+                    return;
                 case "confirm":
+                    isNameUnique = true;
                     String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
+                    for (Event event : database.getAllEvents()){
+                        if(createEventFrame.getName().equals(event.getName())){
+                            isNameUnique = false;
+                            break;
+                        }
+                    }
                     if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0
                         && !createEventFrame.getName().trim().equals("")
                         && !createEventFrame.getAddress().trim().equals("")
                         && !createEventFrame.getCity().trim().equals("")
-                        && !createEventFrame.getCountry().trim().equals("")){
+                        && !createEventFrame.getCountry().trim().equals("")
+                        && isNameUnique){
                         isDataCorrect = true;
 
                         Event event = new Event(
@@ -574,9 +594,10 @@ public class EasyVENT {
 
                     isDataCorrect = true;
 
-                    // check if entered prices are valid
+                    // check if entered prices and seats are valid
                     for (String[] row : tableData) {
-                        if (Pattern.matches("\\d+[.]\\d{2}", row[2]) == false) {
+                        if (Pattern.matches("\\d+[.]\\d{2}", row[2]) == false
+                            || isNumeric(row[1]) == false) {
                             isDataCorrect = false;
                             break;
                         }
@@ -601,7 +622,7 @@ public class EasyVENT {
                     } else {
                         JOptionPane.showMessageDialog(
                             null,
-                            "Ivalid price.",
+                            "Ivalid price or seat number.",
                             "Invalid user input",
                             JOptionPane.ERROR_MESSAGE    // ads red "x" picture
                         );
