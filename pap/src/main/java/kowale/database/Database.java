@@ -45,20 +45,16 @@ public class Database {
     }
 
     public boolean logIntoDatabase(String _login, String _password) {
-        // System.out.println("LOGINNG IN:");
+
         // iterate through userlist
         LinkedList<User> users = getAllUsersCredentials();
         for(int i = 0, size = users.size(); i < size; i ++) {
-            // System.out.println(users.get(i).getType());
             if(users.get(i).getLogin().equals(_login)) {
-                // System.out.println(_password);
-                // System.out.println(users.get(i).getPassword());
 
                 if(users.get(i).getPassword().equals(_password)) {
                     GlobalVariables.USER_LOGIN = users.get(i).getLogin();
                     GlobalVariables.USER_TYPE = users.get(i).getType();
-                    // System.out.println(users.get(i).getName());
-                    // System.out.println(users.get(i).getType());
+
                     return true;
                 }
             }
@@ -109,7 +105,6 @@ public class Database {
         if user has been added successfully.
          */
         String userType = user.getClass().getSimpleName().toString();
-        // System.out.println(userType);
 
         if (connection == null){
             return false;
@@ -146,7 +141,6 @@ public class Database {
             return false;
         } finally {
             try {
-                // System.out.println(success);
                 pstmt.close();
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -166,7 +160,6 @@ public class Database {
                 ResultSet rs = stmt.executeQuery("SELECT * FROM USER_CREDENTIALS");
                 while (rs.next()) {
                     String type = rs.getString("account_type");
-                    // System.out.println(type);
                     String login = rs.getString("login");
                     String pass = rs.getString("password");
                     if (type.equals("C")) {

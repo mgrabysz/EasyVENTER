@@ -25,7 +25,7 @@ public class ManageEventsFrame extends BasicTableFrame {
             option = "modify";
 
         } else if (event.getSource()==cancelButton) {
-            System.out.println("Cancel button clicked");
+
             option = "cancel";
         }
     }
