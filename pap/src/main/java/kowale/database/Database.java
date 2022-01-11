@@ -21,6 +21,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.lang.Boolean;
 // import java.util.Objects;
 import java.util.Map;
 
@@ -290,6 +291,7 @@ public class Database {
     public ArrayList<Event> getEventsOfUser(String login){
         ArrayList<Event> events = new ArrayList<Event>();
         Statement stmt = null;
+        boolean eventNameExists = false;
         if (connection != null) {
             try {
                 stmt = connection.createStatement();
@@ -309,17 +311,31 @@ public class Database {
                 "JOIN countries USING(country_id) WHERE login = '%s' ", login);
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
-
+                    eventNameExists = false;
                     String organizer = rs.getString("comp_name");
                     String name = rs.getString("event_name");
                     String country = rs.getString("country_name");
                     String city = rs.getString("city_name");
                     String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
-
+                    
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
-                    Event event = new Event(name, organizer, country, city, address, start_time);
-                    events.add(event);
+                    
+                    Event eventToAdd = new Event(name, organizer, country, city, address, start_time);
+                    
+                    // iterate through arraylist of unique events 
+                    for (Event event: events) { 
+                        String singleEventName = event.getName();
+                        if(singleEventName.equals(name)){ // event of such name already exists in the arraylist
+                            eventNameExists = true;
+                        }
+                        else{
+                            continue;
+                        }
+                    }
+                    if(!eventNameExists){
+                        events.add(eventToAdd);
+                    }
                 }
             } catch (SQLException ex) {
                 System.out.println(ex);
@@ -361,8 +377,9 @@ public class Database {
                     String city = rs.getString("city_name");
                     String address = rs.getString("street");
                     Date start_date = rs.getDate("start_time");
-
+                    
                     LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
+
                     Event event = new Event(name, organizer, country, city, address, start_time);
                     events.add(event);
                 }
@@ -611,6 +628,9 @@ public class Database {
     public boolean buyTickets(Event event, String userLogin, ArrayList<Ticket> tickets){
         CallableStatement cs = null;
         int orderID = -1; // initialize variable with false value
+        System.out.print("STARTING ORDER ID\nNUMBER OF TICKETS\n");
+        System.out.print(tickets.size());
+
         for(Ticket ticket: tickets){
             if (connection != null) {
                 try {
@@ -627,9 +647,10 @@ public class Database {
                     cs.setInt(6, orderID);
                     cs.registerOutParameter(7, Types.NUMERIC);
                     cs.execute();
-
+                    System.out.print("ORDER ID RETURNED FROM DB");
+                    
                     orderID = cs.getInt(7);  // update value of orderID
-
+                    System.out.print(orderID);
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 } finally {
