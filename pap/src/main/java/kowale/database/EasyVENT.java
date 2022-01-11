@@ -880,10 +880,18 @@ public class EasyVENT {
 
         Event event = database.getEventsOfUser(GlobalVariables.USER_LOGIN).get(GlobalVariables.SELECTED_INDEX);
 
+
+
         HashMap<String, String> eventDetails = event.getDetails();
 
-        LinkedList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
+
+
+        ArrayList<Ticket> tickets = database.getTicketsOfUser(GlobalVariables.USER_LOGIN, event);
+
+        event.setTickets(tickets);
         String sectorName = tickets.get(0).getSector();
+
+        // tu jesteśmy
 
         // TODO: it should display number of seats bought by particular user, not in general
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();

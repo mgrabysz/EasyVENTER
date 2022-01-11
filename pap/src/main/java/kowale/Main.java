@@ -3,6 +3,7 @@ package kowale;
 import kowale.database.EasyVENT;
 // import kowale.event.Event;
 // import kowale.userInterface.*;
+import kowale.userInterface.SliderFrame;
 
 // import java.security.NoSuchAlgorithmException;
 // import java.util.Vector;
