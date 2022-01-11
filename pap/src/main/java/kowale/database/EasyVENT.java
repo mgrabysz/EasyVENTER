@@ -7,28 +7,19 @@ import kowale.ticket.Ticket;
 
 import java.lang.Thread;
 
-// import javax.print.event.PrintJobAdapter;
-// import javax.sound.midi.Track;
 import javax.swing.JOptionPane;
-import javax.swing.plaf.basic.BasicTreeUI.TreeCancelEditingAction;
 
 import java.util.HashMap;
 
 import java.security.MessageDigest;
-// import java.security.NoSuchAlgorithmException;
 import java.nio.charset.StandardCharsets;
-// import java.nio.file.WatchService;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.LinkedList;
 
 import java.util.regex.Pattern;
-// import java.awt.Frame;
-// import javax.swing.JFrame;
 
 public class EasyVENT {
     private static Database database;
@@ -810,9 +801,20 @@ public class EasyVENT {
             case "remove":
                 int maxTicketToRemove = Integer.valueOf(ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][1]);
                 String category = ticketsData[eventDetailsAfterBuyingFrame.getSelectedIndex()][0];
-                // SliderFrame slider = new SliderFrame(maxTicketToRemove)
-                // int toRemove = slider.getNumberofTickets();
-                // Database.removeTicket();
+                SliderFrame slider = new SliderFrame(maxTicketToRemove);
+                while(!slider.getReady()) {
+                    waiting();
+                }
+                int numberToRemove = slider.getNumberOfTickets();
+                slider.dispose();
+                for (Ticket ticket : tickets){
+                    if (numberToRemove == 0){break;}
+                    if (ticket.getCategory().equals(category)){
+                        database.cancelTicket(event.getName(), ticket);
+                        numberToRemove--;
+                    }
+                }
+
                 nextFrame = "viewEventsBought";
                 break;
         }

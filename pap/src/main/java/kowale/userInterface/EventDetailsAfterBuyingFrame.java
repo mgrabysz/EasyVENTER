@@ -123,7 +123,7 @@ public class EventDetailsAfterBuyingFrame extends BasicTableFrame {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource()==actionButton){
-
+            selectedIndex = table.getSelectedRow();
             // remove this ticket from user's tickets
             option = "remove";
 

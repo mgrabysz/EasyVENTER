@@ -86,16 +86,6 @@ public class Event {
         this.dateTime = dateTime;
     }
 
-    // public HashMap<String, HashMap<String, Integer>> getTickets() {
-    //     return this.tickets;
-    // }
-
-    // public void setTickets(HashMap<String, HashMap<String, Integer>> tickets) {
-    //     this.tickets = tickets;
-    //     // System.out.println(tickets);
-    //     // System.out.println(tickets.size());
-    // }
-
     public ArrayList<Ticket> getTickets() {
         return tickets;
     }
@@ -115,7 +105,6 @@ public class Event {
 
     public HashMap<String, String> getExtendedDetails() {
         HashMap<String, String> details = new HashMap<String, String>();
-        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         details.put("name", name);
         details.put("organizer", organizer);
@@ -140,12 +129,10 @@ public class Event {
         details.put("hour", hour);
         details.put("minute", minute);
 
-        // System.out.println(details);
         return details;
     }
 
     public HashMap<String, String> getDetails() {
-        // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         HashMap<String, String> details = new HashMap<String, String>();
@@ -155,7 +142,6 @@ public class Event {
         details.put("city", city);
         details.put("address", address);
         details.put("dateTime", dateTime.format(formatter));
-        // System.out.println(dateTime.format(formatter));
 
         return details;
     }
@@ -183,11 +169,8 @@ public class Event {
                 }
             }
         } else {
-            // TODO: no tickets available
+            return sectors;
         }
-
-        // System.out.println(sectors);
-
         return sectors;
     }
 
@@ -214,7 +197,7 @@ public class Event {
                 }
             }
         } else {
-            // TODO: no tickets available
+            return table;
         }
         return table;
     }
