@@ -26,7 +26,7 @@ e_name VARCHAR2)
 AS
 event_exists NUMBER;
 BEGIN
-    
+
     -- CHECK IF EVENT EXISTS
     SELECT COUNT(1) INTO event_exists
     FROM EVENTS WHERE EVENT_NAME = e_name;
