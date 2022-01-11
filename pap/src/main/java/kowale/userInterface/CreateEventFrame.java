@@ -208,8 +208,6 @@ public class CreateEventFrame extends JFrame implements ActionListener {
             option = "confirm";
 
         } else if (e.getSource()==cancelButton) {
-
-            System.out.println("cancelled");
             option = "cancel";
         }
     }
