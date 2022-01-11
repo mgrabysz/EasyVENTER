@@ -336,6 +336,51 @@ public class Database {
         return events;
     }
 
+    public ArrayList<Event> getEventsOfOrganizer(String login){
+        ArrayList<Event> events = new ArrayList<Event>();
+        Statement stmt = null;
+        if (connection != null) {
+            try {
+                stmt = connection.createStatement();
+                String query = String.format(
+                "SELECT companies.name as comp_name, cities.name as city_name, event_name, country_name, street, start_time "+
+                "FROM user_credentials "+
+                "JOIN organizer_data ON(user_id=organizer_id) "+
+                "JOIN events USING(organizer_id) "+
+                "JOIN event_details ON(events.event_id = event_details.event_id) "+
+                "JOIN companies USING(company_id) "+
+                "JOIN addresses USING(address_id) "+
+                "JOIN cities USING(city_id) "+
+                "JOIN countries USING(country_id) WHERE login = '%s' ", login);
+                ResultSet rs = stmt.executeQuery(query);
+                while (rs.next()) {
+
+                    String organizer = rs.getString("comp_name");
+                    String name = rs.getString("event_name");
+                    String country = rs.getString("country_name");
+                    String city = rs.getString("city_name");
+                    String address = rs.getString("street");
+                    Date start_date = rs.getDate("start_time");
+
+                    LocalDateTime start_time = new Timestamp(start_date.getTime()).toLocalDateTime();
+                    Event event = new Event(name, organizer, country, city, address, start_time);
+                    events.add(event);
+                }
+            } catch (SQLException ex) {
+                System.out.println(ex);
+            } finally {
+                if (stmt != null){
+                    try {
+                        stmt.close();
+                    } catch (SQLException ex) {
+                        System.out.println(ex);
+                    }
+                }
+            }
+        }
+        return events;
+    }
+
     public ArrayList<Event> getEventsButNotOfUser(String login) {
         /*
          * Returns list of events available for this user
