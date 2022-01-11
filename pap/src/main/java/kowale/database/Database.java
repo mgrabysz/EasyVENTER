@@ -282,8 +282,8 @@ public class Database {
         return tickets;
     }
 
-    public LinkedList<Event> getEventsOfUser(String login){
-        LinkedList<Event> events = new LinkedList<Event>();
+    public ArrayList<Event> getEventsOfUser(String login){
+        ArrayList<Event> events = new ArrayList<Event>();
         Statement stmt = null;
         if (connection != null) {
             try {

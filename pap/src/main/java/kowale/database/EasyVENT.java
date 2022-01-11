@@ -514,13 +514,14 @@ public class EasyVENT {
         // TODO: get only events for which client has at least one ticket
 
         // ArrayList<Event> allEvents = database.getEvents(); // OLD!!!
-        ArrayList<Event> allEvents = database.getAllEvents();
+
+        ArrayList<Event> userEvents = database.getEventsOfUser(GlobalVariables.USER_LOGIN);
         // ArrayList<Event> clientEvents = new ArrayList<Event>();
         // for (Event event: allEvents) {
         //     if (event.get)
         // }
         // ArrayList<Event> events = database.getEventsOfUser(user, event)
-        String[][] data = eventsToData(allEvents);
+        String[][] data = eventsToData(userEvents);
 
         viewEventsFrame = new ViewEventsFrame(data);
 
