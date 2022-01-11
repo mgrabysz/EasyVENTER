@@ -764,7 +764,7 @@ public class EasyVENT {
         int i = 0;
         for (String category : ticketHashMap.keySet()) {
             ticketsData[i][0] = category;
-            ticketsData[i][1] = ticketHashMap.get("category");
+            ticketsData[i][1] = ticketHashMap.get(category);
             ++i;
         }
 
