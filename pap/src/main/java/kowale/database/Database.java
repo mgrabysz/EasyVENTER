@@ -333,7 +333,7 @@ public class Database {
         return events;
     }
 
-    public boolean insertEvent(Event event) {
+    public boolean insertEvent(Event event, String organizerLogin) {
         /*
         Pass Event object and Ticket array
         */
@@ -342,7 +342,6 @@ public class Database {
         if (connection != null) {
             try {
                 String eventName = event.getName();
-                String eventOrganizer = event.getOrganizer();
                 String eventCountry = event.getCountry();
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
@@ -351,7 +350,7 @@ public class Database {
 
                 cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?,?)}");
                 cs.setString(1, eventName);
-                cs.setInt(2, Integer.parseInt(eventOrganizer));
+                cs.setString(2, organizerLogin);
                 cs.setString(3, eventCountry);
                 cs.setString(4, eventCity);
                 cs.setString(5, eventAddress);
