@@ -606,9 +606,6 @@ public class EasyVENT {
      * Opens CreateEventFrame.
      */
     private void createEvent() throws Exception{
-        /* TODO:
-        input data check -- date check completed, anything else to check?
-        */
         createEventFrame = new CreateEventFrame();
         boolean isDataCorrect = false;
 
@@ -626,9 +623,11 @@ public class EasyVENT {
                     break;
                 case "confirm":
                     String company = database.getCompanyName(GlobalVariables.USER_LOGIN);
-
-                    // check if input data si correct
-                    if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0 ){
+                    if (createEventFrame.getDateTime().compareTo(LocalDateTime.now()) > 0
+                        && !createEventFrame.getName().equals("")
+                        && !createEventFrame.getAddress().equals("")
+                        && !createEventFrame.getCity().equals("")
+                        && !createEventFrame.getCountry().equals("")){
                         isDataCorrect = true;
 
                         Event event = new Event(
@@ -649,14 +648,9 @@ public class EasyVENT {
                         if (tickets != null) {
                             event.setTickets(tickets);
                             database.insertEvent(event, GlobalVariables.USER_LOGIN);
-                            // GlobalVariables.SECTORS_NUMBER = createEventFrame.getNumOfSectors();
-                            // nextFrame = "InputSectorDataFrame";
                         }
 
                         nextFrame = "mainMenu";
-
-                        createEventFrame.dispose();
-                        createEventFrame = null;
                     } else {
                         createEventFrame.displayMessageDialog();
                         createEventFrame.setOption("");
