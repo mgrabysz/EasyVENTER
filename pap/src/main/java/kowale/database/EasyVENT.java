@@ -597,7 +597,8 @@ public class EasyVENT {
                     // check if entered prices and seats are valid
                     for (String[] row : tableData) {
                         if (Pattern.matches("\\d+[.]\\d{2}", row[2]) == false
-                            || isNumeric(row[1]) == false) {
+                            || isNumeric(row[1]) == false
+                            || Integer.valueOf(row[1]) < 0) {
                             isDataCorrect = false;
                             break;
                         }
