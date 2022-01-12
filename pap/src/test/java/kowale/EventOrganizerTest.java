@@ -14,7 +14,7 @@ public class EventOrganizerTest {
     int numOfSectors;
     Event ev = new Event(
         "Mecz",
-        "PZPN",
+        "krzak firma",
         "Polska",
         "Warszafka",
         "Ulica",
@@ -23,7 +23,7 @@ public class EventOrganizerTest {
 
     @Test
     public void getCompanyTest(){
-        assertEquals("PZPN", eo.getCompanyName());
+        assertEquals("krzak firma", eo.getCompanyName());
     }
 
     @Test
