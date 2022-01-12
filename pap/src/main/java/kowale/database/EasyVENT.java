@@ -692,6 +692,18 @@ public class EasyVENT {
         HashMap<String, HashMap<String, String>> ticketsMap = event.getTicketsMap();
 
         String[][] ticketsData = ticketsMapToData(ticketsMap);
+
+        if (ticketsData.length == 0) {
+            JOptionPane.showMessageDialog(
+                null,
+                "Tickets sold out",
+                "There are no available tickets",
+                JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+            );
+            nextFrame = "viewEvents";
+            return;
+        }
+
         eventDetailsFrame = new EventDetailsFrame(eventDetails, ticketsData);
 
         while (true) {
