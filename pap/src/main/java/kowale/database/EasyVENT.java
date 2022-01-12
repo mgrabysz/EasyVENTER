@@ -440,9 +440,20 @@ public class EasyVENT {
                 nextFrame = "mainMenu";
                 break;
             case "details":
-                nextFrame = "eventDetailsBought";
-                GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
-                break;
+                if (userEvents.size()==0){
+                    JOptionPane.showMessageDialog(
+                        null,
+                        "You don't have any tickets to check",
+                        "No events in your list",
+                        JOptionPane.ERROR_MESSAGE    // ads red "x" picture
+                    );
+                    nextFrame = "mainMenu";
+                    break;
+                } else {
+                    GlobalVariables.SELECTED_INDEX = viewEventsFrame.getSelectedIndex();
+                    nextFrame = "eventDetailsBought";
+                    break;
+                }
         }
 
         viewEventsFrame.dispose();
