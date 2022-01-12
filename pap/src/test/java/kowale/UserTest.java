@@ -27,4 +27,22 @@ public class UserTest{
     public void getSurnameTest(){
         assertEquals("Rambo", user.getSurname());
     }
+
+    @Test
+    public void getEmailTest(){
+        assertEquals("email@gmail.com", user.getEmail());
+    }
+
+    @Test
+    public void getPhoneTest(){
+        assertEquals(666666666, user.getPhoneNumber());
+    }
+
+    @Test
+    public void constructorOnlyWithLoginTest(){
+        User user2 = new User("login", "haslo");
+        assertEquals("login", user2.getLogin());
+        assertEquals("haslo", user2.getPassword());
+    }
+
 }

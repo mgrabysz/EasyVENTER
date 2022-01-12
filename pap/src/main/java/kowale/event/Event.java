@@ -20,7 +20,6 @@ public class Event {
     private String address;
     private LocalDateTime dateTime;
     private ArrayList<Ticket> tickets;
-    // private HashMap<String, HashMap<String, Integer>> tickets;
 
     public Event(
         String name,

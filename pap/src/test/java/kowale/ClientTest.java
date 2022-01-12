@@ -33,4 +33,14 @@ public class ClientTest {
         cl.cancelTicket(ticket);
         assertEquals(exp, cl.getTicketsList());
     }
+
+    @Test
+    public void getGenderTest(){
+        assertEquals("M", cl.getGender());
+    }
+
+    @Test
+    public void getBirthTest(){
+        assertEquals(date, cl.getBirth());
+    }
 }

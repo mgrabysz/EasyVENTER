@@ -22,6 +22,11 @@ public class EventOrganizerTest {
     );
 
     @Test
+    public void getCompanyTest(){
+        assertEquals("PZPN", eo.getCompanyName());
+    }
+
+    @Test
     public void getEventsListTest(){
         LinkedList<Event> exp = new LinkedList<Event>();
         assertEquals(exp, eo.getEventsList());
