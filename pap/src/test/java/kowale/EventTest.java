@@ -17,7 +17,7 @@ public class EventTest{
     String testDateTimeString = "27-11-1942 10:15";
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     LocalDateTime testDateTime = LocalDateTime.parse(testDateTimeString, formatter);
-    
+
     Event event = new Event(
         "Meczyk",
         "PZPN",
@@ -111,7 +111,7 @@ public class EventTest{
     public void getInfoTest(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
         String[] eventInfo = {event.getName(), event.getCity(), event.getAddress(), event.getDateTime().format(formatter)};
-        
+
         assertArrayEquals(eventInfo, event.getInfo());
     }
 
@@ -125,7 +125,7 @@ public class EventTest{
         details.put("city", "Warszafka");
         details.put("address", "Adres");
         details.put("dateTime", testDateTimeString);
-        
+
         assertEquals(details, event.getDetails());
     }
 
@@ -143,7 +143,7 @@ public class EventTest{
         extendedDetails.put("day", "27");
         extendedDetails.put("hour", "10");
         extendedDetails.put("minute", "15");
-        
+
         assertEquals(extendedDetails, event.getExtendedDetails());
     }
 
@@ -154,15 +154,20 @@ public class EventTest{
         HashMap<String, String> numberPriceA = new HashMap<String, String>();
 
         numberPriceA.put("number", "1");
-        numberPriceA.put("Price", "200.00");
+        numberPriceA.put("price", "200.0");
 
         map.put("A", numberPriceA);
 
         HashMap<String, String> numberPriceB = new HashMap<String, String>();
 
         numberPriceB.put("number", "2");
-        numberPriceB.put("Price", "100.00");
+        numberPriceB.put("price", "100.0");
 
         map.put("B", numberPriceB);
+        tickets.add(ticket0);
+        tickets.add(ticket1);
+        tickets.add(ticket2);
+        event.setTickets(tickets);
+        assertEquals(map, event.getTicketsMap());
     }
 }
