@@ -8,11 +8,8 @@ import java.util.ArrayList;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Event {
-    /*
-    Class that represents an event.
-    */
 
+public class Event {
     private String name;
     private String organizer;
     private String country;
@@ -94,12 +91,25 @@ public class Event {
     }
 
     public String[] getInfo() {
-        // DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         String[] eventInfo = {name, city, address, dateTime.format(formatter)};
 
         return eventInfo;
+    }
+
+    public HashMap<String, String> getDetails() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+
+        HashMap<String, String> details = new HashMap<String, String>();
+        details.put("name", name);
+        details.put("organizer", organizer);
+        details.put("country", country);
+        details.put("city", city);
+        details.put("address", address);
+        details.put("dateTime", dateTime.format(formatter));
+
+        return details;
     }
 
     public HashMap<String, String> getExtendedDetails() {
@@ -131,20 +141,10 @@ public class Event {
         return details;
     }
 
-    public HashMap<String, String> getDetails() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-
-        HashMap<String, String> details = new HashMap<String, String>();
-        details.put("name", name);
-        details.put("organizer", organizer);
-        details.put("country", country);
-        details.put("city", city);
-        details.put("address", address);
-        details.put("dateTime", dateTime.format(formatter));
-
-        return details;
-    }
-
+    /**
+     * Returns HashMap of given scheme:
+     * {Sector: {Tickets number, Ticket base price (in PLN)}}
+    */
     public HashMap<String, HashMap<String, String>> getTicketsMap() {
         // {"Sector", "Number of seats", "Base ticket price"}
         HashMap<String, HashMap<String, String>> sectors = new HashMap<String, HashMap<String, String>>();
@@ -173,11 +173,12 @@ public class Event {
         return sectors;
     }
 
+    /**
+     * Returns HashMap of given scheme:
+     * {Category : Number of seats (posessed by this user)}
+    */
     public HashMap<String, String> getTicketsMapSpecificUser() {
-        /*
-         * Returns HashMap of given scheme:
-         * {Category : Number of seats (posessed by this user)}
-        */
+        
         HashMap<String, String> table = new HashMap<String, String>();
 
         if (tickets.size() > 0) {
