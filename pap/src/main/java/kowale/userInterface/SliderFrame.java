@@ -47,6 +47,7 @@ public class SliderFrame extends JFrame implements ChangeListener, ActionListene
         confirmButton.setBounds(40, 180, 220, 50);
         this.add(confirmButton);
 
+        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setVisible(true);
     }
 
