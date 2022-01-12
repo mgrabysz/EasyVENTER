@@ -611,8 +611,6 @@ public class Database {
     public boolean buyTickets(Event event, String userLogin, ArrayList<Ticket> tickets){
         CallableStatement cs = null;
         int orderID = -1; // initialize variable with false value
-        System.out.print("STARTING ORDER ID\nNUMBER OF TICKETS\n");
-        System.out.print(tickets.size());
 
         for(Ticket ticket: tickets){
             if (connection != null) {
@@ -630,10 +628,8 @@ public class Database {
                     cs.setInt(6, orderID);
                     cs.registerOutParameter(7, Types.NUMERIC);
                     cs.execute();
-                    System.out.print("ORDER ID RETURNED FROM DB");
 
                     orderID = cs.getInt(7);  // update value of orderID
-                    System.out.print(orderID);
                 } catch (SQLException ex) {
                     System.out.println(ex);
                 } finally {
