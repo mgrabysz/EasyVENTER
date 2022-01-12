@@ -25,7 +25,7 @@ PCTFREE 10 PCTUSED 40 TABLESPACE ii_data LOGGING
     STORAGE ( INITIAL 16384 NEXT 16384 PCTINCREASE 0 MINEXTENTS 1 MAXEXTENTS 2147483645 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT )
 ROW STORE COMPRESS ADVANCED NO INMEMORY;
 
-CREATE UNIQUE INDEX z01.addresses_index1 ON
+CREATE INDEX z01.addresses_index1 ON
     z01.addresses (
         street
     ASC )
@@ -67,7 +67,7 @@ CREATE UNIQUE INDEX z01.cities_pk ON
             DEFAULT )
         LOGGING;
 
-CREATE UNIQUE INDEX z01.city_unique_name ON
+CREATE INDEX z01.city_unique_name ON
     z01.cities (
         name
     ASC )
@@ -519,5 +519,5 @@ ALTER TABLE z01.ticket_orders
     ADD CONSTRAINT ticket_orders_tickets_fk FOREIGN KEY ( ticket_id )
         REFERENCES z01.tickets ( ticket_id )
     NOT DEFERRABLE;
-    
+        
 COMMIT;
