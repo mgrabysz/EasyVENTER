@@ -28,20 +28,9 @@ public class EventTest{
         assertEquals("PZPN", event.getOrganizer());
     }
 
-    // @Test
-    // public void getLocationTest(){
-    //     assertEquals("PGE Narodowy", event.getLocation());
-    // }
-
     @Test
     public void getDateTimeTest(){
         assertEquals(dateTime, event.getDateTime());
     }
 
-    // @Test
-    // public void getEventInfo(){
-    //     DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
-    //     String[] strings = {"Mecz", "PZPN", "PGE Narodowy", dateTime.format(formatter)};
-    //     assertArrayEquals(strings, event.getEventInfo());
-    // }
 }
