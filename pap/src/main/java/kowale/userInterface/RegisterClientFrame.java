@@ -38,7 +38,7 @@ public class RegisterClientFrame extends RegisterOrganizerFrame {
         this.add(monthCombo);
 
         Vector<String> years = new Vector<String>();
-        for (int i = 2021; i < 2051; i++) {
+        for (int i = 2021; i > 1919; i--) {
             years.add(String.valueOf(i));
         }
         yearCombo = new JComboBox<String>(years);
