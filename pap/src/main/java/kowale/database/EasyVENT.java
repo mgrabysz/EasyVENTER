@@ -653,6 +653,7 @@ public class EasyVENT {
             switch (modifyEventFrame.getOption()) {
                 case "cancel":
                     nextFrame = "manageEvents";
+                    correctData = true;
                     break;
                 case "confirm":
                     if (!modifyEventFrame.getAddress().trim().equals("")
