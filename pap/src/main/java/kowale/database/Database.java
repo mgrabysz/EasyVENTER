@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -412,7 +413,6 @@ public class Database {
         /*
         Pass Event object and Ticket array
         */
-
         CallableStatement cs = null;
         if (connection != null) {
             try {
@@ -421,7 +421,6 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
-                Date eventDateSQL = Date.valueOf(eventDate.toLocalDate());
 
                 cs = connection.prepareCall("{call ADD_EVENT(?,?,?,?,?,?,?,?)}");
                 cs.setString(1, eventName);
@@ -429,7 +428,7 @@ public class Database {
                 cs.setString(3, eventCountry);
                 cs.setString(4, eventCity);
                 cs.setString(5, eventAddress);
-                cs.setDate(6, eventDateSQL);
+                cs.setTimestamp(6, Timestamp.valueOf(eventDate));
                 cs.registerOutParameter(7, Types.NUMERIC);
                 cs.registerOutParameter(8, Types.NUMERIC);
                 cs.execute();
@@ -585,14 +584,13 @@ public class Database {
                 String eventCity = event.getCity();
                 String eventAddress = event.getAddress();
                 LocalDateTime eventDate = event.getDateTime();
-                Date eventDateSQL = Date.valueOf(eventDate.toLocalDate());
 
                 cs = connection.prepareCall("{call EDIT_EVENT(?,?,?,?,?)}");
                 cs.setString(1, eventName);
                 cs.setString(2, eventCountry);
                 cs.setString(3, eventCity);
                 cs.setString(4, eventAddress);
-                cs.setDate(5, eventDateSQL);
+                cs.setTimestamp(5, Timestamp.valueOf(eventDate));
                 cs.execute();
             } catch (SQLException ex) {
                 System.out.println(ex);
