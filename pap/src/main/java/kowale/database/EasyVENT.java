@@ -4,7 +4,7 @@ import kowale.userInterface.*;
 import kowale.user.*;
 import kowale.event.Event;
 import kowale.ticket.Ticket;
-
+import kowale.tools.Tools;
 import java.lang.Thread;
 
 import javax.swing.JOptionPane;
@@ -37,9 +37,10 @@ public class EasyVENT {
     private EventDetailsFrame eventDetailsFrame;
     private EventDetailsAfterBuyingFrame eventDetailsAfterBuyingFrame;
     private ModifyEventFrame modifyEventFrame;
+    private Tools tools = new Tools();
 
     private String nextFrame = "welcome";
-
+    
     public EasyVENT() throws Exception {
         database = new Database();
         mainLoop();
@@ -54,21 +55,6 @@ public class EasyVENT {
         }
         catch (Exception e) {
             System.out.println(e);
-        }
-    }
-
-    /**
-     * check if string is convertable to Double
-     */
-    public static boolean isNumeric(String string) {
-        if (string == null) {
-            return false;
-        }
-        try {
-            Double.parseDouble(string);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
         }
     }
 
@@ -246,9 +232,10 @@ public class EasyVENT {
             String telephone = registerClientFrame.getTelephone();
             if (
                 registerClientFrame.getEmail().trim().length() > 0 &&
+                tools.validateEmail(registerClientFrame.getEmail()) &&
                 registerClientFrame.getTelephone().trim().length() > 0 &&
                 telephone.length() == 9 &&
-                isNumeric(telephone)
+                tools.isNumeric(telephone)
             ) {
 
                 isDataCorrect = true;
@@ -295,9 +282,10 @@ public class EasyVENT {
             // check if input data is correct
             if (
                 registerOrganizerFrame.getEmail().trim().length() > 0 &&
+                tools.validateEmail(registerOrganizerFrame.getEmail()) &&
                 registerOrganizerFrame.getCompany().trim().length() > 0 &&
                 registerOrganizerFrame.getTelephone().length() == 9 &&
-                isNumeric(registerOrganizerFrame.getTelephone())
+                tools.isNumeric(registerOrganizerFrame.getTelephone())
             ) {
                 isDataCorrect = true;
 
@@ -608,7 +596,7 @@ public class EasyVENT {
                     // check if entered prices and seats are valid
                     for (String[] row : tableData) {
                         if (Pattern.matches("\\d+[.]\\d{2}", row[2]) == false
-                            || isNumeric(row[1]) == false
+                            || tools.isNumeric(row[1]) == false
                             || Integer.valueOf(row[1]) < 0) {
                             isDataCorrect = false;
                             break;
