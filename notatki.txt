@@ -1,6 +1,0 @@
-TODO:
-
-
-2. liczba siedzeń w EventDetailsAfterBuyingFrame powinna przedstawiać liczbę biletów,
-   jaką posiada dany klient imo
-3. Zła kategoria się kupiła
