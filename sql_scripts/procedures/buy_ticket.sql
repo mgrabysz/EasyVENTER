@@ -10,16 +10,12 @@ AS
 client_login_exists NUMBER;
 c_client_id NUMBER;
 order_exists NUMBER;
-
 event_exists NUMBER;
 desired_event_id NUMBER;
-
 category_exists NUMBER;
 category_id NUMBER;
-
 desired_ticket_exists NUMERIC;
 desired_ticket_id NUMERIC;
-
 calc_price NUMBER;
 BEGIN
 
@@ -38,9 +34,13 @@ BEGIN
 
             -- Check if ticket category exists
             -- and find its id
-            SELECT 1, CATEGORY_ID INTO category_exists, category_id
+            SELECT 1 INTO category_exists
             FROM TICKET_CATEGORIES WHERE CATEGORY_NAME = t_category_name;
+            
             IF category_exists > 0 THEN
+            
+            SELECT CATEGORY_ID INTO category_id
+            FROM TICKET_CATEGORIES WHERE CATEGORY_NAME = t_category_name;
 
                 -- Check whether ticket with specified attributes exists
                 SELECT 1, TICKET_ID
@@ -78,9 +78,11 @@ BEGIN
                         
                         calc_price:=calculate_total_price(desired_ticket_id, category_id, c_order_id_return);
                         
-                        UPDATE CLIENT_ORDERS SET TOTAL_PRICE=calc_price;
                         -- Append new ticket to the same order
                         ADD_TICKET_TO_ORDER(desired_ticket_id, c_order_id_return, category_id);  
+                        UPDATE CLIENT_ORDERS SET TOTAL_PRICE=calc_price;
+                        
+                        
                     END IF;
                 ELSE
                     RAISE NO_DATA_FOUND;
