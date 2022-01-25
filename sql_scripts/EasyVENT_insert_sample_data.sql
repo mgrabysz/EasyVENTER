@@ -97,25 +97,25 @@ INSERT INTO z01.client_orders VALUES (103, TO_TIMESTAMP('04/01/2022 09:26:50.12'
 INSERT INTO z01.client_orders VALUES (104, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 7000, 101);
 INSERT INTO z01.client_orders VALUES (105, TO_TIMESTAMP('04/01/2022 09:26:50.12', 'DD/MM/YYYY HH24:MI:SS.FF'), 25000, 101);
 
-INSERT INTO z01.tickets VALUES (101, 1, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
-INSERT INTO z01.tickets VALUES (102, 2, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
-INSERT INTO z01.tickets VALUES (103, 10, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
-INSERT INTO z01.tickets VALUES (104, 11, 102, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
-INSERT INTO z01.tickets VALUES (105, 25, 102,TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'B', 10000);
-INSERT INTO z01.tickets VALUES (106, 9, 104, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
-INSERT INTO z01.tickets VALUES (107, 17, 105, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (1, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (2, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (10, 101, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (11, 102, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (25, 102,TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'B', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES ( 9, 104, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (17, 105, TO_DATE('04/01/2022', 'DD/MM/YYYY'), 'A', 10000);
 
-INSERT INTO z01.tickets VALUES (108, 12, 104, NULL, 'A', 10000);
-INSERT INTO z01.tickets VALUES (109, 13, 104, NULL, 'A', 10000);
-INSERT INTO z01.tickets VALUES (110, 1, 104, NULL, 'B', 20000);
-INSERT INTO z01.tickets VALUES (111, 2, 104, NULL, 'B', 20000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (12, 104, NULL, 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (13, 104, NULL, 'A', 10000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES ( 1, 104, NULL, 'B', 20000);
+INSERT INTO z01.tickets (seat, event_id, purchase_date, sector, ticket_price) VALUES (2, 104, NULL, 'B', 20000);
 
-INSERT INTO z01.ticket_orders VALUES (101, 101, 101);
-INSERT INTO z01.ticket_orders VALUES (102, 101, 102);
-INSERT INTO z01.ticket_orders VALUES (103, 102, 101);
-INSERT INTO z01.ticket_orders VALUES (104, 103, 102);
-INSERT INTO z01.ticket_orders VALUES (105, 104, 102);
-INSERT INTO z01.ticket_orders VALUES (106, 105, 101);
-INSERT INTO z01.ticket_orders VALUES (107, 105, 103);
+INSERT INTO z01.ticket_orders VALUES (1, 101, 101);
+INSERT INTO z01.ticket_orders VALUES (2, 101, 102);
+INSERT INTO z01.ticket_orders VALUES (3, 102, 101);
+INSERT INTO z01.ticket_orders VALUES (4, 103, 102);
+INSERT INTO z01.ticket_orders VALUES (5, 104, 102);
+INSERT INTO z01.ticket_orders VALUES (6, 105, 101);
+INSERT INTO z01.ticket_orders VALUES (7, 105, 103);
 
 commit;
