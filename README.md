@@ -1,9 +1,9 @@
 # EasyVENTER
 
 ## Skład zespołu
-- Łukasz Szarejko
-- Patryk Będkowski
-- Szymon Skarzyński
+- [Łukasz Szarejko](https://github.com/szaryvip)
+- [Patryk Będkowski](https://github.com/patrick-bedkowski)
+- [Szymon Skarzyński](https://github.com/Cat107)
 - Marcin Grabysz
 
 ## Wstęp
