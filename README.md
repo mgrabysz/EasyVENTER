@@ -4,7 +4,7 @@
 - [Łukasz Szarejko](https://github.com/szaryvip)
 - [Patryk Będkowski](https://github.com/patrick-bedkowski)
 - [Szymon Skarzyński](https://github.com/Cat107)
-- Marcin Grabysz
+- [Marcin Grabysz](https://github.com/mgrabysz)
 
 ## Wstęp
 Aplikacja będzie platformą do zakupu biletów na wydarzenia sportowe.
